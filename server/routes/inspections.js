@@ -1,0 +1,562 @@
+const router = require('express').Router();
+const path = require('path');
+const { body, validationResult } = require('express-validator');
+const Inspection = require('../models/Inspection');
+const Beneficiary = require('../models/Beneficiary');
+const { Installment, AuditLog } = require('../models/Installment');
+const { protect, authorize } = require('../middleware/auth');
+const { upload, videoUpload, combinedUpload } = require('../middleware/upload');
+const { verifyGPS, verifyTimestamps, validateStageProgression } = require('../services/verification');
+const { runFullAIPipeline, analyzeConstructionPhoto, computeImageHashes, checkDuplicateImage, checkFakeImage, verifyInspectionVideo, reconstructWithCOLMAPNerfstudio } = require('../services/aiService');
+const { calculateRiskScore, calculateVideoRiskScore, synthesizeDualEvidence } = require('../services/riskEngine');
+
+const INSTALLMENT_AMOUNTS = { Foundation: 50000, Plinth: 40000, Lintel: 30000, Completion: 30000 };
+
+// GET /api/inspections — list inspections
+router.get('/', protect, async (req, res) => {
+  try {
+    const { beneficiaryId, status, stage, officerId, page = 1, limit = 20 } = req.query;
+    const filter = {};
+    if (beneficiaryId) filter.beneficiaryId = beneficiaryId;
+    if (status) filter.status = status;
+    if (stage) filter.officerSelectedStage = stage;
+    if (officerId) filter.officerId = officerId;
+
+    // Officers see only their own; admins see all
+    if (req.user.role === 'officer') filter.officerId = req.user._id;
+
+    const total = await Inspection.countDocuments(filter);
+    const inspections = await Inspection.find(filter)
+      .sort({ createdAt: -1 })
+      .skip((page - 1) * limit)
+      .limit(parseInt(limit))
+      .populate('beneficiaryId', 'name village district')
+      .populate('officerId', 'name email')
+      .populate('reviewedBy', 'name');
+
+    res.json({ success: true, data: inspections, total, page: parseInt(page), pages: Math.ceil(total / limit) });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+// GET /api/inspections/:id
+router.get('/:id', protect, async (req, res) => {
+  try {
+    const inspection = await Inspection.findById(req.params.id)
+      .populate('beneficiaryId')
+      .populate('officerId', 'name email phone')
+      .populate('reviewedBy', 'name');
+    if (!inspection) return res.status(404).json({ success: false, message: 'Inspection not found' });
+    res.json({ success: true, data: inspection });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+// POST /api/inspections/verify-video — OpenCV + SHA-256 + Qwen 2.5-VL Video Forensics
+router.post('/verify-video', protect, videoUpload.single('video'), async (req, res) => {
+  try {
+    const { officerStage, beneficiaryId, numKeyframes, videoUrl, videoBase64, inspectionId } = req.body;
+    let videoSource = videoUrl || videoBase64;
+
+    if (req.file) {
+      videoSource = path.resolve(req.file.path);
+    }
+
+    if (!videoSource) {
+      videoSource = 'PAN_PMAYG_DEFAULT_SAMPLE_VIDEO_STREAM_' + Date.now();
+    }
+
+    const result = await verifyInspectionVideo(videoSource, officerStage || 'Plinth', {
+      beneficiaryId,
+      inspectionId,
+      numKeyframes: parseInt(numKeyframes) || 5
+    });
+
+    // If linked to an existing inspection, fuse video evidence and recalculate dual-evidence composite score
+    const targetInspectionId = inspectionId || req.query.inspectionId;
+    if (targetInspectionId) {
+      const inspection = await Inspection.findById(targetInspectionId);
+      if (inspection) {
+        inspection.videoEvidence = {
+          cloudinaryUrl: req.file ? `/uploads/${req.file.filename}` : (videoUrl || ''),
+          videoUrl: req.file ? `/uploads/${req.file.filename}` : (videoUrl || ''),
+          originalFilename: req.file?.originalname || 'video_walkthrough.mp4',
+          fileSize: req.file?.size || 0,
+          durationSec: result.videoMetadata?.durationSec || 6.0,
+          sha256: result.sha256,
+          model: result.model || 'Qwen-2.5-VL-3B-Instruct',
+          verdict: result.verdict,
+          detectedScene: result.detectedScene,
+          isAIGeneratedSuspect: result.isAIGeneratedSuspect || false,
+          aiGeneratedRiskScore: result.aiGeneratedRiskScore || 0,
+          authenticityConfidence: result.authenticityConfidence || 0,
+          officerStage: officerStage || inspection.officerSelectedStage,
+          detectedStage: result.detectedStage,
+          stageMatches: result.stageMatches,
+          opticalFlowVerdict: result.opticalFlowVerdict,
+          qwenForensicExplanation: result.qwenForensicExplanation || [],
+          keyframes: result.keyframes || [],
+          capturedAt: new Date()
+        };
+
+        const { synthesis, unifiedRiskScore } = synthesizeDualEvidence({
+          photoRiskResult: inspection.riskScore,
+          videoEvidence: inspection.videoEvidence,
+          photoEvidence: inspection.evidence?.[0],
+          officerSelectedStage: inspection.officerSelectedStage,
+          ruleFactors: inspection.riskScore?.factors || []
+        });
+
+        inspection.dualEvidenceSynthesis = synthesis;
+        inspection.riskScore = unifiedRiskScore;
+        await inspection.save();
+
+        return res.json({
+          ...result,
+          dualEvidenceSynthesis: synthesis,
+          compositeRiskScore: unifiedRiskScore,
+          inspectionId: inspection._id
+        });
+      }
+    }
+
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+// POST /api/inspections/reconstruct-nerf — COLMAP Structure-from-Motion + Nerfstudio Real-Time 3D Digital Twin
+router.post('/reconstruct-nerf', protect, async (req, res) => {
+  try {
+    const { videoUrl, videoBase64, imageUrls, inspectionId, densifyPoints, generateSplats } = req.body;
+    let targetVideo = videoUrl || videoBase64;
+    let targetImages = imageUrls || [];
+
+    // If inspectionId provided, pull media stored on MongoDB record
+    if (inspectionId) {
+      const inspection = await Inspection.findById(inspectionId);
+      if (inspection) {
+        if (!targetVideo && inspection.videoEvidence?.cloudinaryUrl) {
+          targetVideo = inspection.videoEvidence.cloudinaryUrl;
+        }
+        if (targetImages.length === 0 && inspection.evidence?.length > 0) {
+          targetImages = inspection.evidence.map(e => e.cloudinaryUrl).filter(Boolean);
+        }
+      }
+    }
+
+    // Resolve local /uploads paths to absolute filesystem paths for OpenCV/COLMAP processing
+    if (targetVideo && targetVideo.startsWith('/uploads')) {
+      targetVideo = path.resolve(path.join(__dirname, '..', targetVideo));
+    }
+    targetImages = targetImages.map(img => {
+      if (typeof img === 'string' && img.startsWith('/uploads')) {
+        return path.resolve(path.join(__dirname, '..', img));
+      }
+      return img;
+    });
+
+    const result = await reconstructWithCOLMAPNerfstudio({
+      videoUrl: targetVideo,
+      videoBase64: !targetVideo?.startsWith('http') && !targetVideo?.startsWith('/') && !targetVideo?.includes(':\\') ? targetVideo : null,
+      imageUrls: targetImages,
+      inspectionId,
+      densifyPoints: parseInt(densifyPoints) || 25000,
+      generateSplats: generateSplats !== false
+    });
+
+    // Save reconstruction summary to inspection if found
+    if (inspectionId && result.success) {
+      await Inspection.findByIdAndUpdate(inspectionId, {
+        $set: {
+          'digitalTwinMeta.colmapNerfReconstruction': {
+            reconstructedAt: new Date(),
+            solvedPoses: result.reconstruction?.colmap_sfm?.solved_camera_poses,
+            meanReprojErrorPx: result.reconstruction?.colmap_sfm?.mean_reprojection_error_px,
+            pointCount: result.point_cloud?.count,
+            civilMetrology: result.reconstruction?.civil_metrology
+          }
+        }
+      });
+    }
+
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+// POST /api/inspections/:id/attach-video — Attach walkthrough video to inspection and compute dual-evidence synthesis
+router.post('/:id/attach-video', protect, videoUpload.single('video'), async (req, res) => {
+  try {
+    const inspection = await Inspection.findById(req.params.id);
+    if (!inspection) return res.status(404).json({ success: false, message: 'Inspection not found' });
+
+    let videoSource = req.body.videoUrl || req.body.videoBase64;
+    if (req.file) {
+      videoSource = path.resolve(req.file.path);
+    }
+    if (!videoSource) {
+      return res.status(400).json({ success: false, message: 'No video file or videoUrl provided' });
+    }
+
+    const videoResult = await verifyInspectionVideo(videoSource, inspection.officerSelectedStage, {
+      beneficiaryId: inspection.beneficiaryId,
+      inspectionId: inspection._id,
+      numKeyframes: parseInt(req.body.numKeyframes) || 5
+    });
+
+    inspection.videoEvidence = {
+      cloudinaryUrl: req.file ? `/uploads/${req.file.filename}` : (req.body.videoUrl || ''),
+      videoUrl: req.file ? `/uploads/${req.file.filename}` : (req.body.videoUrl || ''),
+      originalFilename: req.file?.originalname || 'walkthrough_video.mp4',
+      fileSize: req.file?.size || 0,
+      durationSec: videoResult.videoMetadata?.durationSec || 6.0,
+      sha256: videoResult.sha256,
+      model: videoResult.model || 'Qwen-2.5-VL-3B-Instruct',
+      verdict: videoResult.verdict,
+      detectedScene: videoResult.detectedScene,
+      isAIGeneratedSuspect: videoResult.isAIGeneratedSuspect || false,
+      aiGeneratedRiskScore: videoResult.aiGeneratedRiskScore || 0,
+      authenticityConfidence: videoResult.authenticityConfidence || 0,
+      officerStage: inspection.officerSelectedStage,
+      detectedStage: videoResult.detectedStage,
+      stageMatches: videoResult.stageMatches,
+      opticalFlowVerdict: videoResult.opticalFlowVerdict,
+      qwenForensicExplanation: videoResult.qwenForensicExplanation || [],
+      keyframes: videoResult.keyframes || [],
+      capturedAt: new Date()
+    };
+
+    const { synthesis, unifiedRiskScore } = synthesizeDualEvidence({
+      photoRiskResult: inspection.riskScore,
+      videoEvidence: inspection.videoEvidence,
+      photoEvidence: inspection.evidence?.[0],
+      officerSelectedStage: inspection.officerSelectedStage,
+      ruleFactors: inspection.riskScore?.factors || []
+    });
+
+    inspection.dualEvidenceSynthesis = synthesis;
+    inspection.riskScore = unifiedRiskScore;
+    await inspection.save();
+
+    res.json({
+      success: true,
+      data: inspection,
+      synthesis,
+      unifiedRiskScore
+    });
+  } catch (error) {
+    console.error('Attach video error:', error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+// POST /api/inspections — Submit new inspection with photo and/or video
+router.post('/', protect, combinedUpload.fields([{ name: 'photos', maxCount: 5 }, { name: 'video', maxCount: 1 }]), async (req, res) => {
+  try {
+    const { beneficiaryId, officerSelectedStage, latitude, longitude, accuracy, deviceTimestamp, officerNotes, isOfflineCreated, videoResult: rawVideoResult } = req.body;
+
+    // Validate required fields
+    if (!beneficiaryId || !officerSelectedStage) {
+      return res.status(400).json({ success: false, message: 'beneficiaryId and officerSelectedStage are required' });
+    }
+
+    // Get beneficiary (handle valid ObjectId or offline demo fallback)
+    const mongoose = require('mongoose');
+    let beneficiary = null;
+    if (mongoose.Types.ObjectId.isValid(beneficiaryId)) {
+      beneficiary = await Beneficiary.findById(beneficiaryId);
+    }
+    if (!beneficiary) {
+      beneficiary = await Beneficiary.findOne() || await Beneficiary.findOne({ village: 'Pipariya' });
+    }
+    if (!beneficiary) return res.status(404).json({ success: false, message: 'Beneficiary not found' });
+    const realBeneficiaryId = beneficiary._id;
+
+    // Validate stage progression
+    const previousInspections = await Inspection.find({ beneficiaryId: realBeneficiaryId, status: 'verified' }).lean();
+    const previousStages = previousInspections.map(i => ({ stage: i.officerSelectedStage, status: i.status }));
+    const stageCheck = validateStageProgression(previousStages, officerSelectedStage);
+
+    // Create inspection
+    const inspection = new Inspection({
+      beneficiaryId: realBeneficiaryId,
+      officerId: req.user._id,
+      officerSelectedStage,
+      inspectionLocation: { latitude: parseFloat(latitude || 23.6345), longitude: parseFloat(longitude || 77.4231), accuracy: parseFloat(accuracy || 10) },
+      deviceTimestamp: deviceTimestamp ? new Date(deviceTimestamp) : new Date(),
+      serverTimestamp: new Date(),
+      officerNotes,
+      isOfflineCreated: isOfflineCreated === 'true',
+      status: 'pending'
+    });
+
+    // ── GPS Verification ──
+    const gpsVerification = verifyGPS(
+      { latitude: parseFloat(latitude || 23.6345), longitude: parseFloat(longitude || 77.4231) },
+      beneficiary.registeredLocation
+    );
+    inspection.gpsVerification = gpsVerification;
+
+    // ── Timestamp Verification ──
+    const timestampVerification = verifyTimestamps(
+      deviceTimestamp || new Date(),
+      new Date()
+    );
+    inspection.timestampVerification = timestampVerification;
+
+    // ── Process uploaded photos ──
+    const photoFiles = req.files?.photos || (Array.isArray(req.files) ? req.files : []);
+    const evidenceItems = [];
+
+    if (photoFiles && photoFiles.length > 0) {
+      for (const file of photoFiles) {
+        const localPath = file.path ? path.resolve(file.path) : null;
+        const webUrl = file.secure_url || file.url || `/uploads/${file.filename}`;
+
+        const evidence = {
+          cloudinaryUrl: webUrl,
+          cloudinaryPublicId: file.public_id || file.filename,
+          originalFilename: file.originalname,
+          fileSize: file.size,
+          mimeType: file.mimetype,
+          capturedAt: deviceTimestamp ? new Date(deviceTimestamp) : new Date(),
+          gpsLocation: { latitude: parseFloat(latitude || 23.6345), longitude: parseFloat(longitude || 77.4231), accuracy: parseFloat(accuracy || 10) }
+        };
+
+        // Call unified Multi-Modal AI Pipeline (YOLOv8 + CLIP + pHash/SHA256 + DeepGuard + Gemini Vision)
+        const pipelineResult = await runFullAIPipeline(localPath || webUrl, officerSelectedStage, {
+          beneficiaryId: realBeneficiaryId,
+          inspectionId: inspection._id
+        });
+
+        evidence.sha256 = pipelineResult.hashes?.sha256;
+        evidence.pHash = pipelineResult.hashes?.phash;
+        evidence.yolov8 = pipelineResult.yolov8;
+        evidence.clip = pipelineResult.clip;
+        evidence.duplicateCheck = pipelineResult.duplicateCheck;
+        evidence.deepGuard = pipelineResult.deepGuard;
+        evidence.geminiReasoning = pipelineResult.geminiReasoning;
+
+        evidence.aiAnalysis = {
+          detectedStage: pipelineResult.detectedStage,
+          confidence: pipelineResult.confidence,
+          observations: pipelineResult.observations,
+          mismatch: pipelineResult.mismatch,
+          suspiciousEvidence: pipelineResult.deepGuard?.isSuspicious || false,
+          reason: pipelineResult.reason
+        };
+        evidence.fakeImageCheck = {
+          isSuspicious: pipelineResult.deepGuard?.isSuspicious || false,
+          confidence: pipelineResult.deepGuard?.deepGuardScore || 0,
+          flags: (pipelineResult.deepGuard?.signals || []).map(s => s.id || s)
+        };
+
+        evidenceItems.push(evidence);
+      }
+    }
+
+    inspection.evidence = evidenceItems;
+    inspection.stageProgressionCheck = stageCheck;
+
+    // Set AI detected stage from first photo analysis
+    if (evidenceItems.length > 0) {
+      const topEvidence = evidenceItems[0];
+      inspection.aiDetectedStage = topEvidence.yolov8?.detectedStage || topEvidence.aiAnalysis?.detectedStage || officerSelectedStage;
+      inspection.stageMismatch = topEvidence.yolov8?.mismatch !== undefined ? topEvidence.yolov8.mismatch : (topEvidence.aiAnalysis?.mismatch || false);
+    }
+
+    // ── Process Walkthrough Video Evidence (if provided) ──
+    const videoFiles = req.files?.video || [];
+    const videoFile = videoFiles[0] || null;
+    let videoForensicResult = null;
+
+    if (videoFile) {
+      const localVideoPath = path.resolve(videoFile.path);
+      videoForensicResult = await verifyInspectionVideo(localVideoPath, officerSelectedStage, {
+        beneficiaryId: realBeneficiaryId,
+        inspectionId: inspection._id,
+        numKeyframes: 5
+      });
+    } else if (rawVideoResult) {
+      try {
+        videoForensicResult = typeof rawVideoResult === 'string' ? JSON.parse(rawVideoResult) : rawVideoResult;
+      } catch (e) {
+        console.error('Failed to parse rawVideoResult:', e);
+      }
+    }
+
+    if (videoForensicResult) {
+      inspection.videoEvidence = {
+        cloudinaryUrl: videoFile ? `/uploads/${videoFile.filename}` : (videoForensicResult.videoUrl || ''),
+        videoUrl: videoFile ? `/uploads/${videoFile.filename}` : (videoForensicResult.videoUrl || ''),
+        originalFilename: videoFile?.originalname || 'walkthrough_video.mp4',
+        fileSize: videoFile?.size || 0,
+        durationSec: videoForensicResult.videoMetadata?.durationSec || 6.0,
+        sha256: videoForensicResult.sha256,
+        model: videoForensicResult.model || 'Qwen-2.5-VL-3B-Instruct',
+        verdict: videoForensicResult.verdict,
+        detectedScene: videoForensicResult.detectedScene,
+        isAIGeneratedSuspect: videoForensicResult.isAIGeneratedSuspect || false,
+        aiGeneratedRiskScore: videoForensicResult.aiGeneratedRiskScore || 0,
+        authenticityConfidence: videoForensicResult.authenticityConfidence || 0,
+        officerStage: officerSelectedStage,
+        detectedStage: videoForensicResult.detectedStage,
+        stageMatches: videoForensicResult.stageMatches,
+        opticalFlowVerdict: videoForensicResult.opticalFlowVerdict,
+        qwenForensicExplanation: videoForensicResult.qwenForensicExplanation || [],
+        keyframes: videoForensicResult.keyframes || [],
+        capturedAt: deviceTimestamp ? new Date(deviceTimestamp) : new Date()
+      };
+    }
+
+    // ── Calculate Photo & Rule Engine Risk ──
+    const riskInput = {
+      stageProgressionCheck: stageCheck,
+      gpsVerification,
+      timestampVerification,
+      yolov8: evidenceItems[0]?.yolov8,
+      clip: evidenceItems[0]?.clip,
+      duplicateCheck: evidenceItems[0]?.duplicateCheck || {},
+      deepGuard: evidenceItems[0]?.deepGuard,
+      geminiReasoning: evidenceItems[0]?.geminiReasoning,
+      aiAnalysis: { ...(evidenceItems[0]?.aiAnalysis || {}), officerSelectedStage },
+      officerSelectedStage,
+      fakeImageCheck: evidenceItems[0]?.fakeImageCheck || {},
+      beneficiaryCheck: {
+        isDuplicate: beneficiary.isDuplicateSuspect,
+        previousBenefit: beneficiary.govVerificationData?.previousBenefit
+      }
+    };
+    const photoRiskResult = calculateRiskScore(riskInput);
+
+    // ── Synthesize Dual-Evidence (Photo + Video Ensemble Average & Verdict) ──
+    const { synthesis, unifiedRiskScore } = synthesizeDualEvidence({
+      photoRiskResult,
+      videoEvidence: inspection.videoEvidence,
+      photoEvidence: evidenceItems[0],
+      officerSelectedStage,
+      ruleFactors: photoRiskResult.factors
+    });
+
+    inspection.dualEvidenceSynthesis = synthesis;
+    inspection.riskScore = unifiedRiskScore;
+
+    await inspection.save();
+
+    // Emit real-time update
+    if (req.app.get('io')) {
+      req.app.get('io').emit('inspection:new', {
+        id: inspection._id,
+        beneficiary: beneficiary.name,
+        stage: officerSelectedStage,
+        riskScore: inspection.riskScore,
+        dualEvidenceSynthesis: inspection.dualEvidenceSynthesis,
+        status: inspection.status
+      });
+    }
+
+    await AuditLog.create({
+      action: 'INSPECTION_SUBMITTED', entityType: 'Inspection', entityId: inspection._id,
+      userId: req.user._id, userName: req.user.name,
+      details: {
+        stage: officerSelectedStage,
+        riskScore: inspection.riskScore.score,
+        photos: evidenceItems.length,
+        hasVideo: Boolean(inspection.videoEvidence?.verdict),
+        finalVerdict: synthesis.finalVerdict
+      }
+    });
+
+    res.status(201).json({
+      success: true,
+      data: inspection,
+      verification: {
+        gps: gpsVerification,
+        timestamp: timestampVerification,
+        stageProgression: stageCheck,
+        riskScore: inspection.riskScore,
+        dualEvidenceSynthesis: inspection.dualEvidenceSynthesis
+      }
+    });
+  } catch (error) {
+    console.error('Inspection submission error:', error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+// GET /api/inspections/beneficiary/:beneficiaryId/history
+router.get('/beneficiary/:beneficiaryId/history', protect, async (req, res) => {
+  try {
+    const inspections = await Inspection.find({ beneficiaryId: req.params.beneficiaryId })
+      .sort({ createdAt: -1 })
+      .populate('officerId', 'name')
+      .populate('reviewedBy', 'name');
+    res.json({ success: true, data: inspections });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+// PUT /api/inspections/:id/review — Admin review
+router.put('/:id/review', protect, authorize('admin'), async (req, res) => {
+  try {
+    const { status, reviewNotes } = req.body;
+    if (!['verified', 'rejected', 'reinspection'].includes(status)) {
+      return res.status(400).json({ success: false, message: 'Status must be verified, rejected, or reinspection' });
+    }
+
+    const inspection = await Inspection.findById(req.params.id);
+    if (!inspection) return res.status(404).json({ success: false, message: 'Inspection not found' });
+
+    inspection.status = status;
+    inspection.reviewedBy = req.user._id;
+    inspection.reviewedAt = new Date();
+    inspection.reviewNotes = reviewNotes;
+    await inspection.save();
+
+    // If verified, create installment entry
+    if (status === 'verified') {
+      const stageOrder = ['Foundation', 'Plinth', 'Lintel', 'Completion'];
+      const installmentNumber = stageOrder.indexOf(inspection.officerSelectedStage) + 1;
+
+      await Installment.create({
+        beneficiaryId: inspection.beneficiaryId,
+        inspectionId: inspection._id,
+        stage: inspection.officerSelectedStage,
+        installmentNumber,
+        amount: INSTALLMENT_AMOUNTS[inspection.officerSelectedStage],
+        status: inspection.riskScore.score <= 25 ? 'approved' : 'pending',
+        riskScore: inspection.riskScore.score,
+        riskLevel: inspection.riskScore.level,
+        approvedBy: inspection.riskScore.score <= 25 ? req.user._id : undefined,
+        approvedAt: inspection.riskScore.score <= 25 ? new Date() : undefined
+      });
+    }
+
+    // Emit real-time update
+    if (req.app.get('io')) {
+      req.app.get('io').emit('inspection:reviewed', {
+        id: inspection._id,
+        status,
+        reviewedBy: req.user.name
+      });
+    }
+
+    await AuditLog.create({
+      action: `INSPECTION_${status.toUpperCase()}`, entityType: 'Inspection', entityId: inspection._id,
+      userId: req.user._id, userName: req.user.name,
+      details: { status, reviewNotes }
+    });
+
+    res.json({ success: true, data: inspection });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+module.exports = router;

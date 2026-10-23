@@ -1,0 +1,34 @@
+{
+  "expo": {
+    "name": "Smart-Gram Verify",
+    "slug": "smartgram-verify",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "backgroundColor": "#0f172a"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "Camera is required to capture inspection photos",
+        "NSLocationWhenInUseUsageDescription": "Location is required for GPS geofencing verification"
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#0f172a"
+      },
+      "permissions": [
+        "CAMERA",
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION"
+      ]
+    },
+    "plugins": [
+      "expo-camera",
+      "expo-location",
+      "expo-asset"
+    ]
+  }
+}

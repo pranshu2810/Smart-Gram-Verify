@@ -1,0 +1,69 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Environment Variables & Secrets
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!**/.env.example
+
+# Python Virtual Environments & Bytecode
+venv/
+.venv/
+**/venv/
+**/__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Database & Local Mongo Files
+.mongo-data/
+**/.mongo-data/
+*.lock
+*.exe
+
+# Media Uploads & Temp Files
+uploads/
+**/uploads/*
+!**/uploads/.gitkeep
+scratch/
+.agents/
+
+# Build & Bundler Artifacts
+dist/
+**/dist/
+.expo/
+**/.expo/
+.next/
+out/
+.cache/
+**/.cache/
+
+# Logs & System
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
+Thumbs.db
+coverage/
