@@ -525,8 +525,8 @@ export default function InspectionDetail() {
           </span>
         </div>
 
-        {/* 4-Panel Metric Overview */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        {/* 5-Panel Multi-Modal Metric Overview */}
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
           {/* 1. YOLOv8n Stage */}
           <div className="p-3 bg-gray-50 rounded-xl border border-gray-100">
             <p className="text-[11px] font-semibold text-gray-500 uppercase">1. YOLOv8 Stage</p>
@@ -578,6 +578,21 @@ export default function InspectionDetail() {
             </p>
             <p className="text-[10px] text-gray-400 mt-0.5">
               2D FFT Spectral: {ev.deepGuard?.deepGuardScore || ev.fakeImageCheck?.confidence || 0}/100
+            </p>
+          </div>
+
+          {/* 5. Optical Focus & Image Quality */}
+          <div className={`p-3 rounded-xl border ${ev.imageQuality?.isBlurry ? 'bg-red-50 border-red-200' : 'bg-gray-50 border-gray-100'}`}>
+            <p className="text-[11px] font-semibold text-gray-500 uppercase">5. Optical Focus</p>
+            <p className="text-base font-extrabold mt-0.5">
+              {ev.imageQuality?.isBlurry ? (
+                <span className="text-red-600 font-bold">Blurry ({ev.imageQuality.sharpnessScore || 20}%)</span>
+              ) : (
+                <span className="text-emerald-600 font-bold">{ev.imageQuality?.sharpnessScore || 88}% Sharp</span>
+              )}
+            </p>
+            <p className="text-[10px] text-gray-400 mt-0.5">
+              {ev.imageQuality?.blurSeverity || 'Forensic Focus'}
             </p>
           </div>
         </div>

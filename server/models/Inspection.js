@@ -76,6 +76,20 @@ const evidenceSchema = new mongoose.Schema({
     mismatch: Boolean
   },
 
+  // 6. Image Quality & Optical Blur Assessment
+  imageQuality: {
+    engine: { type: String, default: 'OpenCV Laplacian & Tenengrad' },
+    isBlurry: { type: Boolean, default: false },
+    blurSeverity: { type: String, default: 'NONE' },
+    sharpnessScore: Number,
+    laplacianVariance: Number,
+    tenengradEnergy: Number,
+    meanBrightness: Number,
+    retakeRecommended: { type: Boolean, default: false },
+    qualityVerdict: { type: String, default: 'SHARP_AUDIT_GRADE' },
+    actionMessage: String
+  },
+
   // Backward-compatible alias fields
   aiAnalysis: {
     detectedStage: { type: String, enum: [...STAGES, 'Unknown'] },

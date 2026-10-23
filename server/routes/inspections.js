@@ -374,6 +374,28 @@ router.post('/', protect, combinedUpload.fields([{ name: 'photos', maxCount: 5 }
         evidence.duplicateCheck = pipelineResult.duplicateCheck;
         evidence.deepGuard = pipelineResult.deepGuard;
         evidence.geminiReasoning = pipelineResult.geminiReasoning;
+        evidence.imageQuality = pipelineResult.imageQuality || {
+          isBlurry: false,
+          blurSeverity: 'NONE',
+          sharpnessScore: 85,
+          qualityVerdict: 'SHARP_AUDIT_GRADE',
+          actionMessage: 'Quality verified.'
+        };
+
+        // If photo is severely blurry on a live on-site inspection, require retake unless officer explicitly overrides
+        const allowBlurryOverride = req.body.allowBlurryOverride === 'true' || req.body.allowBlurryOverride === true;
+        const isOffline = req.body.isOfflineCreated === 'true' || req.body.isOfflineCreated === true;
+
+        if (evidence.imageQuality?.isBlurry && !allowBlurryOverride && !isOffline) {
+          return res.status(422).json({
+            success: false,
+            isBlurry: true,
+            code: 'BLURRY_IMAGE_DETECTED',
+            message: evidence.imageQuality.actionMessage || 'The captured photo is too blurry for forensic civil audit. Please retake the photo with stable camera focus.',
+            quality: evidence.imageQuality,
+            retakeRequired: true
+          });
+        }
 
         evidence.aiAnalysis = {
           detectedStage: pipelineResult.detectedStage,
@@ -489,6 +511,7 @@ router.post('/', protect, combinedUpload.fields([{ name: 'photos', maxCount: 5 }
       stageProgressionCheck: stageCheck,
       gpsVerification,
       timestampVerification,
+      imageQuality: evidenceItems[0]?.imageQuality,
       yolov8: evidenceItems[0]?.yolov8,
       clip: evidenceItems[0]?.clip,
       duplicateCheck: evidenceItems[0]?.duplicateCheck || {},

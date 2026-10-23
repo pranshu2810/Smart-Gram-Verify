@@ -180,6 +180,22 @@ function calculateRiskScore(verificationResults) {
     });
   }
 
+  // ──────────────────────────────────────────────
+  // 10. Image Quality & Optical Blur Assessment
+  // ──────────────────────────────────────────────
+  const imageQuality = verificationResults.imageQuality;
+  if (imageQuality && (imageQuality.isBlurry || imageQuality.sharpnessScore < 40)) {
+    const isSevere = imageQuality.blurSeverity === 'UNREADABLE_BLUR' || imageQuality.blurSeverity === 'SEVERE_BLUR' || imageQuality.sharpnessScore < 25;
+    const blurPenalty = isSevere ? 35 : 18;
+    totalRisk += blurPenalty;
+    factors.push({
+      factor: isSevere ? 'Severe Image Blur (Retake Advised)' : 'Moderate Camera Shake / Focus Blur',
+      score: blurPenalty,
+      detail: `Sharpness Score: ${imageQuality.sharpnessScore || 20}/100 [${imageQuality.blurSeverity || 'BLURRY'}]. ${imageQuality.actionMessage || 'Structural features lack optical resolution for civil audit.'}`,
+      icon: '📷'
+    });
+  }
+
   totalRisk = Math.min(totalRisk, 100);
 
   return {

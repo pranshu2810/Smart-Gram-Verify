@@ -160,7 +160,7 @@ export default function CameraScreen({ route, navigation }) {
   };
 
   // Submit Photo Inspection
-  const submitPhotoInspection = async () => {
+  const submitPhotoInspection = async (allowBlurryOverride = false) => {
     try {
       const formData = new FormData();
       formData.append('beneficiaryId', beneficiary._id);
@@ -171,6 +171,9 @@ export default function CameraScreen({ route, navigation }) {
       formData.append('deviceTimestamp', new Date().toISOString());
       formData.append('officerNotes', notes);
       formData.append('isOfflineCreated', 'false');
+      if (allowBlurryOverride) {
+        formData.append('allowBlurryOverride', 'true');
+      }
 
       const photoUri = photo.uri;
       const filename = photoUri.split('/').pop() || `inspection_${Date.now()}.jpg`;
@@ -194,6 +197,34 @@ export default function CameraScreen({ route, navigation }) {
       }
     } catch (err) {
       console.log('Photo upload error:', err.message);
+
+      // Blurry Image Detection Handler (Immediate On-Site Feedback)
+      if (err.response?.data?.isBlurry) {
+        const quality = err.response.data.quality || {};
+        Alert.alert(
+          '📷 Blurry Photo Detected!',
+          `${err.response.data.message}\n\n• Optical Sharpness: ${quality.sharpnessScore || 20}/100\n• Severity: ${quality.blurSeverity || 'BLURRY'}\n\nCivil markers (brickwork, plinth, reinforcement) cannot be verified accurately. What would you like to do?`,
+          [
+            {
+              text: '🔄 Retake Photo Now',
+              style: 'default',
+              onPress: () => {
+                setPhoto(null);
+                takePhoto();
+              }
+            },
+            {
+              text: '⚠️ Submit Anyway (Flagged)',
+              style: 'destructive',
+              onPress: () => {
+                submitPhotoInspection(true);
+              }
+            }
+          ]
+        );
+        setSubmitting(false);
+        return;
+      }
 
       // Known 4xx validation error
       if (err.response && err.response.status >= 400 && err.response.status < 500) {

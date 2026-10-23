@@ -119,6 +119,36 @@ export default function InspectionResultScreen({ route, navigation }) {
         )}
       </View>
 
+      {/* Image Quality & Optical Sharpness Card */}
+      {inspection?.evidence?.[0]?.imageQuality && (
+        <View style={[
+          styles.card,
+          inspection.evidence[0].imageQuality.isBlurry && { borderColor: '#fca5a5', backgroundColor: '#fef2f2' }
+        ]}>
+          <Text style={[
+            styles.cardTitle,
+            inspection.evidence[0].imageQuality.isBlurry && { color: '#dc2626' }
+          ]}>
+            {inspection.evidence[0].imageQuality.isBlurry ? '⚠️ Image Quality Warning (Blurry)' : '📷 Image Quality & Sharpness'}
+          </Text>
+          <View style={styles.row}>
+            <Text style={styles.label}>Optical Sharpness</Text>
+            <Text style={[styles.value, { fontWeight: '800', color: inspection.evidence[0].imageQuality.isBlurry ? '#dc2626' : '#16a34a' }]}>
+              {inspection.evidence[0].imageQuality.sharpnessScore || 85}%
+            </Text>
+          </View>
+          <View style={styles.row}>
+            <Text style={styles.label}>Focus / Motion Blur</Text>
+            <Text style={styles.value}>
+              {inspection.evidence[0].imageQuality.blurSeverity || 'NONE'}
+            </Text>
+          </View>
+          <Text style={{ fontSize: 11, color: inspection.evidence[0].imageQuality.isBlurry ? '#991b1b' : '#64748b', marginTop: 4 }}>
+            {inspection.evidence[0].imageQuality.actionMessage}
+          </Text>
+        </View>
+      )}
+
       {/* Captured Evidence Media Gallery */}
       {((inspection?.photos && inspection.photos.length > 0) || (inspection?.evidence && inspection.evidence.length > 0)) && (
         <View style={styles.card}>

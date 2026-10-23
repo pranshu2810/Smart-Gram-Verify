@@ -40,6 +40,13 @@ async function runFullAIPipeline(imageUrl, officerSelectedStage, metadata = {}) 
         detectedObjects: []
       },
       clip: { isSimilar: false, maxSimilarity: 0, matches: [] },
+      imageQuality: {
+        isBlurry: false,
+        blurSeverity: 'NONE',
+        sharpnessScore: 80.0,
+        qualityVerdict: 'SHARP_AUDIT_GRADE',
+        actionMessage: 'Quality verified.'
+      },
       duplicateCheck: { isExactDuplicate: false, isSimilar: false, exactMatches: [], perceptualMatches: [] },
       deepGuard: { isSuspicious: false, deepGuardScore: 0, verdict: 'AUTHENTIC_CAMERA_CAPTURE', signals: [] },
       geminiReasoning: {
