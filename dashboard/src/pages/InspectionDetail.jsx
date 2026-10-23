@@ -676,6 +676,39 @@ export default function InspectionDetail() {
         </div>
       )}
 
+      {/* Evidence Walkthrough Video */}
+      {(inspection.videoEvidence?.cloudinaryUrl || inspection.videoEvidence?.videoUrl) && (
+        <div className="card glass-card-pro p-5 space-y-3">
+          <div className="flex items-center justify-between">
+            <h3 className="text-sm font-extrabold text-slate-800 flex items-center gap-2">
+              <span className="text-purple-600">🎥</span>
+              <span>Field Officer Walkthrough Video Evidence</span>
+            </h3>
+            <span className="text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-purple-100 text-purple-800 border border-purple-300">
+              SHA: {inspection.videoEvidence.sha256?.slice(0, 10)}...
+            </span>
+          </div>
+
+          <div className="rounded-xl overflow-hidden bg-black max-w-xl max-h-80 shadow-md">
+            <video
+              src={inspection.videoEvidence.cloudinaryUrl || inspection.videoEvidence.videoUrl}
+              controls
+              className="w-full h-full object-contain"
+            />
+          </div>
+
+          <div className="flex items-center gap-3 pt-2 text-xs">
+            <button
+              onClick={() => navigate(`/video-inspector?inspectionId=${inspection._id}&stage=${inspection.officerSelectedStage}`)}
+              className="btn-secondary py-1.5 px-3 font-bold text-xs flex items-center gap-1.5"
+            >
+              <span>⚡ Open in Qwen 2.5-VL Video Forensics Studio</span>
+              <span>→</span>
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Evidence Photos */}
       {inspection.evidence?.length > 0 && (
         <div className="card">
