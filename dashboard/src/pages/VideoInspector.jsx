@@ -96,13 +96,32 @@ export default function VideoInspector() {
     setSelectedBeneficiaryId(submission.beneficiaryId?._id || submission.beneficiaryId || '');
     setOfficerStage(submission.officerSelectedStage || 'Plinth');
 
-    const vUrl = submission.videoEvidence?.videoUrl || submission.evidence?.find(e => e.type === 'video')?.url || '';
+    const vUrl = submission.videoEvidence?.videoUrl || submission.videoEvidence?.cloudinaryUrl || submission.evidence?.find(e => e.type === 'video')?.url || '';
     if (vUrl) {
       setVideoPreviewUrl(vUrl);
     } else {
-      setVideoPreviewUrl('DEMO_AUTHENTIC_WALKTHROUGH_PMAYG');
+      setVideoPreviewUrl('');
     }
-    setAnalysisResult(null);
+
+    if (submission.videoEvidence?.verdict) {
+      setAnalysisResult({
+        success: true,
+        model: submission.videoEvidence.model || 'Qwen-2.5-VL-3B-Instruct',
+        verdict: submission.videoEvidence.verdict,
+        detectedScene: submission.videoEvidence.detectedScene || 'Rural Construction Site',
+        isAIGeneratedSuspect: submission.videoEvidence.isAIGeneratedSuspect || false,
+        aiGeneratedRiskScore: submission.videoEvidence.aiGeneratedRiskScore || 0,
+        authenticityConfidence: submission.videoEvidence.authenticityConfidence || 85,
+        detectedStage: submission.videoEvidence.detectedStage || submission.officerSelectedStage,
+        stageMatches: submission.videoEvidence.stageMatches ?? true,
+        opticalFlowVerdict: submission.videoEvidence.opticalFlowVerdict || 'NORMAL_CONTINUOUS_MOTION',
+        sha256: submission.videoEvidence.sha256,
+        qwenForensicExplanation: submission.videoEvidence.qwenForensicExplanation || [],
+        keyframes: submission.videoEvidence.keyframes || []
+      });
+    } else {
+      setAnalysisResult(null);
+    }
     setActionSuccess('');
   };
 
