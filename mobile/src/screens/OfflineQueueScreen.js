@@ -53,10 +53,12 @@ export default function OfflineQueueScreen({ navigation }) {
         // Video Sync Endpoint
         formData.append('beneficiaryId', item.beneficiaryId || '');
         formData.append('officerStage', item.officerSelectedStage || 'Plinth');
+        formData.append('officerSelectedStage', item.officerSelectedStage || 'Plinth');
         formData.append('latitude', (item.latitude || 23.6345).toString());
         formData.append('longitude', (item.longitude || 77.4231).toString());
         formData.append('accuracy', (item.accuracy || 10).toString());
         formData.append('deviceTimestamp', item.deviceTimestamp || new Date().toISOString());
+        formData.append('officerNotes', item.notes || 'Synced from mobile offline queue');
         formData.append('numKeyframes', '5');
 
         const uri = item.videoUri;

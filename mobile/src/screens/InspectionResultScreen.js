@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { resolveMediaUrl } from '../api/client';
 
 export default function InspectionResultScreen({ route, navigation }) {
   const { inspection, verification, beneficiary } = route.params;
@@ -117,6 +118,104 @@ export default function InspectionResultScreen({ route, navigation }) {
           </View>
         )}
       </View>
+
+      {/* Captured Evidence Media Gallery */}
+      {((inspection?.photos && inspection.photos.length > 0) || (inspection?.evidence && inspection.evidence.length > 0)) && (
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>📸 Captured Photographic Evidence</Text>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginTop: 8 }}>
+            {(inspection.photos || inspection.evidence.map(e => e.photoUrl)).filter(Boolean).map((photoUrl, idx) => (
+              <View key={idx} style={{ marginRight: 10, borderRadius: 10, overflow: 'hidden', borderWidth: 1, borderColor: '#e2e8f0' }}>
+                <Image
+                  source={{ uri: resolveMediaUrl(photoUrl) }}
+                  style={{ width: 140, height: 105, backgroundColor: '#f1f5f9' }}
+                  resizeMode="cover"
+                />
+                <View style={{ backgroundColor: '#0f172a', paddingVertical: 2, paddingHorizontal: 6 }}>
+                  <Text style={{ color: '#fff', fontSize: 10, textAlign: 'center' }}>Photo #{idx + 1}</Text>
+                </View>
+              </View>
+            ))}
+          </ScrollView>
+        </View>
+      )}
+
+      {/* Video Evidence & Qwen 2.5-VL Forensics */}
+      {inspection?.videoEvidence && (inspection.videoEvidence.cloudinaryUrl || inspection.videoEvidence.videoUrl || inspection.videoEvidence.verdict) && (
+        <View style={[styles.card, { borderColor: '#d8b4fe' }]}>
+          <Text style={[styles.cardTitle, { color: '#7e22ce' }]}>🎥 Walkthrough Video Forensics</Text>
+          <View style={styles.row}>
+            <Text style={styles.label}>Qwen 2.5-VL Verdict</Text>
+            <Text style={[styles.value, { color: inspection.videoEvidence.isAIGeneratedSuspect ? '#ef4444' : '#15803d', fontWeight: '800' }]}>
+              {inspection.videoEvidence.verdict || 'AUTHENTIC_WALKTHROUGH'}
+            </Text>
+          </View>
+          <View style={styles.row}>
+            <Text style={styles.label}>Optical Flow Continuity</Text>
+            <Text style={styles.value}>{inspection.videoEvidence.opticalFlowVerdict || 'NORMAL_CONTINUOUS_MOTION'}</Text>
+          </View>
+          <View style={styles.row}>
+            <Text style={styles.label}>SHA-256 Fingerprint</Text>
+            <Text style={[styles.value, { fontSize: 10, fontFamily: 'monospace' }]}>
+              {inspection.videoEvidence.sha256?.slice(0, 16)}...
+            </Text>
+          </View>
+
+          {inspection.videoEvidence.qwenForensicExplanation?.length > 0 && (
+            <View style={{ marginTop: 8, paddingTop: 8, borderTopWidth: 1, borderTopColor: '#f3e8ff' }}>
+              <Text style={{ fontSize: 11, fontWeight: '700', color: '#7e22ce', marginBottom: 4 }}>
+                Video AI Forensic Reasoning:
+              </Text>
+              {inspection.videoEvidence.qwenForensicExplanation.map((expl, i) => (
+                <Text key={i} style={{ fontSize: 11, color: '#475569', marginBottom: 2 }}>• {expl}</Text>
+              ))}
+            </View>
+          )}
+
+          <TouchableOpacity
+            style={{
+              marginTop: 10,
+              backgroundColor: '#f3e8ff',
+              paddingVertical: 9,
+              borderRadius: 8,
+              alignItems: 'center',
+              borderWidth: 1,
+              borderColor: '#d8b4fe'
+            }}
+            onPress={() => navigation.navigate('VideoInspection', {
+              videoResult: inspection.videoEvidence,
+              beneficiary,
+              stage
+            })}
+          >
+            <Text style={{ color: '#7e22ce', fontWeight: '700', fontSize: 12 }}>
+              🔍 Open in Video Forensics Inspector
+            </Text>
+          </TouchableOpacity>
+        </View>
+      )}
+
+      {/* Dual Evidence Synthesis (Photo + Video Composite) */}
+      {inspection?.dualEvidenceSynthesis && (
+        <View style={[styles.card, { backgroundColor: '#fdf4ff', borderColor: '#f0abfc' }]}>
+          <Text style={[styles.cardTitle, { color: '#a21caf' }]}>⚖️ Dual-Evidence Synthesis</Text>
+          <View style={styles.row}>
+            <Text style={styles.label}>Unified Decision</Text>
+            <Text style={[styles.value, { color: '#a21caf', fontWeight: '800' }]}>
+              {inspection.dualEvidenceSynthesis.finalVerdict}
+            </Text>
+          </View>
+          <View style={styles.row}>
+            <Text style={styles.label}>Composite Risk Score</Text>
+            <Text style={[styles.value, { fontWeight: '800' }]}>
+              {inspection.dualEvidenceSynthesis.finalCompositeScore}/100
+            </Text>
+          </View>
+          <Text style={{ fontSize: 11, color: '#701a75', marginTop: 4 }}>
+            {inspection.dualEvidenceSynthesis.synthesisNotes}
+          </Text>
+        </View>
+      )}
 
       {/* GPS Geofence Verification */}
       <View style={styles.card}>

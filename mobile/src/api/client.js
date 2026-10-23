@@ -46,5 +46,18 @@ api.interceptors.response.use(
   }
 );
 
+export const resolveMediaUrl = (url) => {
+  if (!url) return '';
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
+    return url;
+  }
+  const cleanPath = url.startsWith('/') ? url : `/${url}`;
+  const base = Platform.select({
+    web: 'http://localhost:5000',
+    default: `http://${CURRENT_LAN_IP}:5000`
+  });
+  return `${base}${cleanPath}`;
+};
+
 export default api;
-export { API_URL };
+export { API_URL, CURRENT_LAN_IP };

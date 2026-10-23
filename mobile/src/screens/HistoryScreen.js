@@ -88,6 +88,16 @@ export default function HistoryScreen({ navigation }) {
             <Text style={styles.badgePillText}>🏗️ {item.officerSelectedStage || 'Plinth'}</Text>
           </View>
 
+          {item.videoEvidence?.cloudinaryUrl || item.videoEvidence?.videoUrl || item.videoEvidence?.verdict ? (
+            <View style={[styles.badgePill, { backgroundColor: '#f3e8ff' }]}>
+              <Text style={[styles.badgePillText, { color: '#7e22ce' }]}>🎥 Video Attached</Text>
+            </View>
+          ) : (
+            <View style={styles.badgePill}>
+              <Text style={styles.badgePillText}>📸 Photo Only</Text>
+            </View>
+          )}
+
           <View style={[styles.badgePill, { backgroundColor: isHighRisk ? '#fef2f2' : '#f0fdf4' }]}>
             <Text style={[styles.badgePillText, { color: isHighRisk ? '#dc2626' : '#16a34a' }]}>
               📊 Risk: {risk}%
