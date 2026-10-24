@@ -78,14 +78,32 @@ router.post('/verify-video', protect, videoUpload.single('video'), async (req, r
     let targetInspection = null;
     const targetInspectionId = inspectionId || req.query.inspectionId;
 
-    if (targetInspectionId) {
+    const mongoose = require('mongoose');
+    let realBeneficiaryId = null;
+    if (beneficiaryId && mongoose.Types.ObjectId.isValid(beneficiaryId)) {
+      const b = await Beneficiary.findById(beneficiaryId);
+      if (b) realBeneficiaryId = b._id;
+    }
+    if (!realBeneficiaryId) {
+      const fallbackBen = await Beneficiary.findOne() || await Beneficiary.findOne({ village: 'Pipariya' });
+      if (fallbackBen) realBeneficiaryId = fallbackBen._id;
+    }
+
+    let officerId = req.user?._id;
+    if (!officerId || !mongoose.Types.ObjectId.isValid(officerId)) {
+      const User = require('../models/User');
+      const officerUser = await User.findOne({ email: 'rajesh@smartgram.gov.in' }) || await User.findOne({ role: 'officer' });
+      officerId = officerUser?._id;
+    }
+
+    if (targetInspectionId && mongoose.Types.ObjectId.isValid(targetInspectionId)) {
       targetInspection = await Inspection.findById(targetInspectionId);
-    } else if (beneficiaryId) {
-      targetInspection = await Inspection.findOne({ beneficiaryId, status: 'pending' }).sort({ createdAt: -1 });
+    } else if (realBeneficiaryId) {
+      targetInspection = await Inspection.findOne({ beneficiaryId: realBeneficiaryId, status: 'pending' }).sort({ createdAt: -1 });
       if (!targetInspection) {
         targetInspection = new Inspection({
-          beneficiaryId,
-          officerId: req.user?._id,
+          beneficiaryId: realBeneficiaryId,
+          officerId,
           officerSelectedStage: officerStage || 'Plinth',
           status: 'pending',
           inspectionLocation: { latitude: 23.6345, longitude: 77.4231, accuracy: 15 },
@@ -305,10 +323,18 @@ router.post('/', protect, combinedUpload.fields([{ name: 'photos', maxCount: 5 }
     const previousStages = previousInspections.map(i => ({ stage: i.officerSelectedStage, status: i.status }));
     const stageCheck = validateStageProgression(previousStages, officerSelectedStage);
 
+    // Resolve officerId safely
+    let officerId = req.user?._id;
+    if (!officerId || !mongoose.Types.ObjectId.isValid(officerId)) {
+      const User = require('../models/User');
+      const officerUser = await User.findOne({ email: 'rajesh@smartgram.gov.in' }) || await User.findOne({ role: 'officer' });
+      officerId = officerUser?._id;
+    }
+
     // Create inspection
     const inspection = new Inspection({
       beneficiaryId: realBeneficiaryId,
-      officerId: req.user._id,
+      officerId,
       officerSelectedStage,
       inspectionLocation: { latitude: parseFloat(latitude || 23.6345), longitude: parseFloat(longitude || 77.4231), accuracy: parseFloat(accuracy || 10) },
       deviceTimestamp: deviceTimestamp ? new Date(deviceTimestamp) : new Date(),

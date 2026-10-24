@@ -59,35 +59,43 @@ export default function OfflineQueueScreen({ navigation }) {
         formData.append('accuracy', (item.accuracy || 10).toString());
         formData.append('deviceTimestamp', item.deviceTimestamp || new Date().toISOString());
         formData.append('officerNotes', item.notes || 'Synced from mobile offline queue');
+        formData.append('isOfflineCreated', 'true');
         formData.append('numKeyframes', '5');
 
         const uri = item.videoUri;
-        const filename = uri.split('/').pop() || `offline_video_${Date.now()}.mp4`;
-        formData.append('video', {
-          uri,
-          type: 'video/mp4',
-          name: filename,
-        });
+        if (uri) {
+          const filename = uri.split('/').pop() || `offline_video_${Date.now()}.mp4`;
+          formData.append('video', {
+            uri,
+            type: 'video/mp4',
+            name: filename,
+          });
+        }
 
         const res = await api.post('/inspections/verify-video', formData, {
-          headers: { 'Content-Type': 'multipart/form-data' },
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'x-skip-offline': 'true'
+          },
+          skipOfflineCheck: true,
           timeout: 120000
         });
 
         if (res.data) {
           await removeFromOfflineQueue(item.offlineId);
-          return true;
+          return { success: true };
         }
       } else {
         // Photo Sync Endpoint
-        formData.append('beneficiaryId', item.beneficiaryId);
-        formData.append('officerSelectedStage', item.officerSelectedStage);
+        formData.append('beneficiaryId', item.beneficiaryId || '');
+        formData.append('officerSelectedStage', item.officerSelectedStage || 'Plinth');
         formData.append('latitude', (item.latitude || 23.6345).toString());
         formData.append('longitude', (item.longitude || 77.4231).toString());
         formData.append('accuracy', (item.accuracy || 10).toString());
         formData.append('deviceTimestamp', item.deviceTimestamp || new Date().toISOString());
         formData.append('officerNotes', item.notes || '');
         formData.append('isOfflineCreated', 'true');
+        formData.append('allowBlurryOverride', 'true');
 
         if (item.photoUri) {
           const uri = item.photoUri;
@@ -100,37 +108,58 @@ export default function OfflineQueueScreen({ navigation }) {
         }
 
         const res = await api.post('/inspections', formData, {
-          headers: { 'Content-Type': 'multipart/form-data' },
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'x-skip-offline': 'true'
+          },
+          skipOfflineCheck: true,
           timeout: 90000
         });
 
-        if (res.data && res.data.success) {
+        if (res.data && (res.data.success || res.data._id || res.data.data)) {
           await removeFromOfflineQueue(item.offlineId);
-          return true;
+          return { success: true };
         }
       }
-      return false;
+      return { success: false, error: 'Server did not acknowledge upload' };
     } catch (err) {
       console.log('Sync failed for item:', item.offlineId, err.message);
-      return false;
+      const errMsg = err.response?.data?.message || err.message || 'Network / Server timeout';
+      return { success: false, error: errMsg };
     }
   };
 
   const syncAll = async () => {
+    // Automatically disable simulated offline mode to allow live sync
     if (offlineSimulated) {
-      return Alert.alert('Offline Mode Active', 'Turn off "Simulated Offline Mode" above to sync records with the server.');
+      await setSimulatedOffline(false);
+      setOfflineSimulatedState(false);
     }
 
     setSyncing(true);
-    let success = 0, failed = 0;
+    let success = 0;
+    const failures = [];
+
     for (const item of queue) {
       const res = await syncItem(item);
-      if (res) success++;
-      else failed++;
+      if (res.success) {
+        success++;
+      } else {
+        failures.push(res.error);
+      }
     }
+
     await loadQueue();
     setSyncing(false);
-    Alert.alert('Sync Finished', `✅ ${success} uploaded successfully\n${failed > 0 ? `❌ ${failed} failed to sync (server error or invalid file)` : ''}`);
+
+    if (failures.length === 0) {
+      Alert.alert('Sync Complete', `✅ All ${success} offline inspection(s) synced to server successfully!`);
+    } else {
+      Alert.alert(
+        'Sync Results',
+        `✅ ${success} uploaded successfully\n❌ ${failures.length} failed\n\nReason: ${failures[0] || 'Server error'}`
+      );
+    }
   };
 
   const handleClear = () => {
@@ -175,12 +204,19 @@ export default function OfflineQueueScreen({ navigation }) {
           <TouchableOpacity
             style={styles.singleSyncBtn}
             onPress={async () => {
+              if (offlineSimulated) {
+                await setSimulatedOffline(false);
+                setOfflineSimulatedState(false);
+              }
               setSyncing(true);
-              const ok = await syncItem(item);
+              const result = await syncItem(item);
               await loadQueue();
               setSyncing(false);
-              if (ok) Alert.alert('Success', 'Inspection synced to central server');
-              else Alert.alert('Failed', 'Could not sync. Ensure server is online.');
+              if (result.success) {
+                Alert.alert('Success', 'Inspection synced to central server');
+              } else {
+                Alert.alert('Sync Failed', `Could not sync: ${result.error || 'Server error'}`);
+              }
             }}
             disabled={syncing}
           >

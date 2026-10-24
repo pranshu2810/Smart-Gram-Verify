@@ -219,10 +219,10 @@ export default function HomeScreen({ navigation }) {
           <Text style={styles.statValue}>PMAY-G</Text>
           <Text style={styles.statLabel}>Scheme</Text>
         </View>
-        <View style={styles.statCard}>
+        <TouchableOpacity style={styles.statCard} onPress={() => navigation.navigate('OfflineQueue')}>
           <Text style={[styles.statValue, offlineCount > 0 && { color: '#d97706' }]}>{offlineCount}</Text>
-          <Text style={styles.statLabel}>Pending Sync</Text>
-        </View>
+          <Text style={styles.statLabel}>Pending Sync {offlineCount > 0 ? '⚡ Sync' : ''}</Text>
+        </TouchableOpacity>
         <View style={styles.statCard}>
           <Text style={[styles.statValue, { color: '#16a34a' }]}>₹1.20L</Text>
           <Text style={styles.statLabel}>Sanctioned</Text>
