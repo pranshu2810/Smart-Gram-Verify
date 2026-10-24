@@ -37,26 +37,26 @@ export default function Sidebar() {
 
   return (
     <aside
-      className="fixed left-0 bottom-0 flex flex-col transition-all duration-300 z-30 select-none bg-white/85 backdrop-blur-2xl border-r border-slate-200/80 shadow-[4px_0_24px_rgba(15,23,42,0.04)]"
+      className="fixed left-0 bottom-0 flex flex-col transition-all duration-300 z-30 select-none glass-sidebar"
       style={{
         top: '61px',
         width: collapsed ? '70px' : '256px',
       }}
     >
       {/* Top subtle highlight */}
-      <div className="h-px w-full bg-gradient-to-r from-transparent via-indigo-500/20 to-transparent" />
+      <div className="h-px w-full bg-gradient-to-r from-transparent via-white/70 to-transparent" />
 
       {/* Role Clearance Strip */}
       {!collapsed && (
-        <div className="mx-3 mt-4 mb-2 p-2.5 rounded-xl bg-slate-50/90 border border-slate-200/80 shadow-2xs">
+        <div className="mx-3 mt-4 mb-2 p-2.5 rounded-2xl bg-[rgba(255,255,255,0.45)] border border-white/60 shadow-2xs backdrop-blur-md">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className={isAdmin ? "micro-aura-cyan" : "micro-aura-emerald"} />
-              <span className="text-xs font-bold text-[#0F172A]">
+              <span className={isAdmin ? "micro-aura-sky" : "micro-aura-teal"} />
+              <span className="text-xs font-bold text-[#28485A]">
                 {isAdmin ? 'Apex Clearance' : 'Field Clearance'}
               </span>
             </div>
-            <span className="text-[10px] px-2 py-0.5 rounded-full font-mono font-bold uppercase bg-indigo-50 text-indigo-700 border border-indigo-200">
+            <span className="text-[10px] px-2 py-0.5 rounded-full font-mono font-bold uppercase bg-[rgba(169,205,224,0.4)] text-[#1E465B] border border-white/50">
               {user?.role || 'admin'}
             </span>
           </div>
@@ -64,7 +64,7 @@ export default function Sidebar() {
       )}
 
       {/* Nav items */}
-      <nav className="flex-1 py-2 px-2 space-y-1 overflow-y-auto overflow-x-hidden">
+      <nav className="flex-1 py-2 px-2.5 space-y-1 overflow-y-auto overflow-x-hidden">
         {navItems.map((item) => (
           <NavLink
             key={item.path}
@@ -73,9 +73,9 @@ export default function Sidebar() {
             className={({ isActive }) =>
               `flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold tracking-wide transition-all duration-200 group ${
                 isActive
-                  ? 'bg-indigo-50/90 text-indigo-700 border-l-4 border-indigo-600 shadow-2xs'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'
-              } ${item.highlight ? 'bg-emerald-50/60 text-emerald-800 border border-emerald-200/80' : ''}`
+                  ? 'bg-[rgba(169,205,224,0.48)] text-[#1A3644] border border-white/70 shadow-2xs'
+                  : 'text-[#607887] hover:text-[#28485A] hover:bg-white/40'
+              } ${item.highlight ? 'bg-[rgba(134,200,197,0.3)] text-[#123C3A] border border-[rgba(134,200,197,0.6)]' : ''}`
             }
           >
             <div className="flex items-center gap-2.5 truncate min-w-0">
@@ -87,7 +87,7 @@ export default function Sidebar() {
               )}
             </div>
             {!collapsed && item.badge && (
-              <span className="text-[9px] font-mono px-1.5 py-0.2 rounded-md font-bold bg-white text-slate-700 border border-slate-200/80 shadow-2xs flex-shrink-0">
+              <span className="text-[9px] font-mono px-1.5 py-0.2 rounded-md font-bold bg-white/50 text-[#28485A] border border-white/60 shadow-2xs flex-shrink-0">
                 {item.badge}
               </span>
             )}
@@ -96,15 +96,15 @@ export default function Sidebar() {
       </nav>
 
       {/* Footer Profile & Collapse */}
-      <div className="p-2 border-t border-slate-200/80 bg-white/70">
-        <div className="flex items-center gap-2.5 p-2 rounded-xl bg-slate-50 border border-slate-200/80 mb-2 shadow-2xs">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-indigo-600 to-blue-600 flex items-center justify-center text-xs font-bold text-white shadow-2xs flex-shrink-0">
+      <div className="p-2 border-t border-white/40 bg-white/30 backdrop-blur-md">
+        <div className="flex items-center gap-2.5 p-2 rounded-xl bg-white/40 border border-white/50 mb-2 shadow-2xs">
+          <div className="w-8 h-8 rounded-full bg-[rgba(169,205,224,0.65)] border border-white/60 flex items-center justify-center text-xs font-bold text-[#1E465B] shadow-2xs flex-shrink-0">
             {user?.name?.charAt(0) || 'U'}
           </div>
           {!collapsed && (
             <div className="flex-1 min-w-0">
-              <p className="text-xs font-bold text-[#0F172A] truncate">{user?.name}</p>
-              <p className="text-[10px] text-indigo-700 font-bold truncate">
+              <p className="text-xs font-bold text-[#28485A] truncate">{user?.name}</p>
+              <p className="text-[10px] text-[#607887] font-semibold truncate">
                 {user?.panchayat ? `${user.panchayat} GP` : 'Apex HQ'}
               </p>
             </div>
@@ -114,14 +114,14 @@ export default function Sidebar() {
         <div className="flex items-center gap-1">
           <button
             onClick={() => { logout(); navigate('/login'); }}
-            className={`flex-1 flex items-center gap-2 px-2.5 py-1.5 rounded-xl text-xs font-bold text-slate-600 hover:text-rose-700 hover:bg-rose-50 transition-colors ${collapsed ? 'justify-center' : ''}`}
+            className={`flex-1 flex items-center gap-2 px-2.5 py-1.5 rounded-xl text-xs font-bold text-[#607887] hover:text-rose-900 hover:bg-rose-100/50 transition-colors ${collapsed ? 'justify-center' : ''}`}
           >
             <span>🚪</span>
             {!collapsed && <span>Sign Out</span>}
           </button>
           <button
             onClick={() => setCollapsed(!collapsed)}
-            className="p-1.5 rounded-xl text-slate-500 hover:text-slate-800 hover:bg-slate-100 transition-colors text-xs"
+            className="p-1.5 rounded-xl text-[#607887] hover:text-[#28485A] hover:bg-white/50 transition-colors text-xs"
             title={collapsed ? 'Expand' : 'Collapse'}
           >
             {collapsed ? '▶' : '◀'}

@@ -300,29 +300,29 @@ export default function RiskMap() {
   });
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 text-[#28485A] animate-fadeIn">
       {/* Page Title & Controls */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 p-5 rounded-2xl bg-[#f8fafd] border border-[#d8e2ec] shadow-xs">
+      <div className="card p-5 border border-white/50 shadow-xs flex flex-col lg:flex-row lg:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
             <span className="text-xl">🗺️</span>
-            <h1 className="text-xl font-black text-[#0f172a]">
+            <h1 className="text-xl font-black text-[#28485A]">
               Geo Risk & Construction Progress Map
             </h1>
-            <span className="text-xs px-2.5 py-0.5 rounded-full font-extrabold bg-indigo-50 text-indigo-700 border border-indigo-200">
+            <span className="badge badge-sky text-xs">
               Leaflet + OpenStreetMap
             </span>
           </div>
-          <p className="text-xs text-slate-600">
+          <p className="text-xs text-[#607887]">
             Real-time visual monitoring of rural housing milestones, risk clusters, and GPS-verified construction radius.
           </p>
         </div>
 
         {/* Center Quick Switcher */}
         <div className="flex flex-wrap items-center gap-2">
-          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#edf2f7] border border-[#d8e2ec] text-xs">
-            <MapPin className="w-3.5 h-3.5 text-indigo-600" />
-            <span className="font-bold text-slate-700">Center:</span>
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/40 border border-white/50 text-xs backdrop-blur-xs">
+            <MapPin className="w-3.5 h-3.5 text-[#28485A]" />
+            <span className="font-bold text-[#607887]">Center:</span>
             <select
               value={customCenter ? 'custom' : selectedCenter.id}
               onChange={(e) => {
@@ -333,7 +333,7 @@ export default function RiskMap() {
                   setCustomCenter(null);
                 }
               }}
-              className="bg-transparent font-extrabold text-slate-900 border-none p-0 focus:ring-0 cursor-pointer text-xs"
+              className="bg-transparent font-extrabold text-[#28485A] border-none p-0 focus:ring-0 cursor-pointer text-xs"
             >
               {PRESET_CENTERS.map(c => (
                 <option key={c.id} value={c.id}>{c.name}</option>
@@ -344,7 +344,7 @@ export default function RiskMap() {
 
           <button
             onClick={fetchMapData}
-            className="p-2 rounded-xl bg-[#edf2f7] hover:bg-slate-200 text-slate-700 border border-[#d8e2ec] transition-colors"
+            className="p-2 rounded-xl bg-white/40 hover:bg-white/60 text-[#28485A] border border-white/50 transition-colors shadow-2xs backdrop-blur-xs"
             title="Refresh Map Points"
           >
             <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
@@ -354,36 +354,36 @@ export default function RiskMap() {
 
       {/* Radius Summary Metrics */}
       <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
-        <div className="p-4 rounded-xl bg-[#f8fafd] border border-[#d8e2ec] shadow-xs">
-          <div className="text-[11px] font-bold text-slate-600 uppercase mb-1">Sites in {radiusKm}km Radius</div>
-          <div className="text-2xl font-black text-[#0f172a]">{mapData.summary?.totalInRadius || 0}</div>
-          <div className="text-[10px] text-indigo-600 font-bold mt-1">Geo-located houses</div>
+        <div className="card p-4 border border-white/50 shadow-xs">
+          <div className="text-[11px] font-bold text-[#607887] uppercase mb-1">Sites in {radiusKm}km Radius</div>
+          <div className="text-2xl font-black text-[#28485A]">{mapData.summary?.totalInRadius || 0}</div>
+          <div className="text-[10px] text-[#28485A] font-bold mt-1">Geo-located houses</div>
         </div>
 
-        <div className="p-4 rounded-xl bg-[#f8fafd] border border-[#d8e2ec] shadow-xs">
-          <div className="text-[11px] font-bold text-slate-600 uppercase mb-1">Avg Construction Done</div>
-          <div className="text-2xl font-black text-indigo-600">{mapData.summary?.avgProgress || 0}%</div>
-          <div className="w-full h-1.5 bg-slate-200 rounded-full mt-1.5 overflow-hidden">
-            <div className="h-full bg-indigo-600 rounded-full" style={{ width: `${mapData.summary?.avgProgress || 0}%` }} />
+        <div className="card p-4 border border-white/50 shadow-xs">
+          <div className="text-[11px] font-bold text-[#607887] uppercase mb-1">Avg Construction Done</div>
+          <div className="text-2xl font-black text-[#86C8C5]">{mapData.summary?.avgProgress || 0}%</div>
+          <div className="w-full h-1.5 bg-white/40 border border-white/50 rounded-full mt-1.5 overflow-hidden">
+            <div className="h-full bg-gradient-to-r from-[#86C8C5] to-[#A9CDE0] rounded-full" style={{ width: `${mapData.summary?.avgProgress || 0}%` }} />
           </div>
         </div>
 
-        <div className="p-4 rounded-xl bg-[#f8fafd] border border-[#d8e2ec] shadow-xs">
-          <div className="text-[11px] font-bold text-slate-600 uppercase mb-1">In-Progress Work</div>
-          <div className="text-2xl font-black text-amber-600">{mapData.summary?.inProgressCount || 0}</div>
-          <div className="text-[10px] text-amber-700 font-bold mt-1">Active site stages</div>
+        <div className="card p-4 border border-white/50 shadow-xs">
+          <div className="text-[11px] font-bold text-[#607887] uppercase mb-1">In-Progress Work</div>
+          <div className="text-2xl font-black text-[#A9CDE0]">{mapData.summary?.inProgressCount || 0}</div>
+          <div className="text-[10px] text-[#607887] font-bold mt-1">Active site stages</div>
         </div>
 
-        <div className="p-4 rounded-xl bg-[#f8fafd] border border-[#d8e2ec] shadow-xs">
-          <div className="text-[11px] font-bold text-slate-600 uppercase mb-1">Completed Houses</div>
-          <div className="text-2xl font-black text-emerald-600">{mapData.summary?.completedCount || 0}</div>
-          <div className="text-[10px] text-emerald-700 font-bold mt-1">100% milestone verified</div>
+        <div className="card p-4 border border-white/50 shadow-xs">
+          <div className="text-[11px] font-bold text-[#607887] uppercase mb-1">Completed Houses</div>
+          <div className="text-2xl font-black text-[#86C8C5]">{mapData.summary?.completedCount || 0}</div>
+          <div className="text-[10px] text-[#28485A] font-bold mt-1">100% milestone verified</div>
         </div>
 
-        <div className="p-4 rounded-xl bg-[#f8fafd] border border-red-200 bg-red-50/30 shadow-xs">
-          <div className="text-[11px] font-bold text-red-700 uppercase mb-1">High Risk in Radius</div>
-          <div className="text-2xl font-black text-red-600">{mapData.summary?.highRiskCount || 0}</div>
-          <div className="text-[10px] text-red-700 font-bold mt-1">Requires audit inspection</div>
+        <div className="card p-4 border border-rose-300/50 bg-rose-100/30 shadow-xs">
+          <div className="text-[11px] font-bold text-rose-800 uppercase mb-1">High Risk in Radius</div>
+          <div className="text-2xl font-black text-rose-700">{mapData.summary?.highRiskCount || 0}</div>
+          <div className="text-[10px] text-rose-800 font-bold mt-1">Requires audit inspection</div>
         </div>
       </div>
 
@@ -392,11 +392,11 @@ export default function RiskMap() {
         {/* Left Map View (3 cols) */}
         <div className="lg:col-span-3 space-y-4">
           {/* Map Interactive Toolbar */}
-          <div className="p-3.5 rounded-2xl bg-[#f8fafd] border border-[#d8e2ec] flex flex-wrap items-center justify-between gap-3 text-xs">
+          <div className="card p-3.5 border border-white/50 flex flex-wrap items-center justify-between gap-3 text-xs shadow-xs">
             {/* Radius Selector */}
             <div className="flex items-center gap-2">
-              <Compass className="w-4 h-4 text-indigo-600" />
-              <span className="font-extrabold text-slate-800">Inspection Radius:</span>
+              <Compass className="w-4 h-4 text-[#28485A]" />
+              <span className="font-extrabold text-[#28485A]">Inspection Radius:</span>
               <div className="flex items-center gap-1">
                 {RADIUS_OPTIONS.map(r => (
                   <button
@@ -404,8 +404,8 @@ export default function RiskMap() {
                     onClick={() => setRadiusKm(r)}
                     className={`px-2.5 py-1 rounded-lg font-extrabold transition-all ${
                       radiusKm === r
-                        ? 'bg-indigo-600 text-white shadow-xs'
-                        : 'bg-[#edf2f7] text-slate-700 hover:bg-slate-200'
+                        ? 'bg-[#A9CDE0] text-[#28485A] shadow-xs border border-white/50'
+                        : 'bg-white/40 text-[#607887] hover:bg-white/60'
                     }`}
                   >
                     {r} km
@@ -416,11 +416,11 @@ export default function RiskMap() {
 
             {/* Stage Filter */}
             <div className="flex items-center gap-2">
-              <Filter className="w-3.5 h-3.5 text-slate-500" />
+              <Filter className="w-3.5 h-3.5 text-[#607887]" />
               <select
                 value={stageFilter}
                 onChange={(e) => setStageFilter(e.target.value)}
-                className="px-2.5 py-1 rounded-lg bg-[#edf2f7] border border-[#d8e2ec] font-bold text-slate-800 text-xs focus:ring-1 focus:ring-indigo-500"
+                className="input-field py-1 px-2.5 text-xs font-bold"
               >
                 <option value="all">All Stages</option>
                 <option value="foundation">Foundation (20%)</option>
@@ -433,7 +433,7 @@ export default function RiskMap() {
               <select
                 value={riskFilter}
                 onChange={(e) => setRiskFilter(e.target.value)}
-                className="px-2.5 py-1 rounded-lg bg-[#edf2f7] border border-[#d8e2ec] font-bold text-slate-800 text-xs focus:ring-1 focus:ring-indigo-500"
+                className="input-field py-1 px-2.5 text-xs font-bold"
               >
                 <option value="all">All Risk Tiers</option>
                 <option value="low">Low Risk (🟢)</option>
@@ -444,32 +444,32 @@ export default function RiskMap() {
           </div>
 
           {/* Leaflet Map Box */}
-          <div className="relative rounded-2xl overflow-hidden border border-[#d8e2ec] shadow-sm bg-slate-100 h-[520px]">
+          <div className="relative rounded-2xl overflow-hidden border border-white/50 shadow-sm bg-white/40 h-[520px]">
             <div ref={mapContainerRef} className="w-full h-full z-0" />
 
             {/* Map Legend Overlay */}
-            <div className="absolute bottom-3 left-3 z-[1000] p-3 rounded-xl bg-white/90 backdrop-blur-md border border-slate-200 shadow-md text-[11px] font-bold text-slate-800 space-y-1.5">
-              <div className="text-[10px] text-slate-500 uppercase font-black">Map Legend</div>
+            <div className="absolute bottom-3 left-3 z-[1000] p-3 rounded-xl bg-white/85 backdrop-blur-md border border-white/60 shadow-md text-[11px] font-bold text-[#28485A] space-y-1.5">
+              <div className="text-[10px] text-[#607887] uppercase font-black">Map Legend</div>
               <div className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
+                <span className="w-2.5 h-2.5 rounded-full bg-[#86C8C5]" />
                 <span>Low Risk / Verified Site</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
+                <span className="w-2.5 h-2.5 rounded-full bg-[#B4B8D9]" />
                 <span>Medium Risk / In Progress</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse" />
+                <span className="w-2.5 h-2.5 rounded-full bg-rose-500 animate-pulse" />
                 <span>High Risk / AI Anomaly Suspect</span>
               </div>
-              <div className="flex items-center gap-2 pt-1 border-t border-slate-200">
-                <span className="w-2.5 h-2.5 rounded-full bg-indigo-600" />
+              <div className="flex items-center gap-2 pt-1 border-t border-white/40">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#A9CDE0]" />
                 <span>Radius Center (★)</span>
               </div>
             </div>
 
             {/* Click to pick tip */}
-            <div className="absolute top-3 right-3 z-[1000] px-3 py-1.5 rounded-xl bg-white/90 backdrop-blur-md border border-slate-200 shadow-sm text-xs font-extrabold text-indigo-700 flex items-center gap-1.5">
+            <div className="absolute top-3 right-3 z-[1000] px-3 py-1.5 rounded-xl bg-white/85 backdrop-blur-md border border-white/60 shadow-sm text-xs font-extrabold text-[#28485A] flex items-center gap-1.5">
               <Info className="w-3.5 h-3.5" />
               <span>Click anywhere on map to set custom radius center</span>
             </div>
@@ -480,64 +480,62 @@ export default function RiskMap() {
         <div className="space-y-4">
           {/* Active House Card */}
           {selectedPoint ? (
-            <div className="p-5 rounded-2xl bg-[#f8fafd] border border-[#d8e2ec] shadow-xs space-y-4">
+            <div className="card p-5 border border-white/50 shadow-xs space-y-4">
               <div className="flex items-start justify-between">
                 <div>
-                  <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-md bg-slate-200 text-slate-800 uppercase">
+                  <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-md bg-white/50 border border-white/60 text-[#28485A] uppercase font-mono">
                     {selectedPoint.householdId}
                   </span>
-                  <h3 className="text-base font-black text-[#0f172a] mt-1.5">{selectedPoint.name}</h3>
-                  <p className="text-xs text-slate-600">S/O {selectedPoint.fatherName}</p>
+                  <h3 className="text-base font-black text-[#28485A] mt-1.5">{selectedPoint.name}</h3>
+                  <p className="text-xs text-[#607887]">S/O {selectedPoint.fatherName}</p>
                 </div>
 
-                <span className={`text-[10px] px-2.5 py-1 rounded-full font-black uppercase ${
+                <span className={`badge ${
                   selectedPoint.riskTier === 'high'
-                    ? 'bg-red-100 text-red-800 border border-red-200'
+                    ? 'badge-critical'
                     : selectedPoint.riskTier === 'medium'
-                    ? 'bg-amber-100 text-amber-800 border border-amber-200'
-                    : 'bg-emerald-100 text-emerald-800 border border-emerald-200'
+                    ? 'badge-medium'
+                    : 'badge-teal'
                 }`}>
                   {selectedPoint.riskTier} RISK
                 </span>
               </div>
 
               {/* Progress Bar */}
-              <div className="p-3.5 rounded-xl bg-[#edf2f7] border border-[#d8e2ec] space-y-2">
-                <div className="flex justify-between text-xs font-bold text-slate-700">
+              <div className="p-3.5 rounded-xl bg-white/40 border border-white/50 space-y-2 backdrop-blur-xs">
+                <div className="flex justify-between text-xs font-bold text-[#28485A]">
                   <span>Current Milestone:</span>
-                  <span className="text-indigo-600 font-extrabold">{selectedPoint.currentStage}</span>
+                  <span className="text-[#28485A] font-extrabold">{selectedPoint.currentStage}</span>
                 </div>
-                <div className="w-full h-2.5 bg-slate-200 rounded-full overflow-hidden">
+                <div className="w-full h-2.5 bg-white/50 border border-white/60 rounded-full overflow-hidden">
                   <div 
-                    className={`h-full rounded-full transition-all duration-500 ${
-                      selectedPoint.progressPct === 100 ? 'bg-emerald-500' : 'bg-indigo-600'
-                    }`}
+                    className="h-full rounded-full transition-all duration-500 bg-gradient-to-r from-[#86C8C5] to-[#A9CDE0]"
                     style={{ width: `${selectedPoint.progressPct}%` }}
                   />
                 </div>
-                <div className="flex justify-between text-[11px] text-slate-500 font-bold">
+                <div className="flex justify-between text-[11px] text-[#607887] font-bold">
                   <span>Work Completed</span>
                   <span>{selectedPoint.progressPct}%</span>
                 </div>
               </div>
 
               {/* Location details */}
-              <div className="space-y-1.5 text-xs text-slate-700">
-                <div className="flex justify-between py-1 border-b border-slate-200">
-                  <span className="text-slate-500">Gram Panchayat:</span>
-                  <span className="font-extrabold text-slate-900">{selectedPoint.village}</span>
+              <div className="space-y-1.5 text-xs text-[#28485A]">
+                <div className="flex justify-between py-1 border-b border-white/30">
+                  <span className="text-[#607887]">Gram Panchayat:</span>
+                  <span className="font-extrabold text-[#28485A]">{selectedPoint.village}</span>
                 </div>
-                <div className="flex justify-between py-1 border-b border-slate-200">
-                  <span className="text-slate-500">Block / District:</span>
-                  <span className="font-extrabold text-slate-900">{selectedPoint.block}, {selectedPoint.district}</span>
+                <div className="flex justify-between py-1 border-b border-white/30">
+                  <span className="text-[#607887]">Block / District:</span>
+                  <span className="font-extrabold text-[#28485A]">{selectedPoint.block}, {selectedPoint.district}</span>
                 </div>
-                <div className="flex justify-between py-1 border-b border-slate-200">
-                  <span className="text-slate-500">Distance from Center:</span>
-                  <span className="font-black text-indigo-700">{selectedPoint.distanceKm ? `${selectedPoint.distanceKm} km` : 'Center'}</span>
+                <div className="flex justify-between py-1 border-b border-white/30">
+                  <span className="text-[#607887]">Distance from Center:</span>
+                  <span className="font-black text-[#28485A]">{selectedPoint.distanceKm ? `${selectedPoint.distanceKm} km` : 'Center'}</span>
                 </div>
                 <div className="flex justify-between py-1">
-                  <span className="text-slate-500">BPL ID / Category:</span>
-                  <span className="font-bold text-slate-800">{selectedPoint.bplNumber} ({selectedPoint.category})</span>
+                  <span className="text-[#607887]">BPL ID / Category:</span>
+                  <span className="font-bold text-[#28485A]">{selectedPoint.bplNumber} ({selectedPoint.category})</span>
                 </div>
               </div>
 
@@ -545,7 +543,7 @@ export default function RiskMap() {
               {selectedPoint.latestInspection && (
                 <button
                   onClick={() => navigate(`/inspections/${selectedPoint.latestInspection._id}`)}
-                  className="w-full py-2.5 px-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-extrabold flex items-center justify-center gap-1.5 shadow-sm transition-all"
+                  className="w-full py-2.5 px-3 rounded-xl btn-primary text-xs font-extrabold flex items-center justify-center gap-1.5 shadow-sm transition-all"
                 >
                   <Eye className="w-3.5 h-3.5" />
                   <span>Inspect Latest Evidence</span>
@@ -553,18 +551,18 @@ export default function RiskMap() {
               )}
             </div>
           ) : (
-            <div className="p-6 rounded-2xl bg-[#f8fafd] border border-[#d8e2ec] text-center text-slate-500 text-xs font-bold">
+            <div className="card p-6 border border-white/50 text-center text-[#607887] text-xs font-bold">
               Click any pin on the map to view house details.
             </div>
           )}
 
           {/* Quick List in Radius */}
-          <div className="p-4 rounded-2xl bg-[#f8fafd] border border-[#d8e2ec] shadow-xs space-y-3">
+          <div className="card p-4 border border-white/50 shadow-xs space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-black text-[#0f172a]">
+              <span className="text-xs font-black text-[#28485A]">
                 Houses in Range ({filteredPoints.length})
               </span>
-              <span className="text-[10px] text-slate-500 font-bold">{radiusKm} km radius</span>
+              <span className="text-[10px] text-[#607887] font-bold">{radiusKm} km radius</span>
             </div>
 
             <div className="space-y-2 max-h-[220px] overflow-y-auto pr-1">
@@ -579,15 +577,15 @@ export default function RiskMap() {
                   }}
                   className={`p-2.5 rounded-xl border text-xs cursor-pointer transition-all ${
                     selectedPoint?._id === pt._id
-                      ? 'bg-indigo-50 border-indigo-300 shadow-xs'
-                      : 'bg-[#edf2f7] hover:bg-slate-200 border-[#d8e2ec]'
+                      ? 'bg-[#A9CDE0]/30 border-[#A9CDE0] shadow-xs text-[#28485A]'
+                      : 'bg-white/40 hover:bg-white/60 border-white/50 text-[#28485A]'
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <span className="font-extrabold text-slate-900">{pt.name}</span>
-                    <span className="text-[10px] font-black text-indigo-700">{pt.progressPct}%</span>
+                    <span className="font-extrabold text-[#28485A]">{pt.name}</span>
+                    <span className="text-[10px] font-black text-[#28485A]">{pt.progressPct}%</span>
                   </div>
-                  <div className="flex items-center justify-between text-[11px] text-slate-500 mt-0.5">
+                  <div className="flex items-center justify-between text-[11px] text-[#607887] mt-0.5">
                     <span>{pt.village}</span>
                     <span>{pt.distanceKm ? `${pt.distanceKm}km` : '0km'}</span>
                   </div>

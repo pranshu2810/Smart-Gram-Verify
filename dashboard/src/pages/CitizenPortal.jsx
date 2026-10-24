@@ -81,25 +81,24 @@ export default function CitizenPortal() {
   };
 
   return (
-    <div className="min-h-screen bg-gov-command text-slate-800 py-8 px-4 sm:px-6 lg:px-8 relative select-none">
+    <div className="min-h-screen bg-gov-command text-[#28485A] py-8 px-4 sm:px-6 lg:px-8 relative select-none">
       <div className="fixed inset-0 dot-grid pointer-events-none opacity-40" />
+
       {/* Top Banner & Language Selector */}
       <div className="max-w-6xl mx-auto mb-8 relative z-10">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-200/80 pb-5">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-white/50 pb-5">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500 via-indigo-600 to-sky-500 p-0.5 shadow-sm">
-              <div className="w-full h-full bg-white/95 rounded-[14px] flex items-center justify-center text-xl shadow-inner">
-                🏛️
-              </div>
+            <div className="w-12 h-12 rounded-2xl bg-white/45 border border-white/60 p-1 shadow-sm backdrop-blur-md flex items-center justify-center text-xl">
+              🏛️
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-[10px] tracking-wider uppercase px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-800 font-extrabold border border-amber-200">
+                <span className="text-[10px] tracking-wider uppercase px-2.5 py-0.5 rounded-full bg-[#A9CDE0]/30 text-[#28485A] font-extrabold border border-white/60">
                   PMAY-G • भारत सरकार
                 </span>
-                <span className="text-xs text-indigo-700 font-bold">Digital Gramin Awaas</span>
+                <span className="text-xs text-[#28485A]/80 font-bold">Digital Gramin Awaas</span>
               </div>
-              <h1 className="text-xl sm:text-2xl font-display font-extrabold text-[#0F172A] mt-0.5">
+              <h1 className="text-xl sm:text-2xl font-display font-extrabold text-[#28485A] mt-0.5">
                 {lang === 'hi' ? 'प्रधानमंत्री ग्रामीण आवास योजना — नागरिक सेवा पोर्टल' : 'PMAY-G Citizen Housing & DBT Tracker'}
               </h1>
             </div>
@@ -109,23 +108,23 @@ export default function CitizenPortal() {
             {b && (
               <button
                 onClick={handleExitSession}
-                className="text-xs px-3.5 py-1.5 rounded-xl bg-slate-100 hover:bg-rose-50 text-slate-700 hover:text-rose-700 font-bold border border-slate-200 hover:border-rose-200 transition-all shadow-2xs"
+                className="text-xs px-3.5 py-1.5 rounded-xl bg-white/40 hover:bg-rose-50/60 text-[#28485A] hover:text-rose-700 font-bold border border-white/50 hover:border-rose-300 transition-all shadow-xs backdrop-blur-md"
               >
                 ← {lang === 'hi' ? 'सुरक्षित लॉगआउट' : 'Exit / New Search'}
               </button>
             )}
             <div className="flex items-center gap-1.5">
-              <span className="text-xs text-slate-500 font-bold">भाषा:</span>
-              <div className="flex bg-white/80 p-1 rounded-xl border border-slate-200/80 shadow-2xs">
+              <span className="text-xs text-[#607887] font-bold">भाषा:</span>
+              <div className="flex bg-white/40 p-1 rounded-xl border border-white/50 shadow-xs backdrop-blur-md">
                 <button
                   onClick={() => setLang('en')}
-                  className={`px-3 py-1 text-xs rounded-lg font-bold transition-all ${lang === 'en' ? 'bg-indigo-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'}`}
+                  className={`px-3 py-1 text-xs rounded-lg font-bold transition-all ${lang === 'en' ? 'bg-[#A9CDE0] text-[#28485A] shadow-xs' : 'text-[#607887] hover:text-[#28485A]'}`}
                 >
                   English
                 </button>
                 <button
                   onClick={() => setLang('hi')}
-                  className={`px-3 py-1 text-xs rounded-lg font-bold transition-all ${lang === 'hi' ? 'bg-amber-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'}`}
+                  className={`px-3 py-1 text-xs rounded-lg font-bold transition-all ${lang === 'hi' ? 'bg-[#86C8C5] text-[#28485A] shadow-xs' : 'text-[#607887] hover:text-[#28485A]'}`}
                 >
                   हिंदी
                 </button>
@@ -138,15 +137,15 @@ export default function CitizenPortal() {
       {/* Screen 1: PRIVATE LOOKUP (When no beneficiary is loaded) */}
       {!b && (
         <div className="max-w-2xl mx-auto my-12 animate-fadeIn relative z-10">
-          <div className="card glass-card-pro p-8 sm:p-10 border border-indigo-500/30 shadow-2xl text-center">
-            <div className="w-16 h-16 rounded-3xl bg-amber-50 border border-amber-200 flex items-center justify-center text-3xl mx-auto mb-4">
+          <div className="card p-8 sm:p-10 border border-white/60 shadow-xl text-center">
+            <div className="w-16 h-16 rounded-3xl bg-[#A9CDE0]/25 border border-white/60 flex items-center justify-center text-3xl mx-auto mb-4 backdrop-blur-md">
               🔐
             </div>
 
-            <h2 className="text-2xl sm:text-3xl font-display font-extrabold text-slate-900 tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-display font-extrabold text-[#28485A] tracking-tight">
               {lang === 'hi' ? 'नागरिक व्यक्तिगत आवास सत्यापन' : 'Citizen Personal Housing Verification'}
             </h2>
-            <p className="text-xs sm:text-sm text-slate-600 mt-2 max-w-md mx-auto leading-relaxed font-medium">
+            <p className="text-xs sm:text-sm text-[#607887] mt-2 max-w-md mx-auto leading-relaxed font-medium">
               {lang === 'hi'
                 ? 'गोपनीयता सुरक्षा के अंतर्गत आप केवल अपना आवास रिकॉर्ड देख सकते हैं। अपनी पंजीयन संख्या (Household ID), आधार अंतिम ४ अंक, या पंजीकृत मोबाइल नंबर दर्ज करें।'
                 : 'For strict privacy protection, you can only access your own individual record. Enter your Sanctioned Household ID, last 4 digits of Aadhaar, or registered phone number.'}
@@ -160,11 +159,11 @@ export default function CitizenPortal() {
               className="mt-6 space-y-4 text-left"
             >
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                <label className="block text-xs font-bold text-[#28485A] mb-1.5">
                   {lang === 'hi' ? 'पंजीयन संख्या / आधार (अंतिम ४) / मोबाइल नंबर:' : 'Household ID / Aadhaar Last 4 / Mobile Number:'}
                 </label>
                 <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-[#607887]">
                     🔍
                   </div>
                   <input
@@ -179,7 +178,7 @@ export default function CitizenPortal() {
               </div>
 
               {error && (
-                <div className="p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs font-bold">
+                <div className="p-3.5 rounded-xl bg-rose-100/50 border border-rose-300/60 text-rose-800 text-xs font-bold backdrop-blur-sm">
                   ⚠️ {error}
                 </div>
               )}
@@ -197,8 +196,8 @@ export default function CitizenPortal() {
               </button>
             </form>
 
-            <div className="mt-8 pt-5 border-t border-[#d8e2ec] text-left text-xs text-slate-600 space-y-1.5">
-              <p className="font-bold text-slate-800">
+            <div className="mt-8 pt-5 border-t border-white/40 text-left text-xs text-[#607887] space-y-1.5">
+              <p className="font-bold text-[#28485A]">
                 {lang === 'hi' ? '💡 अपनी पंजीयन संख्या कैसे प्राप्त करें?' : '💡 How to find your Household ID?'}
               </p>
               <p>
@@ -218,47 +217,47 @@ export default function CitizenPortal() {
 
       {/* Screen 2: CITIZEN'S OWN VERIFIED RECORD (Only shown when citizen authenticated) */}
       {b && (
-        <div className="max-w-6xl mx-auto space-y-8 animate-fadeIn">
+        <div className="max-w-6xl mx-auto space-y-8 animate-fadeIn relative z-10">
           {/* Active Citizen Session Strip */}
-          <div className="p-3.5 rounded-2xl bg-indigo-50/80 border border-indigo-200/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
+          <div className="p-3.5 rounded-2xl bg-[#A9CDE0]/25 border border-white/50 backdrop-blur-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs shadow-xs">
             <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping" />
-              <span className="text-slate-600 font-medium">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#86C8C5] animate-ping" />
+              <span className="text-[#607887] font-medium">
                 {lang === 'hi' ? 'सक्रिय नागरिक सत्र:' : 'Active Beneficiary Session:'}
               </span>
-              <strong className="text-slate-900 font-extrabold text-sm">{b.name}</strong>
-              <span className="font-mono text-indigo-700 font-extrabold">({b.householdId})</span>
+              <strong className="text-[#28485A] font-extrabold text-sm">{b.name}</strong>
+              <span className="font-mono text-[#28485A] font-extrabold">({b.householdId})</span>
             </div>
             <button
               onClick={handleExitSession}
-              className="text-xs px-3 py-1 rounded-xl bg-white hover:bg-rose-50 text-slate-700 hover:text-rose-700 font-bold border border-slate-300 hover:border-rose-300 transition-all"
+              className="text-xs px-3 py-1 rounded-xl bg-white/40 hover:bg-rose-50/60 text-[#28485A] hover:text-rose-700 font-bold border border-white/50 transition-all shadow-xs backdrop-blur-sm"
             >
               ← {lang === 'hi' ? 'सुरक्षित लॉगआउट' : 'Exit / Search Another Record'}
             </button>
           </div>
 
           {/* Beneficiary Header Card */}
-          <div className="card p-6 sm:p-8 bg-[#f8fafd] border border-[#d8e2ec] shadow-sm relative overflow-hidden">
+          <div className="card p-6 sm:p-8 border border-white/50 relative overflow-hidden">
             <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 relative z-10">
               <div className="flex items-start gap-4">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-indigo-600 to-sky-500 flex items-center justify-center text-3xl text-white shadow-md flex-shrink-0">
+                <div className="w-16 h-16 rounded-2xl bg-white/40 border border-white/60 flex items-center justify-center text-3xl shadow-sm backdrop-blur-md flex-shrink-0">
                   🏠
                 </div>
                 <div>
                   <div className="flex flex-wrap items-center gap-2">
-                    <h3 className="text-2xl font-display font-extrabold text-slate-900">{b.name}</h3>
-                    <span className="badge badge-verified">
+                    <h3 className="text-2xl font-display font-extrabold text-[#28485A]">{b.name}</h3>
+                    <span className="badge badge-teal">
                       ✓ {lang === 'hi' ? 'सत्यापित हितग्राही' : 'Verified Beneficiary'}
                     </span>
-                    <span className="badge bg-slate-200 text-slate-800 border-slate-300 font-bold">
+                    <span className="badge badge-lavender font-bold">
                       {b.category || 'General'}
                     </span>
                   </div>
-                  <p className="text-sm text-slate-600 mt-1 font-medium">
-                    {lang === 'hi' ? 'पिता / पति:' : 'Father / Husband:'} <strong>{b.fatherName}</strong> • {lang === 'hi' ? 'ग्राम पंचायत:' : 'GP:'} <strong>{b.village}</strong>, {b.block} Block, {b.district} District
+                  <p className="text-sm text-[#607887] mt-1 font-medium">
+                    {lang === 'hi' ? 'पिता / पति:' : 'Father / Husband:'} <strong className="text-[#28485A]">{b.fatherName}</strong> • {lang === 'hi' ? 'ग्राम पंचायत:' : 'GP:'} <strong className="text-[#28485A]">{b.village}</strong>, {b.block} Block, {b.district} District
                   </p>
-                  <p className="text-xs text-slate-500 mt-1 font-mono">
-                    Household ID: <strong className="text-indigo-700">{b.householdId}</strong> • Aadhaar: XXXX-XXXX-{b.aadhaarLast4 || '****'}
+                  <p className="text-xs text-[#607887] mt-1 font-mono">
+                    Household ID: <strong className="text-[#28485A]">{b.householdId}</strong> • Aadhaar: XXXX-XXXX-{b.aadhaarLast4 || '****'}
                   </p>
                 </div>
               </div>
@@ -266,7 +265,7 @@ export default function CitizenPortal() {
               <div className="flex flex-wrap items-center gap-3">
                 <button
                   onClick={() => setShowCert(true)}
-                  className="glass-btn-emerald py-2.5 px-4 text-xs font-bold shadow-sm"
+                  className="btn-teal py-2.5 px-4 text-xs font-bold shadow-sm"
                 >
                   📜 {lang === 'hi' ? 'स्वीकृति प्रमाण-पत्र देखें' : 'View Sanction Certificate'}
                 </button>
@@ -280,22 +279,22 @@ export default function CitizenPortal() {
             </div>
 
             {/* Financial Overview Progress Bar */}
-            <div className="mt-8 pt-6 border-t border-[#d8e2ec]">
+            <div className="mt-8 pt-6 border-t border-white/40">
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-2">
-                <span className="text-xs font-bold text-slate-700">
-                  {lang === 'hi' ? 'कुल स्वीकृत अनुदान राशि:' : 'Total Sanctioned Grant:'} <strong className="text-slate-900 text-sm">₹{totalSanctioned.toLocaleString('en-IN')}</strong>
+                <span className="text-xs font-bold text-[#607887]">
+                  {lang === 'hi' ? 'कुल स्वीकृत अनुदान राशि:' : 'Total Sanctioned Grant:'} <strong className="text-[#28485A] text-sm">₹{totalSanctioned.toLocaleString('en-IN')}</strong>
                 </span>
-                <span className="text-xs font-bold text-emerald-800">
+                <span className="text-xs font-bold text-[#28485A]">
                   {lang === 'hi' ? 'बैंक खाते में जमा:' : 'Transferred to Bank:'} <strong>₹{disbursedTotal.toLocaleString('en-IN')}</strong> ({Math.round((disbursedTotal / totalSanctioned) * 100)}%)
                 </span>
               </div>
-              <div className="w-full bg-[#e2e8f0] h-3.5 rounded-full overflow-hidden border border-[#cbd5e1]">
+              <div className="w-full bg-[#D2E0E8]/40 h-3.5 rounded-full overflow-hidden border border-white/50 backdrop-blur-sm">
                 <div
-                  className="h-full bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full transition-all duration-700 shadow-xs"
+                  className="h-full bg-gradient-to-r from-[#86C8C5] to-[#A9CDE0] rounded-full transition-all duration-700 shadow-xs"
                   style={{ width: `${Math.min(100, (disbursedTotal / totalSanctioned) * 100)}%` }}
                 />
               </div>
-              <div className="flex justify-between text-[11px] text-slate-600 font-bold mt-2">
+              <div className="flex justify-between text-[11px] text-[#607887] font-bold mt-2">
                 <span>{lang === 'hi' ? '४ किस्तों में प्रत्यक्ष लाभ अंतरण (DBT)' : 'Disbursed in 4 Stages via Aadhaar DBT'}</span>
                 <span>{lang === 'hi' ? 'शेष राशि:' : 'Pending Balance:'} ₹{pendingAmount.toLocaleString('en-IN')}</span>
               </div>
@@ -303,13 +302,13 @@ export default function CitizenPortal() {
           </div>
 
           {/* 4-Stage Construction Visual Roadmap */}
-          <div className="card p-6 sm:p-8 bg-[#f8fafd] border border-[#d8e2ec] shadow-sm">
+          <div className="card p-6 sm:p-8 border border-white/50">
             <div className="flex items-center justify-between mb-6">
               <div>
-                <h3 className="text-xl font-display font-extrabold text-slate-900">
+                <h3 className="text-xl font-display font-extrabold text-[#28485A]">
                   {lang === 'hi' ? '४-चरण निर्माण प्रगति एवं AI सत्यापन' : '4-Stage Construction & AI Verification Roadmap'}
                 </h3>
-                <p className="text-xs text-slate-600 font-medium mt-0.5">
+                <p className="text-xs text-[#607887] font-medium mt-0.5">
                   {lang === 'hi'
                     ? 'प्रत्येक चरण पूरा होने पर ग्राम रोजगार सहायक द्वारा जीपीएस फोटो ली जाती है और AI द्वारा सत्यापन के बाद किस्त स्वीकृत होती है।'
                     : 'Each completed stage is verified by Officer GPS photos and Gemini Vision AI before release of installment.'}
@@ -326,37 +325,41 @@ export default function CitizenPortal() {
                 return (
                   <div
                     key={stg.key}
-                    className={`rounded-2xl border-2 p-4 flex flex-col justify-between transition-all ${
+                    className={`rounded-2xl border p-4 flex flex-col justify-between transition-all backdrop-blur-md ${
                       info.status === 'verified'
-                        ? 'bg-emerald-50/50 border-emerald-300 shadow-2xs'
+                        ? 'bg-[#86C8C5]/20 border-[#86C8C5]/50 shadow-xs'
                         : info.status === 'pending'
-                        ? 'bg-amber-50/50 border-amber-300 shadow-2xs'
-                        : 'bg-[#edf2f7]/60 border-[#d8e2ec]'
+                        ? 'bg-[#A9CDE0]/25 border-[#A9CDE0]/50 shadow-xs'
+                        : 'bg-white/30 border-white/45'
                     }`}
                   >
                     <div>
                       <div className="flex items-center justify-between mb-2">
-                        <span className="text-xs font-mono font-bold text-slate-500">#{i + 1}</span>
-                        <span className={`badge badge-${info.color}`}>
+                        <span className="text-xs font-mono font-bold text-[#607887]">#{i + 1}</span>
+                        <span className={`badge ${
+                          info.status === 'verified' ? 'badge-teal' :
+                          info.status === 'pending' ? 'badge-sky' :
+                          info.status === 'rejected' ? 'badge-critical' : 'badge-lavender'
+                        }`}>
                           {info.label}
                         </span>
                       </div>
 
-                      <h4 className="font-display font-extrabold text-slate-900 text-base">
+                      <h4 className="font-display font-extrabold text-[#28485A] text-base">
                         {lang === 'hi' ? stg.nameHi : stg.nameEn}
                       </h4>
-                      <p className="text-xs text-slate-600 mt-1 leading-relaxed">
+                      <p className="text-xs text-[#607887] mt-1 leading-relaxed">
                         {stg.desc}
                       </p>
 
-                      <div className="mt-3 inline-block px-2.5 py-1 rounded-lg bg-[#f8fafd] border border-[#d8e2ec] text-xs text-indigo-700 font-bold shadow-2xs">
+                      <div className="mt-3 inline-block px-2.5 py-1 rounded-lg bg-white/40 border border-white/50 text-xs text-[#28485A] font-bold shadow-2xs">
                         ₹{stg.amount.toLocaleString('en-IN')} {lang === 'hi' ? 'किस्त' : 'Payout'}
                       </div>
                     </div>
 
-                    <div className="mt-4 pt-3 border-t border-slate-200">
+                    <div className="mt-4 pt-3 border-t border-white/30">
                       {photoUrl ? (
-                        <div className="relative rounded-xl overflow-hidden aspect-[4/3] bg-slate-900 border border-slate-200 group">
+                        <div className="relative rounded-xl overflow-hidden aspect-[4/3] bg-[#28485A] border border-white/40 group">
                           <img
                             src={photoUrl}
                             alt={stg.key}
@@ -368,7 +371,7 @@ export default function CitizenPortal() {
                           </div>
                         </div>
                       ) : (
-                        <div className="py-6 text-center rounded-lg bg-[#edf2f7] border border-dashed border-[#cbd5e1] text-xs text-slate-600 font-medium">
+                        <div className="py-6 text-center rounded-lg bg-white/20 border border-dashed border-white/40 text-xs text-[#607887] font-medium">
                           <span>📷 {lang === 'hi' ? 'फोटो प्रतीक्षित' : 'Awaiting Inspection'}</span>
                         </div>
                       )}
@@ -380,60 +383,60 @@ export default function CitizenPortal() {
           </div>
 
           {/* DBT Passbook / Installment Ledger */}
-          <div className="card p-6 sm:p-8 bg-[#f8fafd] border border-[#d8e2ec] shadow-sm">
-            <h3 className="text-xl font-display font-extrabold text-slate-900 mb-1">
+          <div className="card p-6 sm:p-8 border border-white/50">
+            <h3 className="text-xl font-display font-extrabold text-[#28485A] mb-1">
               {lang === 'hi' ? 'प्रत्यक्ष लाभ अंतरण (DBT) पासबुक विवरण' : 'Direct Benefit Transfer (DBT) Installment History'}
             </h3>
-            <p className="text-xs text-slate-600 font-medium mb-6">
+            <p className="text-xs text-[#607887] font-medium mb-6">
               {lang === 'hi'
                 ? 'आधार-लिंक्ड बैंक खाते (Aadhaar Payment Bridge System) में हस्तांतरित किस्तों की आधिकारिक रसीद एवं UTR संदर्भ संख्या'
                 : 'Official electronic transfer records linked to your verified bank account'}
             </p>
 
             <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead className="bg-[#edf2f7] border-b border-[#d8e2ec]">
+              <table className="glass-table w-full text-sm">
+                <thead>
                   <tr>
-                    <th className="text-left py-3.5 px-4 text-xs font-extrabold text-slate-800">किस्त संख्या</th>
-                    <th className="text-left py-3.5 px-4 text-xs font-extrabold text-slate-800">चरण (Milestone)</th>
-                    <th className="text-left py-3.5 px-4 text-xs font-extrabold text-slate-800">राशि (Amount)</th>
-                    <th className="text-left py-3.5 px-4 text-xs font-extrabold text-slate-800">हस्तांतरण स्थिति</th>
-                    <th className="text-left py-3.5 px-4 text-xs font-extrabold text-slate-800">बैंक UTR संदर्भ</th>
-                    <th className="text-left py-3.5 px-4 text-xs font-extrabold text-slate-800">दिनांक (Date)</th>
+                    <th className="text-left py-3.5 px-4 text-xs font-extrabold text-[#28485A]">किस्त संख्या</th>
+                    <th className="text-left py-3.5 px-4 text-xs font-extrabold text-[#28485A]">चरण (Milestone)</th>
+                    <th className="text-left py-3.5 px-4 text-xs font-extrabold text-[#28485A]">राशि (Amount)</th>
+                    <th className="text-left py-3.5 px-4 text-xs font-extrabold text-[#28485A]">हस्तांतरण स्थिति</th>
+                    <th className="text-left py-3.5 px-4 text-xs font-extrabold text-[#28485A]">बैंक UTR संदर्भ</th>
+                    <th className="text-left py-3.5 px-4 text-xs font-extrabold text-[#28485A]">दिनांक (Date)</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-200">
-                  <tr className="hover:bg-slate-50 transition-colors">
-                    <td className="py-3.5 px-4 font-bold text-slate-900">#1st Installment</td>
-                    <td className="py-3.5 px-4 text-slate-700 font-medium">Foundation (नींव)</td>
-                    <td className="py-3.5 px-4 font-extrabold text-emerald-700">₹50,000</td>
-                    <td className="py-3.5 px-4"><span className="badge badge-verified">✓ जमा हो गया (Disbursed)</span></td>
-                    <td className="py-3.5 px-4 font-mono text-xs text-slate-700 font-bold">UTR-RBI-PMAY-892341</td>
-                    <td className="py-3.5 px-4 text-xs text-slate-600 font-medium">12-Jan-2026</td>
+                <tbody className="divide-y divide-white/40">
+                  <tr className="hover:bg-white/30 transition-colors">
+                    <td className="py-3.5 px-4 font-bold text-[#28485A]">#1st Installment</td>
+                    <td className="py-3.5 px-4 text-[#607887] font-medium">Foundation (नींव)</td>
+                    <td className="py-3.5 px-4 font-extrabold text-[#28485A]">₹50,000</td>
+                    <td className="py-3.5 px-4"><span className="badge badge-teal">✓ जमा हो गया (Disbursed)</span></td>
+                    <td className="py-3.5 px-4 font-mono text-xs text-[#28485A] font-bold">UTR-RBI-PMAY-892341</td>
+                    <td className="py-3.5 px-4 text-xs text-[#607887] font-medium">12-Jan-2026</td>
                   </tr>
-                  <tr className="hover:bg-slate-50 transition-colors">
-                    <td className="py-3.5 px-4 font-bold text-slate-900">#2nd Installment</td>
-                    <td className="py-3.5 px-4 text-slate-700 font-medium">Plinth (कुर्सी स्तर)</td>
-                    <td className="py-3.5 px-4 font-extrabold text-emerald-700">₹40,000</td>
-                    <td className="py-3.5 px-4"><span className="badge badge-pending">⏳ समीक्षाधीन (Under Review)</span></td>
-                    <td className="py-3.5 px-4 font-mono text-xs text-slate-500 font-bold">Pending Approval</td>
-                    <td className="py-3.5 px-4 text-xs text-slate-600 font-medium">In Process</td>
+                  <tr className="hover:bg-white/30 transition-colors">
+                    <td className="py-3.5 px-4 font-bold text-[#28485A]">#2nd Installment</td>
+                    <td className="py-3.5 px-4 text-[#607887] font-medium">Plinth (कुर्सी स्तर)</td>
+                    <td className="py-3.5 px-4 font-extrabold text-[#28485A]">₹40,000</td>
+                    <td className="py-3.5 px-4"><span className="badge badge-sky">⏳ समीक्षाधीन (Under Review)</span></td>
+                    <td className="py-3.5 px-4 font-mono text-xs text-[#607887] font-bold">Pending Approval</td>
+                    <td className="py-3.5 px-4 text-xs text-[#607887] font-medium">In Process</td>
                   </tr>
-                  <tr className="hover:bg-slate-50 transition-colors">
-                    <td className="py-3.5 px-4 font-bold text-slate-900">#3rd Installment</td>
-                    <td className="py-3.5 px-4 text-slate-700 font-medium">Lintel (छत)</td>
-                    <td className="py-3.5 px-4 font-extrabold text-slate-700">₹30,000</td>
-                    <td className="py-3.5 px-4"><span className="badge badge-low">प्रतीक्षित (Upcoming)</span></td>
-                    <td className="py-3.5 px-4 font-mono text-xs text-slate-400">—</td>
-                    <td className="py-3.5 px-4 text-xs text-slate-500 font-medium">Upcoming</td>
+                  <tr className="hover:bg-white/30 transition-colors">
+                    <td className="py-3.5 px-4 font-bold text-[#28485A]">#3rd Installment</td>
+                    <td className="py-3.5 px-4 text-[#607887] font-medium">Lintel (छत)</td>
+                    <td className="py-3.5 px-4 font-extrabold text-[#28485A]">₹30,000</td>
+                    <td className="py-3.5 px-4"><span className="badge badge-lavender">प्रतीक्षित (Upcoming)</span></td>
+                    <td className="py-3.5 px-4 font-mono text-xs text-[#607887]">—</td>
+                    <td className="py-3.5 px-4 text-xs text-[#607887] font-medium">Upcoming</td>
                   </tr>
-                  <tr className="hover:bg-slate-50 transition-colors">
-                    <td className="py-3.5 px-4 font-bold text-slate-900">#4th Installment</td>
-                    <td className="py-3.5 px-4 text-slate-700 font-medium">Completion (पूर्ण आवास)</td>
-                    <td className="py-3.5 px-4 font-extrabold text-slate-700">₹30,000</td>
-                    <td className="py-3.5 px-4"><span className="badge badge-low">प्रतीक्षित (Upcoming)</span></td>
-                    <td className="py-3.5 px-4 font-mono text-xs text-slate-400">—</td>
-                    <td className="py-3.5 px-4 text-xs text-slate-500 font-medium">Upcoming</td>
+                  <tr className="hover:bg-white/30 transition-colors">
+                    <td className="py-3.5 px-4 font-bold text-[#28485A]">#4th Installment</td>
+                    <td className="py-3.5 px-4 text-[#607887] font-medium">Completion (पूर्ण आवास)</td>
+                    <td className="py-3.5 px-4 font-extrabold text-[#28485A]">₹30,000</td>
+                    <td className="py-3.5 px-4"><span className="badge badge-lavender">प्रतीक्षित (Upcoming)</span></td>
+                    <td className="py-3.5 px-4 font-mono text-xs text-[#607887]">—</td>
+                    <td className="py-3.5 px-4 text-xs text-[#607887] font-medium">Upcoming</td>
                   </tr>
                 </tbody>
               </table>
@@ -441,26 +444,26 @@ export default function CitizenPortal() {
           </div>
 
           {/* Grievance / Request Inspection Form */}
-          <div id="grievance" className="card p-6 sm:p-8 bg-[#f8fafd] border border-[#d8e2ec] shadow-sm">
-            <h3 className="text-xl font-display font-extrabold text-slate-900 mb-1">
+          <div id="grievance" className="card p-6 sm:p-8 border border-white/50">
+            <h3 className="text-xl font-display font-extrabold text-[#28485A] mb-1">
               {lang === 'hi' ? 'नागरिक सहायता एवं पुनः निरीक्षण अनुरोध' : 'Citizen Assistance & Inspection Request'}
             </h3>
-            <p className="text-xs text-slate-600 font-medium mb-6">
+            <p className="text-xs text-[#607887] font-medium mb-6">
               {lang === 'hi'
                 ? 'यदि आपका निर्माण पूरा हो गया है और अधिकारी का आगमन नहीं हुआ है, तो यहाँ तुरंत अनुरोध भेजें।'
                 : 'Request an urgent field visit from your Panchayat Gram Rozgar Sahayak if your stage is ready.'}
             </p>
 
             {grievanceSent ? (
-              <div className="p-5 rounded-2xl bg-emerald-50 border border-emerald-200 text-center animate-fadeIn">
+              <div className="p-5 rounded-2xl bg-[#86C8C5]/20 border border-[#86C8C5]/50 text-center animate-fadeIn backdrop-blur-md">
                 <div className="text-4xl mb-2">✅</div>
-                <h4 className="text-lg font-bold text-emerald-900">
+                <h4 className="text-lg font-bold text-[#28485A]">
                   {lang === 'hi' ? 'अनुरोध सफलतापूर्वक दर्ज हो गया है!' : 'Inspection Request Successfully Registered!'}
                 </h4>
-                <p className="text-xs text-emerald-800 mt-1 font-semibold">
+                <p className="text-xs text-[#28485A] mt-1 font-semibold">
                   Ticket Reference: <strong className="font-mono">REQ-SG-2026-{Math.floor(1000 + Math.random() * 9000)}</strong>
                 </p>
-                <p className="text-xs text-slate-600 mt-2 font-medium">
+                <p className="text-xs text-[#607887] mt-2 font-medium">
                   {lang === 'hi'
                     ? 'संबंधित पंचायत अधिकारी को सूचित कर दिया गया है। अगले ४८ घंटों में निरीक्षण सम्पन्न होगा।'
                     : 'The Block Development Officer and Field Inspector have been notified.'}
@@ -476,7 +479,7 @@ export default function CitizenPortal() {
               >
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                    <label className="block text-xs font-bold text-[#28485A] mb-1.5">
                       {lang === 'hi' ? 'निरीक्षण हेतु चरण:' : 'Ready Stage for Inspection:'}
                     </label>
                     <select
@@ -491,7 +494,7 @@ export default function CitizenPortal() {
                     </select>
                   </div>
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                    <label className="block text-xs font-bold text-[#28485A] mb-1.5">
                       {lang === 'hi' ? 'संपर्क मोबाइल नंबर:' : 'Contact Mobile Number:'}
                     </label>
                     <input
@@ -503,7 +506,7 @@ export default function CitizenPortal() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                  <label className="block text-xs font-bold text-[#28485A] mb-1.5">
                     {lang === 'hi' ? 'टिप्पणी / समस्या का विवरण:' : 'Message / Details:'}
                   </label>
                   <textarea
@@ -526,65 +529,65 @@ export default function CitizenPortal() {
 
       {/* Digital Sanction Certificate Modal */}
       {showCert && b && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-fadeIn">
-          <div className="bg-[#f8fafd] border border-[#d8e2ec] rounded-3xl max-w-2xl w-full p-8 shadow-2xl relative text-slate-800">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#28485A]/30 backdrop-blur-md animate-fadeIn">
+          <div className="card max-w-2xl w-full p-8 shadow-2xl relative text-[#28485A] border border-white/60">
             <button
               onClick={() => setShowCert(false)}
-              className="absolute top-4 right-4 text-slate-400 hover:text-slate-800 text-xl font-bold"
+              className="absolute top-4 right-4 text-[#607887] hover:text-[#28485A] text-xl font-bold"
             >
               ✕
             </button>
 
-            <div className="text-center border-b border-[#d8e2ec] pb-5">
+            <div className="text-center border-b border-white/40 pb-5">
               <div className="text-3xl mb-1">🇮🇳</div>
-              <p className="text-xs tracking-widest uppercase text-amber-700 font-extrabold">
+              <p className="text-xs tracking-widest uppercase text-[#28485A] font-extrabold">
                 Government of India • Ministry of Rural Development
               </p>
-              <h3 className="text-xl font-display font-extrabold text-slate-900 mt-1">
+              <h3 className="text-xl font-display font-extrabold text-[#28485A] mt-1">
                 Pradhan Mantri Awaas Yojana - Gramin (PMAY-G)
               </h3>
-              <p className="text-xs text-emerald-700 font-bold mt-0.5">
+              <p className="text-xs text-[#86C8C5] font-bold mt-0.5">
                 Digital Sanction Order & Housing Verification Certificate
               </p>
             </div>
 
             <div className="grid grid-cols-2 gap-4 my-6 text-xs font-medium">
               <div>
-                <span className="text-slate-500">Beneficiary Name:</span>
-                <p className="text-sm font-bold text-slate-900 mt-0.5">{b.name}</p>
+                <span className="text-[#607887]">Beneficiary Name:</span>
+                <p className="text-sm font-bold text-[#28485A] mt-0.5">{b.name}</p>
               </div>
               <div>
-                <span className="text-slate-500">Household ID:</span>
-                <p className="text-sm font-bold text-indigo-700 font-mono mt-0.5">{b.householdId}</p>
+                <span className="text-[#607887]">Household ID:</span>
+                <p className="text-sm font-bold text-[#28485A] font-mono mt-0.5">{b.householdId}</p>
               </div>
               <div>
-                <span className="text-slate-500">Father / Husband:</span>
-                <p className="text-sm font-bold text-slate-900 mt-0.5">{b.fatherName}</p>
+                <span className="text-[#607887]">Father / Husband:</span>
+                <p className="text-sm font-bold text-[#28485A] mt-0.5">{b.fatherName}</p>
               </div>
               <div>
-                <span className="text-slate-500">Location:</span>
-                <p className="text-sm font-bold text-slate-900 mt-0.5">{b.village}, {b.block}, {b.district}</p>
+                <span className="text-[#607887]">Location:</span>
+                <p className="text-sm font-bold text-[#28485A] mt-0.5">{b.village}, {b.block}, {b.district}</p>
               </div>
               <div>
-                <span className="text-slate-500">Total Approved Amount:</span>
-                <p className="text-base font-extrabold text-emerald-700 mt-0.5">₹{totalSanctioned.toLocaleString('en-IN')}</p>
+                <span className="text-[#607887]">Total Approved Amount:</span>
+                <p className="text-base font-extrabold text-[#28485A] mt-0.5">₹{totalSanctioned.toLocaleString('en-IN')}</p>
               </div>
               <div>
-                <span className="text-slate-500">Geofence Coordinates:</span>
-                <p className="text-xs font-mono text-slate-700 font-bold mt-0.5">
+                <span className="text-[#607887]">Geofence Coordinates:</span>
+                <p className="text-xs font-mono text-[#28485A] font-bold mt-0.5">
                   {b.registeredLocation?.latitude || '23.6345'}, {b.registeredLocation?.longitude || '77.4231'}
                 </p>
               </div>
             </div>
 
-            <div className="p-4 rounded-xl bg-[#edf2f7] border border-[#d8e2ec] flex items-center justify-between">
+            <div className="p-4 rounded-xl bg-white/40 border border-white/50 flex items-center justify-between backdrop-blur-sm">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-white border border-[#cbd5e1] rounded-lg p-1 flex items-center justify-center text-slate-900 font-mono text-[9px] font-bold text-center">
+                <div className="w-12 h-12 bg-white/60 border border-white/60 rounded-lg p-1 flex items-center justify-center text-[#28485A] font-mono text-[9px] font-bold text-center">
                   QR VERIFIED
                 </div>
-                <div className="text-[11px] text-slate-600 font-medium">
-                  <p className="text-slate-900 font-bold">Digitally Signed & Blockchain Anchored</p>
-                  <p>Smart-Gram AI Audit Hash: <span className="font-mono text-indigo-600 font-bold">0x7f8a...92b4</span></p>
+                <div className="text-[11px] text-[#607887] font-medium">
+                  <p className="text-[#28485A] font-bold">Digitally Signed & Blockchain Anchored</p>
+                  <p>Smart-Gram AI Audit Hash: <span className="font-mono text-[#28485A] font-bold">0x7f8a...92b4</span></p>
                 </div>
               </div>
               <button

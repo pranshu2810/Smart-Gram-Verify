@@ -34,19 +34,19 @@ export default function Approvals() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center py-24 text-slate-700 font-bold">
-        <span className="w-5 h-5 border-2 border-indigo-600 border-t-transparent rounded-full animate-spin mr-3" />
+      <div className="flex items-center justify-center py-24 text-[#28485A] font-bold">
+        <span className="w-5 h-5 border-2 border-[#A9CDE0] border-t-transparent rounded-full animate-spin mr-3" />
         Loading pending approval requests...
       </div>
     );
   }
 
   return (
-    <div className="space-y-6 animate-fadeIn text-slate-800">
+    <div className="space-y-6 animate-fadeIn text-[#28485A]">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h1 className="page-title text-2xl sm:text-3xl text-slate-900">Disbursement Approvals</h1>
-          <p className="text-xs sm:text-sm text-slate-600 font-medium mt-1">
+          <h1 className="page-title text-2xl sm:text-3xl text-[#28485A]">Disbursement Approvals</h1>
+          <p className="text-xs sm:text-sm text-[#607887] font-medium mt-1">
             {inspections.length} construction stage inspections awaiting HQ administrative sign-off
           </p>
         </div>
@@ -66,22 +66,22 @@ export default function Approvals() {
           {inspections.map((insp) => (
             <div
               key={insp._id}
-              className="card p-5 bg-[#f8fafd] border border-[#d8e2ec] hover:border-indigo-300 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-all"
+              className="card p-5 border border-white/50 hover:border-[#A9CDE0] shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-all"
             >
               <div
                 className="flex-1 cursor-pointer"
                 onClick={() => navigate(`/inspections/${insp._id}`)}
               >
                 <div className="flex items-center gap-3.5">
-                  <div className="w-12 h-12 rounded-2xl bg-indigo-50 border border-indigo-200 flex items-center justify-center text-xl flex-shrink-0">
+                  <div className="w-12 h-12 rounded-2xl bg-white/40 border border-white/60 flex items-center justify-center text-xl flex-shrink-0 shadow-xs backdrop-blur-md">
                     🏠
                   </div>
                   <div>
-                    <p className="text-base font-extrabold text-slate-900">
+                    <p className="text-base font-extrabold text-[#28485A]">
                       {insp.beneficiaryId?.name || 'Unnamed Beneficiary'}
                     </p>
-                    <p className="text-xs text-slate-600 font-medium mt-0.5">
-                      Village: <strong className="text-slate-800">{insp.beneficiaryId?.village}</strong> • Stage: <strong className="text-indigo-700">{insp.officerSelectedStage}</strong> • Inspector: {insp.officerId?.name || 'Field Officer'}
+                    <p className="text-xs text-[#607887] font-medium mt-0.5">
+                      Village: <strong className="text-[#28485A]">{insp.beneficiaryId?.village}</strong> • Stage: <strong className="text-[#28485A]">{insp.officerSelectedStage}</strong> • Inspector: {insp.officerId?.name || 'Field Officer'}
                     </p>
                   </div>
                 </div>
@@ -90,7 +90,7 @@ export default function Approvals() {
               <div className="flex items-center gap-2.5 flex-wrap">
                 <RiskBadge score={insp.riskScore?.score} level={insp.riskScore?.level} />
                 {insp.dualEvidenceSynthesis?.finalVerdict === 'DUAL_CONSENSUS_VERIFIED' && (
-                  <span className="badge bg-emerald-50 text-emerald-800 border-emerald-300 font-bold text-[11px]">
+                  <span className="badge badge-teal font-bold text-[11px]">
                     ⚖️ Dual Consensus
                   </span>
                 )}
@@ -100,7 +100,7 @@ export default function Approvals() {
                   </span>
                 )}
                 {insp.dualEvidenceSynthesis?.finalVerdict === 'MEDIA_DISCREPANCY_FLAGGED' && (
-                  <span className="badge bg-amber-50 text-amber-800 border-amber-300 font-bold text-[11px]">
+                  <span className="badge badge-lavender font-bold text-[11px]">
                     ⚠️ Stage Discrepancy
                   </span>
                 )}
@@ -109,20 +109,20 @@ export default function Approvals() {
                 )}
                 <button
                   onClick={() => handleQuickReview(insp._id, 'verified')}
-                  className="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs rounded-xl font-bold transition-all shadow-xs"
+                  className="px-3.5 py-2 btn-teal text-[#28485A] text-xs rounded-xl font-bold transition-all shadow-xs"
                 >
                   ✓ Approve Stage
                 </button>
                 <button
                   onClick={() => handleQuickReview(insp._id, 'reinspection')}
-                  className="px-3 py-2 bg-amber-500 hover:bg-amber-600 text-white text-xs rounded-xl font-bold transition-all shadow-xs"
+                  className="px-3.5 py-2 bg-amber-500/80 hover:bg-amber-500 text-white text-xs rounded-xl font-bold transition-all shadow-xs"
                   title="Request Re-inspection"
                 >
                   🔄 Re-inspect
                 </button>
                 <button
                   onClick={() => handleQuickReview(insp._id, 'rejected')}
-                  className="px-3 py-2 bg-rose-600 hover:bg-rose-700 text-white text-xs rounded-xl font-bold transition-all shadow-xs"
+                  className="px-3.5 py-2 bg-rose-500/80 hover:bg-rose-500 text-white text-xs rounded-xl font-bold transition-all shadow-xs"
                   title="Reject Inspection"
                 >
                   ✕ Reject

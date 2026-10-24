@@ -25,10 +25,10 @@ function ProtectedRoute({ children, roleRequired }) {
 
   if (authChecking) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#050814] text-white">
-        <div className="flex items-center gap-3 p-4 bg-[#0d1230]/90 rounded-2xl shadow-xl border border-indigo-500/30">
-          <span className="w-5 h-5 border-2 border-indigo-400 border-t-transparent rounded-full animate-spin" />
-          <span className="text-sm font-bold text-indigo-200">Verifying Government Clearance...</span>
+      <div className="min-h-screen flex items-center justify-center bg-glass-canvas">
+        <div className="flex items-center gap-3 p-5 rounded-2xl card border border-white/60 shadow-glass">
+          <span className="w-5 h-5 border-2 border-[#A9CDE0] border-t-[#28485A] rounded-full animate-spin" />
+          <span className="text-sm font-bold text-[#28485A] font-mono">Verifying Government Clearance...</span>
         </div>
       </div>
     );
@@ -54,10 +54,14 @@ function AppRoutes() {
 
   if (authChecking) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#050814] text-white">
-        <div className="flex items-center gap-3 p-4 bg-[#0d1230]/90 rounded-2xl shadow-xl border border-indigo-500/30">
-          <span className="w-5 h-5 border-2 border-indigo-400 border-t-transparent rounded-full animate-spin" />
-          <span className="text-sm font-bold text-indigo-200">Loading Smart-Gram Verify...</span>
+      <div className="min-h-screen flex items-center justify-center bg-glass-canvas">
+        <div className="flex flex-col items-center gap-4 p-8 rounded-3xl card border border-white/60 shadow-glass">
+          <div className="w-12 h-12 rounded-2xl bg-[rgba(169,205,224,0.45)] border border-white/60 flex items-center justify-center text-2xl">🏛️</div>
+          <div className="flex items-center gap-3">
+            <span className="w-5 h-5 border-2 border-[#A9CDE0] border-t-[#28485A] rounded-full animate-spin" />
+            <span className="text-sm font-bold text-[#28485A] font-mono">Loading Smart-Gram Verify...</span>
+          </div>
+          <p className="text-xs text-[#607887] font-medium">PMAY-G Gov-Tech Platform</p>
         </div>
       </div>
     );

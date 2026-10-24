@@ -26,23 +26,23 @@ export default function AuditLogs() {
   };
 
   const actionColors = {
-    INSPECTION_SUBMITTED: 'bg-blue-50 text-blue-800 border-blue-200',
-    INSPECTION_VERIFIED: 'bg-emerald-50 text-emerald-800 border-emerald-200',
-    INSPECTION_REJECTED: 'bg-rose-50 text-rose-800 border-rose-200',
-    INSPECTION_REINSPECTION: 'bg-amber-50 text-amber-800 border-amber-200',
-    BENEFICIARY_CREATED: 'bg-purple-50 text-purple-800 border-purple-200',
-    USER_LOGIN: 'bg-slate-100 text-slate-800 border-slate-200',
-    USER_REGISTERED: 'bg-indigo-50 text-indigo-800 border-indigo-200',
-    INSTALLMENT_APPROVED: 'bg-emerald-50 text-emerald-800 border-emerald-200',
-    DATABASE_SEEDED: 'bg-slate-100 text-slate-800 border-slate-200',
+    INSPECTION_SUBMITTED: 'badge-sky',
+    INSPECTION_VERIFIED: 'badge-teal',
+    INSPECTION_REJECTED: 'badge-critical',
+    INSPECTION_REINSPECTION: 'badge-medium',
+    BENEFICIARY_CREATED: 'badge-lavender',
+    USER_LOGIN: 'badge-sky',
+    USER_REGISTERED: 'badge-teal',
+    INSTALLMENT_APPROVED: 'badge-teal',
+    DATABASE_SEEDED: 'badge-lavender',
   };
 
   return (
-    <div className="space-y-6 animate-fadeIn text-slate-800">
+    <div className="space-y-6 animate-fadeIn text-[#28485A]">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h1 className="page-title text-2xl sm:text-3xl text-slate-900">Immutable Audit Trail</h1>
-          <p className="text-xs sm:text-sm text-slate-600 font-medium mt-1">
+          <h1 className="page-title text-2xl sm:text-3xl text-[#28485A]">Immutable Audit Trail</h1>
+          <p className="text-xs sm:text-sm text-[#607887] font-medium mt-1">
             Cryptographically sealed system event log documenting every login, inspection, and stage disbursement
           </p>
         </div>
@@ -51,10 +51,10 @@ export default function AuditLogs() {
         </button>
       </div>
 
-      <div className="card p-0 overflow-hidden bg-[#f8fafd] border border-[#d8e2ec] shadow-sm">
+      <div className="card p-0 overflow-hidden border border-white/50 shadow-sm">
         {loading ? (
-          <div className="text-center py-16 text-slate-700 font-bold">
-            <span className="w-5 h-5 border-2 border-indigo-600 border-t-transparent rounded-full animate-spin inline-block mr-2" />
+          <div className="text-center py-16 text-[#28485A] font-bold">
+            <span className="w-5 h-5 border-2 border-[#A9CDE0] border-t-transparent rounded-full animate-spin inline-block mr-2" />
             Loading cryptographic audit trail...
           </div>
         ) : logs.length === 0 ? (
@@ -64,30 +64,30 @@ export default function AuditLogs() {
             message="All administrative and field actions will be logged here automatically."
           />
         ) : (
-          <div className="divide-y divide-slate-100">
+          <div className="divide-y divide-white/40">
             {logs.map((log) => (
               <div
                 key={log._id}
-                className="flex items-center gap-4 px-5 py-3.5 hover:bg-slate-50/80 transition-colors"
+                className="flex items-center gap-4 px-5 py-3.5 hover:bg-white/35 transition-colors"
               >
-                <div className="w-2.5 h-2.5 rounded-full bg-indigo-600 flex-shrink-0" />
+                <div className="w-2.5 h-2.5 rounded-full bg-[#86C8C5] flex-shrink-0" />
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
                     <span
                       className={`badge text-[11px] font-bold ${
-                        actionColors[log.action] || 'bg-slate-100 text-slate-800 border-slate-200'
+                        actionColors[log.action] || 'badge-sky'
                       }`}
                     >
                       {log.action}
                     </span>
-                    <span className="text-xs font-bold text-slate-700">{log.entityType}</span>
+                    <span className="text-xs font-bold text-[#28485A]">{log.entityType}</span>
                   </div>
-                  <p className="text-xs text-slate-500 font-medium mt-1">
-                    Operated by: <strong className="text-slate-900">{log.userName || log.userId?.name || 'System'}</strong> • {new Date(log.createdAt).toLocaleString('en-IN')}
+                  <p className="text-xs text-[#607887] font-medium mt-1">
+                    Operated by: <strong className="text-[#28485A]">{log.userName || log.userId?.name || 'System'}</strong> • {new Date(log.createdAt).toLocaleString('en-IN')}
                   </p>
                 </div>
                 {log.details && (
-                  <div className="text-xs text-slate-600 font-mono bg-slate-50 px-2.5 py-1 rounded-lg border border-slate-200 max-w-sm truncate hidden md:block">
+                  <div className="text-xs text-[#607887] font-mono bg-white/40 px-2.5 py-1 rounded-lg border border-white/50 max-w-sm truncate hidden md:block">
                     {typeof log.details === 'object' ? JSON.stringify(log.details) : log.details}
                   </div>
                 )}
@@ -106,7 +106,7 @@ export default function AuditLogs() {
           >
             ← Previous
           </button>
-          <span className="text-xs font-bold text-slate-700">
+          <span className="text-xs font-bold text-[#28485A]">
             Page {page} of {totalPages}
           </span>
           <button

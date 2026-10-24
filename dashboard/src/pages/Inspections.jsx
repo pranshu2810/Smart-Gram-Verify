@@ -32,11 +32,11 @@ export default function Inspections() {
   };
 
   return (
-    <div className="space-y-6 animate-fadeIn text-slate-800">
+    <div className="space-y-6 animate-fadeIn text-[#28485A]">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h1 className="page-title text-2xl sm:text-3xl text-slate-900">Inspection Audit</h1>
-          <p className="text-xs sm:text-sm text-slate-600 font-medium mt-1">
+          <h1 className="page-title text-2xl sm:text-3xl text-[#28485A]">Inspection Audit</h1>
+          <p className="text-xs sm:text-sm text-[#607887] font-medium mt-1">
             Complete registry of field inspection submissions with automated AI verification results
           </p>
         </div>
@@ -75,10 +75,10 @@ export default function Inspections() {
       </div>
 
       {/* Table */}
-      <div className="card p-0 overflow-hidden bg-[#f8fafd] border border-[#d8e2ec] shadow-sm">
+      <div className="card p-0 overflow-hidden border border-white/50 shadow-sm">
         {loading ? (
-          <div className="text-center py-16 text-slate-700 font-bold">
-            <span className="w-5 h-5 border-2 border-indigo-600 border-t-transparent rounded-full animate-spin inline-block mr-2" />
+          <div className="text-center py-16 text-[#28485A] font-bold">
+            <span className="w-5 h-5 border-2 border-[#A9CDE0] border-t-transparent rounded-full animate-spin inline-block mr-2" />
             Loading inspection audits...
           </div>
         ) : inspections.length === 0 ? (
@@ -89,43 +89,49 @@ export default function Inspections() {
           />
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead className="bg-slate-50 border-b border-slate-200">
+            <table className="glass-table w-full text-sm">
+              <thead>
                 <tr>
-                  <th className="text-left py-3.5 px-4 text-xs font-bold text-slate-800">Beneficiary</th>
-                  <th className="text-left py-3.5 px-4 text-xs font-bold text-slate-800">Village GP</th>
-                  <th className="text-left py-3.5 px-4 text-xs font-bold text-slate-800">Officer Stage</th>
-                  <th className="text-left py-3.5 px-4 text-xs font-bold text-slate-800">AI Detected</th>
-                  <th className="text-left py-3.5 px-4 text-xs font-bold text-slate-800">Mismatch Flag</th>
-                  <th className="text-left py-3.5 px-4 text-xs font-bold text-slate-800">Geofence</th>
-                  <th className="text-left py-3.5 px-4 text-xs font-bold text-slate-800">Risk Assessment</th>
-                  <th className="text-left py-3.5 px-4 text-xs font-bold text-slate-800">Review Status</th>
-                  <th className="text-left py-3.5 px-4 text-xs font-bold text-slate-800">Date Recorded</th>
+                  <th className="text-left py-3.5 px-4 text-xs font-bold text-[#28485A]">Beneficiary</th>
+                  <th className="text-left py-3.5 px-4 text-xs font-bold text-[#28485A]">Village GP</th>
+                  <th className="text-left py-3.5 px-4 text-xs font-bold text-[#28485A]">Officer Stage</th>
+                  <th className="text-left py-3.5 px-4 text-xs font-bold text-[#28485A]">AI Detected</th>
+                  <th className="text-left py-3.5 px-4 text-xs font-bold text-[#28485A]">Mismatch Flag</th>
+                  <th className="text-left py-3.5 px-4 text-xs font-bold text-[#28485A]">Geofence</th>
+                  <th className="text-left py-3.5 px-4 text-xs font-bold text-[#28485A]">Risk Assessment</th>
+                  <th className="text-left py-3.5 px-4 text-xs font-bold text-[#28485A]">Review Status</th>
+                  <th className="text-left py-3.5 px-4 text-xs font-bold text-[#28485A]">Date Recorded</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-white/40">
                 {inspections.map((insp) => (
                   <tr
                     key={insp._id}
                     onClick={() => navigate(`/inspections/${insp._id}`)}
-                    className="hover:bg-indigo-50/40 cursor-pointer transition-colors"
+                    className="hover:bg-white/35 cursor-pointer transition-colors"
                   >
-                    <td className="py-3.5 px-4 font-bold text-slate-900">{insp.beneficiaryId?.name || '—'}</td>
-                    <td className="py-3.5 px-4 text-slate-700 font-medium">{insp.beneficiaryId?.village || '—'}</td>
-                    <td className="py-3.5 px-4 font-semibold text-slate-800">{insp.officerSelectedStage}</td>
-                    <td className="py-3.5 px-4 text-indigo-700 font-bold">{insp.aiDetectedStage || 'Analyzing...'}</td>
+                    <td className="py-3.5 px-4 font-bold text-[#28485A]">{insp.beneficiaryId?.name || '—'}</td>
+                    <td className="py-3.5 px-4 text-[#607887] font-medium">{insp.beneficiaryId?.village || '—'}</td>
+                    <td className="py-3.5 px-4 font-semibold text-[#28485A]">{insp.officerSelectedStage}</td>
+                    <td className="py-3.5 px-4 text-[#28485A] font-bold">{insp.aiDetectedStage || 'Analyzing...'}</td>
                     <td className="py-3.5 px-4">
                       {insp.stageMismatch ? (
                         <span className="badge badge-critical">AI Mismatch</span>
                       ) : (
-                        <span className="badge badge-verified">✓ Consistent</span>
+                        <span className="badge badge-teal">✓ Consistent</span>
                       )}
                     </td>
                     <td className="py-3.5 px-4">
                       {insp.gpsVerification?.withinFence ? (
-                        <span className="text-emerald-700 text-xs font-bold">✓ Inside Fence</span>
+                        <span className="text-[#28485A] text-xs font-bold flex items-center gap-1">
+                          <span className="w-2 h-2 rounded-full bg-[#86C8C5]" />
+                          Inside Fence
+                        </span>
                       ) : (
-                        <span className="text-rose-700 text-xs font-bold">✕ Outside ({insp.gpsVerification?.distance || 0}m)</span>
+                        <span className="text-rose-700 text-xs font-bold flex items-center gap-1">
+                          <span className="w-2 h-2 rounded-full bg-rose-500" />
+                          Outside ({insp.gpsVerification?.distance || 0}m)
+                        </span>
                       )}
                     </td>
                     <td className="py-3.5 px-4">
@@ -134,7 +140,7 @@ export default function Inspections() {
                     <td className="py-3.5 px-4">
                       <StatusBadge status={insp.status} />
                     </td>
-                    <td className="py-3.5 px-4 text-slate-500 text-xs font-medium">
+                    <td className="py-3.5 px-4 text-[#607887] text-xs font-medium">
                       {new Date(insp.createdAt).toLocaleDateString('en-IN')}
                     </td>
                   </tr>
@@ -154,7 +160,7 @@ export default function Inspections() {
           >
             ← Previous
           </button>
-          <span className="text-xs font-bold text-slate-700">
+          <span className="text-xs font-bold text-[#28485A]">
             Page {page} of {totalPages}
           </span>
           <button

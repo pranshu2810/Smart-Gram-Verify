@@ -130,11 +130,11 @@ export default function Beneficiaries() {
   };
 
   return (
-    <div className="space-y-6 animate-fadeIn text-slate-800">
+    <div className="space-y-6 animate-fadeIn text-[#28485A]">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h1 className="page-title text-2xl sm:text-3xl text-slate-900">Beneficiary Directory</h1>
-          <p className="text-xs sm:text-sm text-slate-600 font-medium mt-1">
+          <h1 className="page-title text-2xl sm:text-3xl text-[#28485A]">Beneficiary Directory</h1>
+          <p className="text-xs sm:text-sm text-[#607887] font-medium mt-1">
             Official PMAY-G registry of sanctioned rural housing households
           </p>
         </div>
@@ -166,36 +166,36 @@ export default function Beneficiaries() {
 
       {/* Create Form */}
       {showForm && (
-        <form onSubmit={handleCreate} className="card p-6 bg-[#f8fafd] border border-[#d8e2ec] shadow-md animate-fadeIn">
-          <div className="flex items-center justify-between mb-4 border-b border-[#d8e2ec] pb-3">
+        <form onSubmit={handleCreate} className="card p-6 border border-white/50 shadow-md animate-fadeIn">
+          <div className="flex items-center justify-between mb-4 border-b border-white/40 pb-3">
             <div>
-              <h3 className="text-base font-display font-bold text-slate-900">Register New Sanctioned Household</h3>
-              <p className="text-xs text-slate-600 font-medium mt-0.5">Enrolls applicant into the PMAY-G verification and stage disbursement lifecycle</p>
+              <h3 className="text-base font-display font-bold text-[#28485A]">Register New Sanctioned Household</h3>
+              <p className="text-xs text-[#607887] font-medium mt-0.5">Enrolls applicant into the PMAY-G verification and stage disbursement lifecycle</p>
             </div>
             <button
               type="button"
               onClick={handleAutoGPS}
-              className="text-xs px-3 py-1.5 rounded-xl bg-emerald-50 text-emerald-800 font-bold border border-emerald-200 hover:bg-emerald-100 transition-all flex items-center gap-1"
+              className="text-xs px-3 py-1.5 rounded-xl bg-[#86C8C5]/20 text-[#28485A] font-bold border border-[#86C8C5]/50 hover:bg-[#86C8C5]/30 transition-all flex items-center gap-1 backdrop-blur-xs"
             >
               📍 Auto-Detect GPS
             </button>
           </div>
 
           {formError && (
-            <div className="mb-4 p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs font-bold">
+            <div className="mb-4 p-3.5 rounded-xl bg-rose-100/50 border border-rose-300/60 text-rose-800 text-xs font-bold backdrop-blur-xs">
               ⚠️ {formError}
             </div>
           )}
 
           {formSuccess && (
-            <div className="mb-4 p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold">
+            <div className="mb-4 p-3.5 rounded-xl bg-[#86C8C5]/25 border border-[#86C8C5]/60 text-[#28485A] text-xs font-bold backdrop-blur-xs">
               {formSuccess}
             </div>
           )}
 
           <div className="grid md:grid-cols-3 gap-4">
             <div>
-              <label className="text-xs font-bold text-slate-700 mb-1 block">Full Name *</label>
+              <label className="text-xs font-bold text-[#28485A] mb-1 block">Full Name *</label>
               <input
                 type="text"
                 placeholder="e.g. Ramesh Kumar"
@@ -207,7 +207,7 @@ export default function Beneficiaries() {
             </div>
 
             <div>
-              <label className="text-xs font-bold text-slate-700 mb-1 block">Father / Husband's Name *</label>
+              <label className="text-xs font-bold text-[#28485A] mb-1 block">Father / Husband's Name *</label>
               <input
                 type="text"
                 placeholder="e.g. Ramdas Ahirwar"
@@ -219,7 +219,7 @@ export default function Beneficiaries() {
             </div>
 
             <div>
-              <label className="text-xs font-bold text-slate-700 mb-1 block">Household ID (Optional)</label>
+              <label className="text-xs font-bold text-[#28485A] mb-1 block">Household ID (Optional)</label>
               <input
                 type="text"
                 placeholder="Auto-generated if left blank"
@@ -230,7 +230,7 @@ export default function Beneficiaries() {
             </div>
 
             <div>
-              <label className="text-xs font-bold text-slate-700 mb-1 block">Aadhaar (Last 4 Digits or Full)</label>
+              <label className="text-xs font-bold text-[#28485A] mb-1 block">Aadhaar (Last 4 Digits or Full)</label>
               <input
                 type="text"
                 maxLength={14}
@@ -242,7 +242,7 @@ export default function Beneficiaries() {
             </div>
 
             <div>
-              <label className="text-xs font-bold text-slate-700 mb-1 block">Mobile Phone</label>
+              <label className="text-xs font-bold text-[#28485A] mb-1 block">Mobile Phone</label>
               <input
                 type="text"
                 maxLength={10}
@@ -254,7 +254,7 @@ export default function Beneficiaries() {
             </div>
 
             <div>
-              <label className="text-xs font-bold text-slate-700 mb-1 block">Social Category</label>
+              <label className="text-xs font-bold text-[#28485A] mb-1 block">Social Category</label>
               <select
                 value={form.category}
                 onChange={(e) => setForm((p) => ({ ...p, category: e.target.value }))}
@@ -267,7 +267,7 @@ export default function Beneficiaries() {
             </div>
 
             <div>
-              <label className="text-xs font-bold text-slate-700 mb-1 block">Gram Panchayat / Village *</label>
+              <label className="text-xs font-bold text-[#28485A] mb-1 block">Gram Panchayat / Village *</label>
               <input
                 type="text"
                 placeholder="e.g. Barkheda"
@@ -279,7 +279,7 @@ export default function Beneficiaries() {
             </div>
 
             <div>
-              <label className="text-xs font-bold text-slate-700 mb-1 block">Block *</label>
+              <label className="text-xs font-bold text-[#28485A] mb-1 block">Block *</label>
               <input
                 type="text"
                 placeholder="e.g. Berasia"
@@ -291,7 +291,7 @@ export default function Beneficiaries() {
             </div>
 
             <div>
-              <label className="text-xs font-bold text-slate-700 mb-1 block">District *</label>
+              <label className="text-xs font-bold text-[#28485A] mb-1 block">District *</label>
               <input
                 type="text"
                 placeholder="e.g. Bhopal"
@@ -303,7 +303,7 @@ export default function Beneficiaries() {
             </div>
 
             <div>
-              <label className="text-xs font-bold text-slate-700 mb-1 block">Site Address / Landmark *</label>
+              <label className="text-xs font-bold text-[#28485A] mb-1 block">Site Address / Landmark *</label>
               <input
                 type="text"
                 placeholder="e.g. Near Primary School, Ward 4"
@@ -315,7 +315,7 @@ export default function Beneficiaries() {
             </div>
 
             <div>
-              <label className="text-xs font-bold text-slate-700 mb-1 block">Geofence Latitude (GPS)</label>
+              <label className="text-xs font-bold text-[#28485A] mb-1 block">Geofence Latitude (GPS)</label>
               <input
                 type="text"
                 value={form['registeredLocation.latitude']}
@@ -325,7 +325,7 @@ export default function Beneficiaries() {
             </div>
 
             <div>
-              <label className="text-xs font-bold text-slate-700 mb-1 block">Geofence Longitude (GPS)</label>
+              <label className="text-xs font-bold text-[#28485A] mb-1 block">Geofence Longitude (GPS)</label>
               <input
                 type="text"
                 value={form['registeredLocation.longitude']}
@@ -335,7 +335,7 @@ export default function Beneficiaries() {
             </div>
           </div>
 
-          <div className="mt-6 pt-4 border-t border-[#d8e2ec] flex gap-3">
+          <div className="mt-6 pt-4 border-t border-white/40 flex gap-3">
             <button
               type="submit"
               disabled={submitting}
@@ -355,10 +355,10 @@ export default function Beneficiaries() {
       )}
 
       {/* Table */}
-      <div className="card p-0 overflow-hidden bg-[#f8fafd] border border-[#d8e2ec] shadow-sm">
+      <div className="card p-0 overflow-hidden border border-white/50 shadow-sm">
         {loading ? (
-          <div className="text-center py-16 text-slate-600 font-bold">
-            <span className="w-5 h-5 border-2 border-indigo-600 border-t-transparent rounded-full animate-spin inline-block mr-2" />
+          <div className="text-center py-16 text-[#28485A] font-bold">
+            <span className="w-5 h-5 border-2 border-[#A9CDE0] border-t-transparent rounded-full animate-spin inline-block mr-2" />
             Loading beneficiary registry...
           </div>
         ) : beneficiaries.length === 0 ? (
@@ -369,20 +369,20 @@ export default function Beneficiaries() {
           />
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead className="bg-[#edf2f7] border-b border-[#d8e2ec]">
+            <table className="glass-table w-full text-sm">
+              <thead>
                 <tr>
-                  <th className="text-left py-3.5 px-4 text-xs font-extrabold text-slate-800">Beneficiary & Household</th>
-                  <th className="text-left py-3.5 px-4 text-xs font-extrabold text-slate-800">Village GP</th>
-                  <th className="text-left py-3.5 px-4 text-xs font-extrabold text-slate-800">Gov Status</th>
-                  <th className="text-left py-3.5 px-4 text-xs font-extrabold text-slate-800">Active Milestone</th>
-                  <th className="text-left py-3.5 px-4 text-xs font-extrabold text-slate-800">📸 Photo AI</th>
-                  <th className="text-left py-3.5 px-4 text-xs font-extrabold text-slate-800">🎥 Video AI (Qwen)</th>
-                  <th className="text-left py-3.5 px-4 text-xs font-extrabold text-slate-800">⚖️ Dual Synthesized Risk</th>
-                  <th className="text-right py-3.5 px-4 text-xs font-extrabold text-slate-800">AI Forensics Actions</th>
+                  <th className="text-left py-3.5 px-4 text-xs font-extrabold text-[#28485A]">Beneficiary & Household</th>
+                  <th className="text-left py-3.5 px-4 text-xs font-extrabold text-[#28485A]">Village GP</th>
+                  <th className="text-left py-3.5 px-4 text-xs font-extrabold text-[#28485A]">Gov Status</th>
+                  <th className="text-left py-3.5 px-4 text-xs font-extrabold text-[#28485A]">Active Milestone</th>
+                  <th className="text-left py-3.5 px-4 text-xs font-extrabold text-[#28485A]">📸 Photo AI</th>
+                  <th className="text-left py-3.5 px-4 text-xs font-extrabold text-[#28485A]">🎥 Video AI (Qwen)</th>
+                  <th className="text-left py-3.5 px-4 text-xs font-extrabold text-[#28485A]">⚖️ Dual Synthesized Risk</th>
+                  <th className="text-right py-3.5 px-4 text-xs font-extrabold text-[#28485A]">AI Forensics Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-200">
+              <tbody className="divide-y divide-white/40">
                 {beneficiaries.map((b) => {
                   const insp = b.latestInspection;
                   const synth = insp?.dualEvidenceSynthesis || null;
@@ -397,9 +397,9 @@ export default function Beneficiaries() {
                   const dualScore = synth?.finalCompositeScore ?? (insp?.riskScore?.score ?? null);
 
                   return (
-                    <tr key={b._id} className="hover:bg-indigo-50/40 transition-colors">
+                    <tr key={b._id} className="hover:bg-white/35 transition-colors">
                       <td className="py-3.5 px-4">
-                        <div className="font-extrabold text-slate-900 flex items-center gap-1.5">
+                        <div className="font-extrabold text-[#28485A] flex items-center gap-1.5">
                           <span>{b.name}</span>
                           {b.isDuplicateSuspect && (
                             <span className="text-[10px] bg-rose-100 text-rose-700 px-1.5 py-0.2 rounded font-bold">
@@ -408,17 +408,17 @@ export default function Beneficiaries() {
                           )}
                         </div>
                         <div className="flex items-center gap-2 mt-0.5">
-                          <span className="font-mono text-xs font-bold text-indigo-700">
+                          <span className="font-mono text-xs font-bold text-[#28485A]">
                             {b.householdId || 'Pending ID'}
                           </span>
-                          <span className="text-slate-400 text-xs">•</span>
-                          <span className="text-xs text-slate-500 font-medium">{b.fatherName || 'S/o Unknown'}</span>
+                          <span className="text-white/60 text-xs">•</span>
+                          <span className="text-xs text-[#607887] font-medium">{b.fatherName || 'S/o Unknown'}</span>
                         </div>
                       </td>
 
                       <td className="py-3.5 px-4">
-                        <div className="font-bold text-slate-800 text-xs">{b.village}</div>
-                        <div className="text-[11px] text-slate-500 font-medium">{b.block}, {b.district}</div>
+                        <div className="font-bold text-[#28485A] text-xs">{b.village}</div>
+                        <div className="text-[11px] text-[#607887] font-medium">{b.block}, {b.district}</div>
                       </td>
 
                       <td className="py-3.5 px-4">
@@ -426,7 +426,7 @@ export default function Beneficiaries() {
                       </td>
 
                       <td className="py-3.5 px-4">
-                        <span className="px-2 py-0.5 rounded-md text-xs font-bold bg-slate-100 text-slate-800 border border-slate-200">
+                        <span className="badge badge-lavender">
                           {insp?.officerSelectedStage || 'Foundation'}
                         </span>
                       </td>
@@ -435,15 +435,15 @@ export default function Beneficiaries() {
                       <td className="py-3.5 px-4">
                         {photoRisk !== null ? (
                           <div className="flex items-center gap-1.5">
-                            <span className={`text-xs font-black font-mono ${photoRisk > 40 ? 'text-rose-600' : 'text-emerald-700'}`}>
+                            <span className={`text-xs font-black font-mono ${photoRisk > 40 ? 'text-rose-600' : 'text-[#28485A]'}`}>
                               {photoRisk}/100
                             </span>
-                            <span className="text-[10px] px-1.5 py-0.2 rounded bg-slate-100 text-slate-600 font-medium">
+                            <span className="text-[10px] px-1.5 py-0.2 rounded bg-white/40 text-[#607887] font-medium border border-white/50">
                               YOLOv8
                             </span>
                           </div>
                         ) : (
-                          <span className="text-xs text-slate-400 italic">No Photo</span>
+                          <span className="text-xs text-[#607887] italic">No Photo</span>
                         )}
                       </td>
 
@@ -451,15 +451,15 @@ export default function Beneficiaries() {
                       <td className="py-3.5 px-4">
                         {hasVideo && videoRisk !== null ? (
                           <div className="flex items-center gap-1.5">
-                            <span className={`text-xs font-black font-mono ${videoRisk > 40 ? 'text-rose-600' : 'text-emerald-700'}`}>
+                            <span className={`text-xs font-black font-mono ${videoRisk > 40 ? 'text-rose-600' : 'text-[#28485A]'}`}>
                               {videoRisk}/100
                             </span>
-                            <span className="text-[10px] px-1.5 py-0.2 rounded bg-purple-50 text-purple-700 font-bold border border-purple-200">
+                            <span className="badge badge-lavender">
                               Qwen VL
                             </span>
                           </div>
                         ) : (
-                          <span className="text-[11px] font-semibold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200 inline-block">
+                          <span className="text-[11px] font-semibold text-[#607887] bg-white/40 px-2 py-0.5 rounded border border-white/50 inline-block">
                             ⏳ Pending Video
                           </span>
                         )}
@@ -471,26 +471,26 @@ export default function Beneficiaries() {
                           <div>
                             <div className="flex items-center gap-2">
                               <span className={`text-sm font-black font-mono ${
-                                dualScore > 50 ? 'text-rose-600' : dualScore > 25 ? 'text-amber-600' : 'text-emerald-700'
+                                dualScore > 50 ? 'text-rose-600' : dualScore > 25 ? 'text-amber-600' : 'text-[#28485A]'
                               }`}>
                                 {dualScore}/100
                               </span>
                               <span className={`text-[10px] font-extrabold uppercase px-1.5 py-0.2 rounded ${
                                 (synth?.finalDecision === 'APPROVE' || dualScore <= 25)
-                                  ? 'bg-emerald-100 text-emerald-800'
+                                  ? 'badge-teal'
                                   : (synth?.finalDecision === 'REJECT' || dualScore > 50)
-                                  ? 'bg-rose-100 text-rose-800'
-                                  : 'bg-amber-100 text-amber-800'
+                                  ? 'badge-critical'
+                                  : 'badge-medium'
                               }`}>
                                 {synth?.finalDecision || (dualScore <= 25 ? 'APPROVE' : 'REVIEW')}
                               </span>
                             </div>
-                            <div className="text-[10px] text-slate-500 font-medium mt-0.5">
+                            <div className="text-[10px] text-[#607887] font-medium mt-0.5">
                               {hasVideo ? 'Cross-modal Dual Average' : 'Single Modal (Photo Only)'}
                             </div>
                           </div>
                         ) : (
-                          <span className="text-xs text-slate-400 italic">Pending Audit</span>
+                          <span className="text-xs text-[#607887] italic">Pending Audit</span>
                         )}
                       </td>
 
@@ -501,7 +501,7 @@ export default function Beneficiaries() {
                           <button
                             title="Inspect or upload walkthrough video for this beneficiary"
                             onClick={() => navigate(`/video-inspector?beneficiaryId=${b._id}&stage=${insp?.officerSelectedStage || 'Plinth'}`)}
-                            className="p-1.5 rounded-lg bg-purple-50 hover:bg-purple-100 text-purple-700 border border-purple-200 text-xs font-bold transition-all flex items-center gap-1"
+                            className="p-1.5 rounded-lg bg-white/40 hover:bg-[#B4B8D9]/30 text-[#28485A] border border-white/50 text-xs font-bold transition-all flex items-center gap-1 shadow-2xs"
                           >
                             <span>🎥</span>
                             <span className="hidden xl:inline">Video AI</span>
@@ -511,7 +511,7 @@ export default function Beneficiaries() {
                           <button
                             title="Reconstruct 3D Spatial Twin & LiDAR model for this house"
                             onClick={() => navigate(`/spatial-twin?beneficiaryId=${b._id}&stage=${insp?.officerSelectedStage || 'Plinth'}`)}
-                            className="p-1.5 rounded-lg bg-cyan-50 hover:bg-cyan-100 text-cyan-700 border border-cyan-200 text-xs font-bold transition-all flex items-center gap-1"
+                            className="p-1.5 rounded-lg bg-white/40 hover:bg-[#86C8C5]/30 text-[#28485A] border border-white/50 text-xs font-bold transition-all flex items-center gap-1 shadow-2xs"
                           >
                             <span>🏛️</span>
                             <span className="hidden xl:inline">3D Twin</span>
@@ -522,7 +522,7 @@ export default function Beneficiaries() {
                             <button
                               title="View Full Inspection Audit"
                               onClick={() => navigate(`/inspections/${insp._id}`)}
-                              className="p-1.5 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 text-xs font-bold transition-all"
+                              className="p-1.5 rounded-lg bg-white/40 hover:bg-[#A9CDE0]/40 text-[#28485A] border border-white/50 text-xs font-bold transition-all shadow-2xs"
                             >
                               🔍
                             </button>
@@ -530,7 +530,7 @@ export default function Beneficiaries() {
                             <button
                               title="View Beneficiary Details"
                               onClick={() => setSelectedDossier(b)}
-                              className="p-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-all"
+                              className="p-1.5 rounded-lg bg-white/40 hover:bg-white/60 text-[#28485A] border border-white/50 text-xs font-bold transition-all shadow-2xs"
                             >
                               📋
                             </button>
@@ -555,7 +555,7 @@ export default function Beneficiaries() {
           >
             ← Previous
           </button>
-          <span className="text-xs font-bold text-slate-700">
+          <span className="text-xs font-bold text-[#28485A]">
             Page {page} of {totalPages}
           </span>
           <button
@@ -570,44 +570,44 @@ export default function Beneficiaries() {
 
       {/* Beneficiary Dossier Modal */}
       {selectedDossier && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-fadeIn">
-          <div className="bg-white rounded-2xl max-w-xl w-full p-6 shadow-2xl border border-slate-200 space-y-4">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#28485A]/30 backdrop-blur-md animate-fadeIn">
+          <div className="card max-w-xl w-full p-6 shadow-2xl border border-white/60 space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-white/40">
               <div className="flex items-center gap-3">
                 <span className="text-2xl">👤</span>
                 <div>
-                  <h3 className="text-base font-extrabold text-slate-900">{selectedDossier.name}</h3>
-                  <p className="text-xs text-slate-500 font-mono">Household ID: {selectedDossier.householdId}</p>
+                  <h3 className="text-base font-extrabold text-[#28485A]">{selectedDossier.name}</h3>
+                  <p className="text-xs text-[#607887] font-mono">Household ID: {selectedDossier.householdId}</p>
                 </div>
               </div>
               <button
                 onClick={() => setSelectedDossier(null)}
-                className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold flex items-center justify-center"
+                className="w-8 h-8 rounded-full bg-white/40 hover:bg-white/60 text-[#28485A] font-bold flex items-center justify-center border border-white/50"
               >
                 ✕
               </button>
             </div>
 
             <div className="grid grid-cols-2 gap-3 text-xs">
-              <div className="p-3 bg-slate-50 rounded-xl">
-                <span className="text-slate-500 block">Father's Name</span>
-                <strong className="text-slate-800">{selectedDossier.fatherName}</strong>
+              <div className="p-3 bg-white/40 rounded-xl border border-white/50">
+                <span className="text-[#607887] block">Father's Name</span>
+                <strong className="text-[#28485A]">{selectedDossier.fatherName}</strong>
               </div>
-              <div className="p-3 bg-slate-50 rounded-xl">
-                <span className="text-slate-500 block">Gram Panchayat</span>
-                <strong className="text-slate-800">{selectedDossier.village}, {selectedDossier.block}</strong>
+              <div className="p-3 bg-white/40 rounded-xl border border-white/50">
+                <span className="text-[#607887] block">Gram Panchayat</span>
+                <strong className="text-[#28485A]">{selectedDossier.village}, {selectedDossier.block}</strong>
               </div>
-              <div className="p-3 bg-slate-50 rounded-xl">
-                <span className="text-slate-500 block">Social Category</span>
-                <strong className="text-slate-800">{selectedDossier.category}</strong>
+              <div className="p-3 bg-white/40 rounded-xl border border-white/50">
+                <span className="text-[#607887] block">Social Category</span>
+                <strong className="text-[#28485A]">{selectedDossier.category}</strong>
               </div>
-              <div className="p-3 bg-slate-50 rounded-xl">
-                <span className="text-slate-500 block">Gov Verification Status</span>
-                <strong className="text-emerald-700 font-bold">{selectedDossier.govVerificationStatus || 'Verified'}</strong>
+              <div className="p-3 bg-white/40 rounded-xl border border-white/50">
+                <span className="text-[#607887] block">Gov Verification Status</span>
+                <strong className="text-[#28485A] font-bold">{selectedDossier.govVerificationStatus || 'Verified'}</strong>
               </div>
             </div>
 
-            <div className="pt-3 border-t border-slate-100 flex gap-2">
+            <div className="pt-3 border-t border-white/40 flex gap-2">
               <button
                 onClick={() => {
                   const bId = selectedDossier._id;

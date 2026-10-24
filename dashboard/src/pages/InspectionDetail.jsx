@@ -127,13 +127,13 @@ export default function InspectionDetail() {
 
   return (
     <div className="space-y-5 animate-fadeIn max-w-5xl">
-      <button onClick={() => navigate(-1)} className="text-sm text-gray-500 hover:text-gray-700">← Back</button>
+      <button onClick={() => navigate(-1)} className="text-sm text-[#607887] hover:text-[#28485A] font-bold">← Back</button>
 
       {/* Header */}
       <div className="flex items-start justify-between">
         <div>
-          <h1 className="page-title">Inspection #{inspection._id?.slice(-6).toUpperCase()}</h1>
-          <p className="text-sm text-gray-500 mt-1">{ben.name} — {ben.village}, {ben.district}</p>
+          <h1 className="page-title text-2xl sm:text-3xl text-[#28485A]">Inspection #{inspection._id?.slice(-6).toUpperCase()}</h1>
+          <p className="text-sm text-[#607887] font-medium mt-1">{ben.name} — {ben.village}, {ben.district}</p>
         </div>
         <div className="flex items-center gap-3">
           <StatusBadge status={inspection.status} />
@@ -142,30 +142,30 @@ export default function InspectionDetail() {
       </div>
 
       {/* ⚖️ DUAL-EVIDENCE AI SYNTHESIS HERO CARD (Photo + Video Ensemble Average) */}
-      <div className={`card p-5 sm:p-6 border-2 shadow-md relative overflow-hidden transition-all ${
+      <div className={`card p-5 sm:p-6 border shadow-md relative overflow-hidden transition-all ${
         synth.finalVerdict === 'CRITICAL_FRAUD_FLAGGED'
-          ? 'bg-rose-50/40 border-rose-400'
+          ? 'bg-rose-100/40 border-rose-300'
           : synth.finalVerdict === 'MEDIA_DISCREPANCY_FLAGGED'
-          ? 'bg-amber-50/40 border-amber-400'
+          ? 'bg-[#B4B8D9]/30 border-[#B4B8D9]/60'
           : synth.finalVerdict === 'DUAL_CONSENSUS_VERIFIED'
-          ? 'bg-emerald-50/40 border-emerald-400'
-          : 'bg-[#f8fafd] border-indigo-200'
+          ? 'bg-[#86C8C5]/25 border-[#86C8C5]/60'
+          : 'border-white/50'
       }`}>
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-4 border-b border-slate-200/80">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-4 border-b border-white/40">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-indigo-600 text-white flex items-center justify-center text-2xl shadow-sm flex-shrink-0">
+            <div className="w-12 h-12 rounded-2xl bg-white/40 border border-white/60 text-[#28485A] flex items-center justify-center text-2xl shadow-xs backdrop-blur-md flex-shrink-0">
               ⚖️
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-xs uppercase tracking-wider font-extrabold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded-md border border-indigo-200">
+                <span className="text-xs uppercase tracking-wider font-extrabold text-[#28485A] bg-[#A9CDE0]/30 px-2 py-0.5 rounded-md border border-white/50">
                   Dual-Evidence AI Synthesis
                 </span>
-                <span className="text-[11px] text-slate-500 font-semibold font-mono">
+                <span className="text-[11px] text-[#607887] font-semibold font-mono">
                   Ensemble: Photo YOLOv8 + Video Qwen 2.5-VL
                 </span>
               </div>
-              <h2 className="text-lg sm:text-xl font-bold text-slate-900 mt-0.5">
+              <h2 className="text-lg sm:text-xl font-bold text-[#28485A] mt-0.5">
                 Composite Result: Image 📸 + Walkthrough Video 🎥
               </h2>
             </div>
@@ -173,23 +173,23 @@ export default function InspectionDetail() {
 
           <div>
             {synth.finalVerdict === 'DUAL_CONSENSUS_VERIFIED' && (
-              <span className="px-3.5 py-1.5 rounded-xl text-xs font-black bg-emerald-100 text-emerald-800 border border-emerald-300 shadow-xs flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse" />
+              <span className="badge badge-teal py-1.5 px-3.5 text-xs shadow-xs flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-[#86C8C5] animate-pulse" />
                 ✓ Dual-Consensus Verified
               </span>
             )}
             {synth.finalVerdict === 'CRITICAL_FRAUD_FLAGGED' && (
-              <span className="px-3.5 py-1.5 rounded-xl text-xs font-black bg-rose-100 text-rose-800 border border-rose-300 shadow-xs flex items-center gap-1.5 animate-pulse">
+              <span className="badge badge-critical py-1.5 px-3.5 text-xs shadow-xs flex items-center gap-1.5 animate-pulse">
                 <span>🚨</span> Critical Fraud Override
               </span>
             )}
             {synth.finalVerdict === 'MEDIA_DISCREPANCY_FLAGGED' && (
-              <span className="px-3.5 py-1.5 rounded-xl text-xs font-black bg-amber-100 text-amber-900 border border-amber-300 shadow-xs flex items-center gap-1.5">
+              <span className="badge badge-lavender py-1.5 px-3.5 text-xs shadow-xs flex items-center gap-1.5">
                 <span>⚠️</span> Modality Discrepancy
               </span>
             )}
             {(!['DUAL_CONSENSUS_VERIFIED', 'CRITICAL_FRAUD_FLAGGED', 'MEDIA_DISCREPANCY_FLAGGED'].includes(synth.finalVerdict)) && (
-              <span className="px-3.5 py-1.5 rounded-xl text-xs font-black bg-blue-100 text-blue-800 border border-blue-300 shadow-xs">
+              <span className="badge badge-sky py-1.5 px-3.5 text-xs shadow-xs">
                 ⚖️ Composite Evaluated
               </span>
             )}
@@ -199,35 +199,35 @@ export default function InspectionDetail() {
         {/* 3-Column Modality Breakdown & Average Gauge */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 mt-4">
           {/* Column 1: Photo Evidence AI */}
-          <div className="p-4 rounded-xl bg-white border border-slate-200 shadow-xs">
-            <div className="flex items-center justify-between pb-2 border-b border-slate-100">
-              <span className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+          <div className="p-4 rounded-xl bg-white/40 border border-white/50 shadow-xs backdrop-blur-sm">
+            <div className="flex items-center justify-between pb-2 border-b border-white/30">
+              <span className="text-xs font-bold text-[#28485A] flex items-center gap-1.5">
                 <span>📸</span> 1. Photo AI Analysis
               </span>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-100 text-slate-600">
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-white/40 text-[#607887]">
                 YOLOv8 + DeepGuard
               </span>
             </div>
             <div className="space-y-1.5 text-xs mt-2.5">
               <div className="flex justify-between">
-                <span className="text-slate-500">Detected Stage:</span>
-                <strong className="text-slate-800 font-bold">{synth.photoDetectedStage || '—'}</strong>
+                <span className="text-[#607887]">Detected Stage:</span>
+                <strong className="text-[#28485A] font-bold">{synth.photoDetectedStage || '—'}</strong>
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-500">DeepGuard Synthetic:</span>
-                <strong className={(ev.deepGuard?.deepGuardScore || 0) > 40 ? 'text-rose-600 font-bold' : 'text-emerald-700'}>
+                <span className="text-[#607887]">DeepGuard Synthetic:</span>
+                <strong className={(ev.deepGuard?.deepGuardScore || 0) > 40 ? 'text-rose-600 font-bold' : 'text-[#28485A]'}>
                   {ev.deepGuard?.deepGuardScore || 0}/100
                 </strong>
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-500">Stage Match:</span>
-                <strong className={ev.yolov8?.mismatch ? 'text-rose-600' : 'text-emerald-700'}>
+                <span className="text-[#607887]">Stage Match:</span>
+                <strong className={ev.yolov8?.mismatch ? 'text-rose-600' : 'text-[#28485A]'}>
                   {ev.yolov8?.mismatch ? '⚠️ Mismatch' : '✓ Matches Claim'}
                 </strong>
               </div>
-              <div className="pt-2 border-t border-slate-100 flex items-center justify-between">
-                <span className="font-bold text-slate-700">Photo Risk Score:</span>
-                <span className={`text-base font-extrabold ${synth.photoRiskScore > 40 ? 'text-rose-600' : 'text-emerald-700'}`}>
+              <div className="pt-2 border-t border-white/30 flex items-center justify-between">
+                <span className="font-bold text-[#28485A]">Photo Risk Score:</span>
+                <span className={`text-base font-extrabold ${synth.photoRiskScore > 40 ? 'text-rose-600' : 'text-[#28485A]'}`}>
                   {synth.photoRiskScore}/100
                 </span>
               </div>
@@ -235,56 +235,56 @@ export default function InspectionDetail() {
           </div>
 
           {/* Column 2: Video Evidence AI */}
-          <div className="p-4 rounded-xl bg-white border border-slate-200 shadow-xs">
-            <div className="flex items-center justify-between pb-2 border-b border-slate-100">
-              <span className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+          <div className="p-4 rounded-xl bg-white/40 border border-white/50 shadow-xs backdrop-blur-sm">
+            <div className="flex items-center justify-between pb-2 border-b border-white/30">
+              <span className="text-xs font-bold text-[#28485A] flex items-center gap-1.5">
                 <span>🎥</span> 2. Video AI Analysis
               </span>
               <span className={`text-[10px] font-mono px-2 py-0.5 rounded ${
-                hasRealVideo ? 'bg-purple-50 text-purple-700 font-bold' : 'bg-amber-50 text-amber-700 font-semibold'
+                hasRealVideo ? 'bg-[#B4B8D9]/40 text-[#28485A] font-bold' : 'bg-white/40 text-[#607887] font-semibold'
               }`}>
                 {hasRealVideo ? 'Qwen 2.5-VL + OpenCV' : '⏳ Awaiting Video'}
               </span>
             </div>
             <div className="space-y-1.5 text-xs mt-2.5">
               <div className="flex justify-between">
-                <span className="text-slate-500">Video Verdict:</span>
+                <span className="text-[#607887]">Video Verdict:</span>
                 {hasRealVideo ? (
                   <strong className={`font-mono text-[11px] truncate max-w-[140px] ${
                     video.verdict === 'SCREEN_RECORDING_FRAUD' || video.isAIGeneratedSuspect
                       ? 'text-rose-600'
                       : video.verdict === 'AUTHENTIC_PHYSICAL_SITE'
-                      ? 'text-emerald-700'
-                      : 'text-slate-600'
+                      ? 'text-[#28485A]'
+                      : 'text-[#607887]'
                   }`}>
                     {video.verdict || synth.videoVerdict || 'AUTHENTIC'}
                   </strong>
                 ) : (
-                  <span className="font-semibold text-amber-700 text-[11px] bg-amber-50 px-2 py-0.5 rounded">
+                  <span className="font-semibold text-[#607887] text-[11px] bg-white/40 px-2 py-0.5 rounded border border-white/40">
                     Pending Walkthrough
                   </span>
                 )}
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-500">Detected Milestone:</span>
-                <strong className="text-slate-800 font-bold">
+                <span className="text-[#607887]">Detected Milestone:</span>
+                <strong className="text-[#28485A] font-bold">
                   {hasRealVideo ? (video.detectedStage || synth.videoDetectedStage || '—') : 'Not Analyzed'}
                 </strong>
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-500">Optical Flow:</span>
-                <strong className="text-slate-700 font-mono text-[10px]">
+                <span className="text-[#607887]">Optical Flow:</span>
+                <strong className="text-[#28485A] font-mono text-[10px]">
                   {hasRealVideo ? (video.opticalFlowVerdict || 'NATURAL_HANDHELD') : '—'}
                 </strong>
               </div>
-              <div className="pt-2 border-t border-slate-100 flex items-center justify-between">
-                <span className="font-bold text-slate-700">Video Risk Score:</span>
+              <div className="pt-2 border-t border-white/30 flex items-center justify-between">
+                <span className="font-bold text-[#28485A]">Video Risk Score:</span>
                 {hasRealVideo && synth.videoRiskScore !== null && synth.videoRiskScore !== undefined ? (
-                  <span className={`text-base font-extrabold ${synth.videoRiskScore > 40 ? 'text-rose-600' : 'text-emerald-700'}`}>
+                  <span className={`text-base font-extrabold ${synth.videoRiskScore > 40 ? 'text-rose-600' : 'text-[#28485A]'}`}>
                     {synth.videoRiskScore}/100
                   </span>
                 ) : (
-                  <span className="text-[11px] font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200">
+                  <span className="text-[11px] font-bold text-[#607887] bg-white/40 px-2 py-0.5 rounded-md border border-white/50">
                     Pending Video Upload
                   </span>
                 )}
@@ -293,44 +293,44 @@ export default function InspectionDetail() {
           </div>
 
           {/* Column 3: Composite Average & Decision */}
-          <div className="p-4 rounded-xl bg-gradient-to-br from-indigo-50/80 to-blue-50/80 border border-indigo-200 shadow-xs flex flex-col justify-between">
+          <div className="p-4 rounded-xl bg-white/40 border border-white/50 shadow-xs backdrop-blur-sm flex flex-col justify-between">
             <div>
-              <div className="flex items-center justify-between pb-2 border-b border-indigo-100">
-                <span className="text-xs font-bold text-indigo-900 flex items-center gap-1.5">
+              <div className="flex items-center justify-between pb-2 border-b border-white/30">
+                <span className="text-xs font-bold text-[#28485A] flex items-center gap-1.5">
                   <span>⚖️</span> 3. Synthesized Average
                 </span>
-                <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-indigo-600 text-white">
+                <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-[#A9CDE0] text-[#28485A]">
                   {hasRealVideo ? 'Dual Modality Average' : 'Single Modality (Photo)'}
                 </span>
               </div>
 
               <div className="mt-2.5 space-y-1 text-xs">
-                <div className="flex justify-between text-slate-600">
+                <div className="flex justify-between text-[#607887]">
                   <span>{hasRealVideo ? 'Math Average:' : 'Modality Basis:'}</span>
                   {hasRealVideo && synth.videoRiskScore !== null ? (
-                    <span className="font-mono font-semibold">
+                    <span className="font-mono font-semibold text-[#28485A]">
                       ({synth.photoRiskScore} + {synth.videoRiskScore}) / 2 = <strong>{synth.mathematicalAverage}/100</strong>
                     </span>
                   ) : (
-                    <span className="font-semibold text-slate-700">
+                    <span className="font-semibold text-[#28485A]">
                       Photo Only ({synth.photoRiskScore}/100)
                     </span>
                   )}
                 </div>
-                <div className="flex justify-between text-slate-600">
+                <div className="flex justify-between text-[#607887]">
                   <span>Cross-Modal Agreement:</span>
                   {hasRealVideo ? (
-                    <strong className={synth.stageAgreement ? 'text-emerald-700' : 'text-amber-700'}>
+                    <strong className={synth.stageAgreement ? 'text-[#28485A]' : 'text-amber-700'}>
                       {synth.stageAgreement ? '✓ Photo & Video Agree' : '⚠️ Modality Mismatch (+15)'}
                     </strong>
                   ) : (
-                    <span className="text-slate-500 italic text-[11px]">Awaiting Walkthrough Video</span>
+                    <span className="text-[#607887] italic text-[11px]">Awaiting Walkthrough Video</span>
                   )}
                 </div>
-                <div className="flex justify-between text-slate-600">
+                <div className="flex justify-between text-[#607887]">
                   <span>Admin Directive:</span>
                   <strong className={`font-mono font-bold ${
-                    synth.finalDecision === 'APPROVE' ? 'text-emerald-700' : synth.finalDecision === 'REJECT' ? 'text-rose-600' : 'text-amber-700'
+                    synth.finalDecision === 'APPROVE' ? 'text-[#28485A]' : synth.finalDecision === 'REJECT' ? 'text-rose-600' : 'text-amber-700'
                   }`}>
                     {synth.finalDecision}
                   </strong>
@@ -338,18 +338,18 @@ export default function InspectionDetail() {
               </div>
             </div>
 
-            <div className="pt-3 border-t border-indigo-100 flex items-center justify-between mt-2">
+            <div className="pt-3 border-t border-white/30 flex items-center justify-between mt-2">
               <div>
-                <span className="text-[11px] font-bold text-indigo-900 block">Unified Risk Score:</span>
-                <span className="text-[10px] text-slate-500 font-mono">Governs DBT Release</span>
+                <span className="text-[11px] font-bold text-[#28485A] block">Unified Risk Score:</span>
+                <span className="text-[10px] text-[#607887] font-mono">Governs DBT Release</span>
               </div>
               <div className="text-right">
                 <span className={`text-2xl font-black ${
-                  synth.finalCompositeScore > 50 ? 'text-rose-600' : synth.finalCompositeScore > 25 ? 'text-amber-600' : 'text-emerald-700'
+                  synth.finalCompositeScore > 50 ? 'text-rose-600' : synth.finalCompositeScore > 25 ? 'text-amber-600' : 'text-[#28485A]'
                 }`}>
                   {synth.finalCompositeScore}/100
                 </span>
-                <span className="text-[10px] font-bold text-slate-500 block">
+                <span className="text-[10px] font-bold text-[#607887] block">
                   [{synth.finalRiskLevel}]
                 </span>
               </div>
@@ -641,21 +641,21 @@ export default function InspectionDetail() {
       </div>
 
       {/* 3D Spatial Digital Twin & LiDAR Studio Access Banner */}
-      <div className="card p-5 bg-gradient-to-r from-slate-900 via-slate-800 to-indigo-950 text-white border-0 shadow-xl rounded-2xl flex flex-col md:flex-row items-center justify-between gap-4">
+      <div className="card p-5 bg-white/40 border border-white/60 text-[#28485A] shadow-lg rounded-2xl flex flex-col md:flex-row items-center justify-between gap-4 backdrop-blur-md">
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-indigo-500/20 border border-indigo-400/30 flex items-center justify-center text-2xl flex-shrink-0 shadow-inner">
+          <div className="w-12 h-12 rounded-2xl bg-white/50 border border-white/60 flex items-center justify-center text-2xl flex-shrink-0 shadow-xs">
             🏛️
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h3 className="text-base font-extrabold text-white">
+              <h3 className="text-base font-extrabold text-[#28485A]">
                 3D Spatial Digital Twin &amp; LiDAR Metrology Studio
               </h3>
-              <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-cyan-400/20 text-cyan-300 border border-cyan-400/30 uppercase">
+              <span className="badge badge-teal text-[10px] uppercase">
                 {inspection.officerSelectedStage || 'Plinth'} Milestone
               </span>
             </div>
-            <p className="text-xs text-slate-300 mt-1 max-w-xl">
+            <p className="text-xs text-[#607887] mt-1 max-w-xl">
               Launch dedicated full-screen spatial twin with 4 procedural rendering modes (BIM Solid, LiDAR Laser Cloud, CAD Wireframe, X-Ray Rebar) and millimeter-precision structural gauges for {ben.name || 'this beneficiary'}.
             </p>
           </div>
@@ -663,7 +663,7 @@ export default function InspectionDetail() {
 
         <button
           onClick={() => navigate(`/spatial-twin?beneficiaryId=${ben._id || ''}&inspectionId=${inspection._id}&stage=${inspection.officerSelectedStage || 'Plinth'}`)}
-          className="btn-primary bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-extrabold px-5 py-3 text-xs rounded-xl shadow-lg hover:shadow-cyan-500/25 transition-all flex items-center gap-2 flex-shrink-0"
+          className="btn-primary font-extrabold px-5 py-3 text-xs rounded-xl shadow-md transition-all flex items-center gap-2 flex-shrink-0"
         >
           <span>Open 3D Spatial Twin Studio</span>
           <span>→</span>
@@ -672,19 +672,19 @@ export default function InspectionDetail() {
 
       {/* Risk Factors */}
       {inspection.riskScore?.factors?.length > 0 && (
-        <div className="card border-amber-100">
-          <h3 className="text-sm font-semibold text-amber-700 mb-3">⚠️ Risk Factors (Score: {inspection.riskScore.score}/100)</h3>
+        <div className="card border border-white/50">
+          <h3 className="text-sm font-semibold text-[#28485A] mb-3">⚠️ Risk Factors (Score: {inspection.riskScore.score}/100)</h3>
           <div className="space-y-2">
             {inspection.riskScore.factors.map((f, i) => (
-              <div key={i} className="flex items-center justify-between p-3 bg-amber-50/50 rounded-lg">
+              <div key={i} className="flex items-center justify-between p-3 bg-white/40 border border-white/50 rounded-xl backdrop-blur-xs">
                 <div className="flex items-center gap-2">
                   <span>{f.icon}</span>
                   <div>
-                    <p className="text-sm font-medium text-gray-700">{f.factor}</p>
-                    <p className="text-xs text-gray-500">{f.detail}</p>
+                    <p className="text-sm font-medium text-[#28485A]">{f.factor}</p>
+                    <p className="text-xs text-[#607887]">{f.detail}</p>
                   </div>
                 </div>
-                <span className="text-sm font-bold text-amber-600">+{Math.round(f.score)}</span>
+                <span className="text-sm font-bold text-amber-700">+{Math.round(f.score)}</span>
               </div>
             ))}
           </div>
@@ -693,18 +693,18 @@ export default function InspectionDetail() {
 
       {/* Evidence Walkthrough Video */}
       {(inspection.videoEvidence?.cloudinaryUrl || inspection.videoEvidence?.videoUrl) && (
-        <div className="card glass-card-pro p-5 space-y-3">
+        <div className="card p-5 space-y-3 border border-white/50">
           <div className="flex items-center justify-between">
-            <h3 className="text-sm font-extrabold text-slate-800 flex items-center gap-2">
-              <span className="text-purple-600">🎥</span>
+            <h3 className="text-sm font-extrabold text-[#28485A] flex items-center gap-2">
+              <span className="text-[#B4B8D9]">🎥</span>
               <span>Field Officer Walkthrough Video Evidence</span>
             </h3>
-            <span className="text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-purple-100 text-purple-800 border border-purple-300">
+            <span className="badge badge-lavender text-[10px]">
               SHA: {inspection.videoEvidence.sha256?.slice(0, 10)}...
             </span>
           </div>
 
-          <div className="rounded-xl overflow-hidden bg-black max-w-xl max-h-80 shadow-md">
+          <div className="rounded-xl overflow-hidden bg-[#28485A] max-w-xl max-h-80 shadow-md border border-white/40">
             <video
               src={inspection.videoEvidence.cloudinaryUrl || inspection.videoEvidence.videoUrl}
               controls
@@ -726,18 +726,18 @@ export default function InspectionDetail() {
 
       {/* Evidence Photos */}
       {inspection.evidence?.length > 0 && (
-        <div className="card">
-          <h3 className="text-sm font-semibold text-gray-700 mb-3">📸 Evidence Photos</h3>
+        <div className="card border border-white/50">
+          <h3 className="text-sm font-semibold text-[#28485A] mb-3">📸 Evidence Photos</h3>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
             {inspection.evidence.map((e, i) => (
-              <div key={i} className="relative rounded-lg overflow-hidden bg-gray-100 aspect-[4/3]">
+              <div key={i} className="relative rounded-xl overflow-hidden bg-white/40 border border-white/50 aspect-[4/3] shadow-xs">
                 <img src={e.cloudinaryUrl} alt={`Evidence ${i + 1}`} className="w-full h-full object-cover"
-                  onError={(ev) => { ev.target.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="150"><rect fill="%23f1f5f9" width="200" height="150"/><text x="50%" y="50%" text-anchor="middle" fill="%2394a3b8" font-size="14">No Preview</text></svg>'; }} />
+                  onError={(ev) => { ev.target.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="150"><rect fill="%23D2E0E8" width="200" height="150"/><text x="50%" y="50%" text-anchor="middle" fill="%23607887" font-size="14">No Preview</text></svg>'; }} />
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-2">
-                  <p className="text-[10px] text-white/80">SHA-256: {e.sha256?.slice(0, 12)}...</p>
+                  <p className="text-[10px] text-white/90 font-mono">SHA-256: {e.sha256?.slice(0, 12)}...</p>
                 </div>
                 {e.fakeImageCheck?.isSuspicious && (
-                  <div className="absolute top-2 right-2 bg-red-500 text-white text-[10px] px-2 py-0.5 rounded-full">AI Suspect</div>
+                  <div className="absolute top-2 right-2 badge badge-critical text-[10px]">AI Suspect</div>
                 )}
               </div>
             ))}
@@ -747,21 +747,21 @@ export default function InspectionDetail() {
 
       {/* Admin Review */}
       {user?.role === 'admin' && ['pending', 'under_review'].includes(inspection.status) && (
-        <div className="card border-primary-100">
-          <h3 className="text-sm font-semibold text-primary-700 mb-3">📝 Admin Review</h3>
+        <div className="card border border-white/50">
+          <h3 className="text-sm font-semibold text-[#28485A] mb-3">📝 Admin Review</h3>
           <textarea value={reviewNotes} onChange={(e) => setReviewNotes(e.target.value)} placeholder="Review notes (optional)..."
             className="input-field mb-4 h-24 resize-none" />
           <div className="flex gap-3">
             <button onClick={() => handleReview('verified')} disabled={submitting}
-              className="flex-1 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-medium text-sm transition-all disabled:opacity-50">
+              className="flex-1 py-2.5 btn-teal text-[#28485A] rounded-xl font-bold text-sm transition-all disabled:opacity-50 shadow-sm">
               ✅ Verify & Approve
             </button>
             <button onClick={() => handleReview('reinspection')} disabled={submitting}
-              className="flex-1 py-2.5 bg-amber-500 hover:bg-amber-600 text-white rounded-lg font-medium text-sm transition-all disabled:opacity-50">
+              className="flex-1 py-2.5 bg-amber-500/80 hover:bg-amber-500 text-white rounded-xl font-bold text-sm transition-all disabled:opacity-50 shadow-sm">
               🔄 Request Reinspection
             </button>
             <button onClick={() => handleReview('rejected')} disabled={submitting}
-              className="flex-1 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium text-sm transition-all disabled:opacity-50">
+              className="flex-1 py-2.5 bg-rose-500/80 hover:bg-rose-500 text-white rounded-xl font-bold text-sm transition-all disabled:opacity-50 shadow-sm">
               ❌ Reject
             </button>
           </div>
@@ -770,10 +770,10 @@ export default function InspectionDetail() {
 
       {/* Review History */}
       {inspection.reviewedBy && (
-        <div className="card">
-          <h3 className="text-sm font-semibold text-gray-700 mb-2">Review History</h3>
-          <p className="text-sm text-gray-600">Reviewed by <strong>{inspection.reviewedBy?.name}</strong> on {new Date(inspection.reviewedAt).toLocaleString('en-IN')}</p>
-          {inspection.reviewNotes && <p className="text-sm text-gray-500 mt-1 italic">"{inspection.reviewNotes}"</p>}
+        <div className="card border border-white/50">
+          <h3 className="text-sm font-semibold text-[#28485A] mb-2">Review History</h3>
+          <p className="text-sm text-[#607887]">Reviewed by <strong className="text-[#28485A]">{inspection.reviewedBy?.name}</strong> on {new Date(inspection.reviewedAt).toLocaleString('en-IN')}</p>
+          {inspection.reviewNotes && <p className="text-sm text-[#607887] mt-1 italic">"{inspection.reviewNotes}"</p>}
         </div>
       )}
     </div>
@@ -782,9 +782,9 @@ export default function InspectionDetail() {
 
 function Row({ label, value, highlight }) {
   return (
-    <div className="flex justify-between items-center py-1">
-      <span className="text-slate-600 font-medium text-xs">{label}</span>
-      <span className={`font-bold text-xs ${highlight ? 'text-rose-600' : 'text-slate-900'}`}>{value}</span>
+    <div className="flex justify-between items-center py-1 border-b border-white/20 last:border-0">
+      <span className="text-[#607887] font-medium text-xs">{label}</span>
+      <span className={`font-bold text-xs ${highlight ? 'text-rose-600' : 'text-[#28485A]'}`}>{value}</span>
     </div>
   );
 }

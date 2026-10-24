@@ -28,19 +28,19 @@ export default function RiskCases() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center py-24 text-slate-700 font-bold">
-        <span className="w-5 h-5 border-2 border-indigo-600 border-t-transparent rounded-full animate-spin mr-3" />
+      <div className="flex items-center justify-center py-24 text-[#28485A] font-bold">
+        <span className="w-5 h-5 border-2 border-[#A9CDE0] border-t-transparent rounded-full animate-spin mr-3" />
         Scanning risk cases and AI fraud anomalies...
       </div>
     );
   }
 
   return (
-    <div className="space-y-6 animate-fadeIn text-slate-800">
+    <div className="space-y-6 animate-fadeIn text-[#28485A]">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h1 className="page-title text-2xl sm:text-3xl text-slate-900">⚠️ High Risk & Fraud Triage</h1>
-          <p className="text-xs sm:text-sm text-slate-600 font-medium mt-1">
+          <h1 className="page-title text-2xl sm:text-3xl text-[#28485A]">⚠️ High Risk & Fraud Triage</h1>
+          <p className="text-xs sm:text-sm text-[#607887] font-medium mt-1">
             {inspections.length} cases flagged with GPS fence deviation, AI stage mismatches, or forensic anomalies
           </p>
         </div>
@@ -61,27 +61,27 @@ export default function RiskCases() {
             <div
               key={insp._id}
               onClick={() => navigate(`/inspections/${insp._id}`)}
-              className="card p-5 bg-[#f8fafd] border border-[#d8e2ec] hover:border-rose-400 shadow-sm cursor-pointer transition-all"
+              className="card p-5 border border-white/50 hover:border-rose-300 shadow-sm cursor-pointer transition-all"
             >
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div className="flex items-center gap-4">
                   <div
-                    className={`w-12 h-12 rounded-2xl flex items-center justify-center text-white font-extrabold text-lg flex-shrink-0 shadow-xs ${
+                    className={`w-12 h-12 rounded-2xl flex items-center justify-center font-extrabold text-lg flex-shrink-0 shadow-xs border ${
                       (insp.riskScore?.score || 0) > 70
-                        ? 'bg-rose-600'
+                        ? 'bg-rose-100 text-rose-800 border-rose-300'
                         : (insp.riskScore?.score || 0) > 45
-                        ? 'bg-orange-500'
-                        : 'bg-amber-500'
+                        ? 'bg-[#B4B8D9]/40 text-[#28485A] border-[#B4B8D9]/60'
+                        : 'bg-[#A9CDE0]/40 text-[#28485A] border-white/60'
                     }`}
                   >
                     {insp.riskScore?.score || 0}
                   </div>
                   <div>
-                    <p className="text-base font-extrabold text-slate-900">
+                    <p className="text-base font-extrabold text-[#28485A]">
                       {insp.beneficiaryId?.name || 'Unnamed Beneficiary'}
                     </p>
-                    <p className="text-xs text-slate-600 font-medium mt-0.5">
-                      Village: <strong className="text-slate-800">{insp.beneficiaryId?.village}</strong> • Stage: <strong className="text-indigo-700">{insp.officerSelectedStage}</strong> • Inspector: {insp.officerId?.name || 'Field Officer'}
+                    <p className="text-xs text-[#607887] font-medium mt-0.5">
+                      Village: <strong className="text-[#28485A]">{insp.beneficiaryId?.village}</strong> • Stage: <strong className="text-[#28485A]">{insp.officerSelectedStage}</strong> • Inspector: {insp.officerId?.name || 'Field Officer'}
                     </p>
                   </div>
                 </div>
@@ -91,7 +91,7 @@ export default function RiskCases() {
                     <span className="badge badge-critical">AI Stage Mismatch</span>
                   )}
                   {insp.gpsVerification && !insp.gpsVerification.withinFence && (
-                    <span className="badge badge-high">
+                    <span className="badge badge-critical">
                       GPS Deviation ({insp.gpsVerification.distance}m)
                     </span>
                   )}
@@ -103,11 +103,11 @@ export default function RiskCases() {
               </div>
 
               {insp.riskScore?.factors?.length > 0 && (
-                <div className="mt-3.5 pt-3 border-t border-slate-100 flex gap-2 flex-wrap">
+                <div className="mt-3.5 pt-3 border-t border-white/40 flex gap-2 flex-wrap">
                   {insp.riskScore.factors.map((f, i) => (
                     <span
                       key={i}
-                      className="text-xs bg-slate-100 text-slate-800 px-2.5 py-1 rounded-lg font-bold border border-slate-200"
+                      className="text-xs bg-white/40 text-[#28485A] px-2.5 py-1 rounded-lg font-bold border border-white/50 backdrop-blur-xs"
                     >
                       {f.icon || '⚠️'} {f.factor} (+{Math.round(f.score)})
                     </span>
