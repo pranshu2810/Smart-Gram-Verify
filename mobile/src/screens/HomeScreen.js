@@ -8,7 +8,7 @@ import {
   RefreshControl,
   Switch
 } from 'react-native';
-import { useAuth } from '../../App';
+import { useAuth } from '../context/AuthContext';
 import {
   getOfflineQueueCount,
   isSimulatedOffline,

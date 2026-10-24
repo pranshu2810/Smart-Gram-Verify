@@ -15,10 +15,8 @@ import RiskMapScreen from './src/screens/RiskMapScreen';
 import OfflineQueueScreen from './src/screens/OfflineQueueScreen';
 import HistoryScreen from './src/screens/HistoryScreen';
 
-// ── Auth Context ──
-export const AuthContext = createContext(null);
-
-export function useAuth() { return useContext(AuthContext); }
+import { AuthContext, useAuth } from './src/context/AuthContext';
+export { AuthContext, useAuth };
 
 const Stack = createNativeStackNavigator();
 

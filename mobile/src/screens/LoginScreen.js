@@ -12,7 +12,7 @@ import {
   ActivityIndicator
 } from 'react-native';
 import api from '../api/client';
-import { useAuth } from '../../App';
+import { useAuth } from '../context/AuthContext';
 import { setSimulatedOffline } from '../services/offlineStorage';
 
 export default function LoginScreen() {
@@ -29,9 +29,9 @@ export default function LoginScreen() {
     setLoading(true);
 
     try {
+      await setSimulatedOffline(false);
       const { data } = await api.post('/auth/login', { email: e, password: p });
       if (data.success) {
-        await setSimulatedOffline(false);
         await login(data.token, data.user);
       } else {
         Alert.alert('Login Failed', data.message || 'Invalid credentials');

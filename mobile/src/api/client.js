@@ -18,9 +18,12 @@ const API_URL = Platform.select({
 const api = axios.create({ baseURL: API_URL, timeout: 60000 });
 
 api.interceptors.request.use(async (config) => {
+  // Allow auth endpoints to proceed so users can log in even if offline mode was previously set
+  const isAuth = config.url && config.url.includes('/auth/');
+
   // Check if simulated offline mode is turned on
   const offline = await isSimulatedOffline();
-  if (offline) {
+  if (offline && !isAuth) {
     const error = new Error('Device is in Offline Mode');
     error.isOffline = true;
     return Promise.reject(error);
