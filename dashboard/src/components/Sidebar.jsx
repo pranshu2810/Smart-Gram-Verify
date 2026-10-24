@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext';
 
 const ADMIN_NAV = [
   { path: '/admin',          label: 'Executive HQ',         icon: '🛡️', badge: 'HQ' },
-  { path: '/overview',       label: 'Analytics Stream',     icon: '📊' },
+  { path: '/overview',       label: 'Analytics Overview',   icon: '📊' },
   { path: '/risk-map',       label: 'Geo Risk Telemetry',   icon: '🗺️', badge: 'Live' },
   { path: '/video-inspector',label: 'VLM Forensics Lab',    icon: '🎥', badge: 'AI' },
   { path: '/spatial-twin',   label: '3D Spatial Twin',      icon: '🏛️', badge: '3D' },
@@ -37,29 +37,26 @@ export default function Sidebar() {
 
   return (
     <aside
-      className="fixed left-0 bottom-0 flex flex-col transition-all duration-300 z-30 select-none"
+      className="fixed left-0 bottom-0 flex flex-col transition-all duration-300 z-30 select-none bg-white/85 backdrop-blur-2xl border-r border-slate-200/80 shadow-[4px_0_24px_rgba(15,23,42,0.04)]"
       style={{
         top: '61px',
         width: collapsed ? '70px' : '256px',
-        background: '#07090E',
-        borderRight: '1px solid rgba(255, 255, 255, 0.07)',
-        boxShadow: '4px 0 24px rgba(0, 0, 0, 0.5)',
       }}
     >
-      {/* Subtle top edge highlight */}
-      <div className="h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+      {/* Top subtle highlight */}
+      <div className="h-px w-full bg-gradient-to-r from-transparent via-indigo-500/20 to-transparent" />
 
       {/* Role Clearance Strip */}
       {!collapsed && (
-        <div className="mx-3 mt-4 mb-2 p-2.5 rounded-lg bg-white/[0.02] border border-white/[0.06]">
+        <div className="mx-3 mt-4 mb-2 p-2.5 rounded-xl bg-slate-50/90 border border-slate-200/80 shadow-2xs">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <span className={isAdmin ? "micro-aura-cyan" : "micro-aura-emerald"} />
-              <span className="text-xs font-semibold text-[#F1F5F9]">
+              <span className="text-xs font-bold text-[#0F172A]">
                 {isAdmin ? 'Apex Clearance' : 'Field Clearance'}
               </span>
             </div>
-            <span className="text-[10px] px-1.5 py-0.2 rounded font-mono uppercase bg-white/[0.05] text-[#94A3B8] border border-white/[0.06]">
+            <span className="text-[10px] px-2 py-0.5 rounded-full font-mono font-bold uppercase bg-indigo-50 text-indigo-700 border border-indigo-200">
               {user?.role || 'admin'}
             </span>
           </div>
@@ -67,22 +64,22 @@ export default function Sidebar() {
       )}
 
       {/* Nav items */}
-      <nav className="flex-1 py-2 px-2 space-y-0.5 overflow-y-auto overflow-x-hidden">
+      <nav className="flex-1 py-2 px-2 space-y-1 overflow-y-auto overflow-x-hidden">
         {navItems.map((item) => (
           <NavLink
             key={item.path}
             to={item.path}
             title={collapsed ? item.label : undefined}
             className={({ isActive }) =>
-              `flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium tracking-wide transition-all duration-200 group ${
+              `flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold tracking-wide transition-all duration-200 group ${
                 isActive
-                  ? 'bg-white/[0.08] text-[#F1F5F9] border border-white/[0.14] shadow-[inset_0_1px_0_rgba(255,255,255,0.15)]'
-                  : 'text-[#94A3B8] hover:text-[#F1F5F9] hover:bg-white/[0.03]'
-              }`
+                  ? 'bg-indigo-50/90 text-indigo-700 border-l-4 border-indigo-600 shadow-2xs'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'
+              } ${item.highlight ? 'bg-emerald-50/60 text-emerald-800 border border-emerald-200/80' : ''}`
             }
           >
             <div className="flex items-center gap-2.5 truncate min-w-0">
-              <span className="text-sm opacity-80 group-hover:opacity-100 flex-shrink-0">
+              <span className="text-base flex-shrink-0 group-hover:scale-105 transition-transform">
                 {item.icon}
               </span>
               {!collapsed && (
@@ -90,7 +87,7 @@ export default function Sidebar() {
               )}
             </div>
             {!collapsed && item.badge && (
-              <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-white/[0.05] text-[#94A3B8] border border-white/[0.06] flex-shrink-0">
+              <span className="text-[9px] font-mono px-1.5 py-0.2 rounded-md font-bold bg-white text-slate-700 border border-slate-200/80 shadow-2xs flex-shrink-0">
                 {item.badge}
               </span>
             )}
@@ -99,16 +96,16 @@ export default function Sidebar() {
       </nav>
 
       {/* Footer Profile & Collapse */}
-      <div className="p-2 border-t border-white/[0.06] bg-[#07090E]/60">
-        <div className="flex items-center gap-2.5 p-2 rounded-lg bg-white/[0.02] border border-white/[0.05] mb-2">
-          <div className="w-7 h-7 rounded-md bg-white/[0.08] border border-white/[0.1] flex items-center justify-center text-xs font-semibold text-[#F1F5F9] flex-shrink-0">
+      <div className="p-2 border-t border-slate-200/80 bg-white/70">
+        <div className="flex items-center gap-2.5 p-2 rounded-xl bg-slate-50 border border-slate-200/80 mb-2 shadow-2xs">
+          <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-indigo-600 to-blue-600 flex items-center justify-center text-xs font-bold text-white shadow-2xs flex-shrink-0">
             {user?.name?.charAt(0) || 'U'}
           </div>
           {!collapsed && (
             <div className="flex-1 min-w-0">
-              <p className="text-xs font-medium text-[#F1F5F9] truncate">{user?.name}</p>
-              <p className="text-[10px] text-[#64748B] font-mono truncate">
-                {user?.panchayat ? `${user.panchayat} GP` : 'Govt of India'}
+              <p className="text-xs font-bold text-[#0F172A] truncate">{user?.name}</p>
+              <p className="text-[10px] text-indigo-700 font-bold truncate">
+                {user?.panchayat ? `${user.panchayat} GP` : 'Apex HQ'}
               </p>
             </div>
           )}
@@ -117,14 +114,14 @@ export default function Sidebar() {
         <div className="flex items-center gap-1">
           <button
             onClick={() => { logout(); navigate('/login'); }}
-            className={`flex-1 flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs font-medium text-[#94A3B8] hover:text-[#FF334B] hover:bg-white/[0.04] transition-colors ${collapsed ? 'justify-center' : ''}`}
+            className={`flex-1 flex items-center gap-2 px-2.5 py-1.5 rounded-xl text-xs font-bold text-slate-600 hover:text-rose-700 hover:bg-rose-50 transition-colors ${collapsed ? 'justify-center' : ''}`}
           >
             <span>🚪</span>
             {!collapsed && <span>Sign Out</span>}
           </button>
           <button
             onClick={() => setCollapsed(!collapsed)}
-            className="p-1.5 rounded-lg text-[#64748B] hover:text-[#F1F5F9] hover:bg-white/[0.04] transition-colors text-xs"
+            className="p-1.5 rounded-xl text-slate-500 hover:text-slate-800 hover:bg-slate-100 transition-colors text-xs"
             title={collapsed ? 'Expand' : 'Collapse'}
           >
             {collapsed ? '▶' : '◀'}

@@ -58,13 +58,12 @@ export default function AdminPortal() {
   const o = stats?.overview || {};
 
   return (
-    <div className="space-y-6 animate-fadeIn text-[#F1F5F9]">
-      {/* Executive Command Header - Gov-Tech Glass Slab */}
+    <div className="space-y-6 animate-fadeIn text-slate-800">
+      {/* Executive Command Header - Frosted Glass Slab */}
       <div className="gov-card-hero relative overflow-hidden">
-        {/* Subtle top chisel line */}
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 relative z-10">
           <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-xl bg-white/[0.04] border border-white/[0.12] flex items-center justify-center text-2xl text-slate-200 shadow-[inset_0_1px_0_rgba(255,255,255,0.2)] flex-shrink-0">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-indigo-600 via-indigo-700 to-sky-600 flex items-center justify-center text-2xl text-white shadow-md flex-shrink-0">
               🛡️
             </div>
             <div>
@@ -73,13 +72,13 @@ export default function AdminPortal() {
                   <span className="micro-aura-cyan" />
                   Executive Command HQ
                 </span>
-                <span className="text-xs text-[#94A3B8] font-mono">PMAY-G APEX AUDIT MATRIX</span>
+                <span className="text-xs text-indigo-700 font-mono font-bold">PMAY-G APEX AUDIT MATRIX</span>
               </div>
-              <h1 className="page-title mt-1 text-[#F1F5F9]">
+              <h1 className="page-title mt-1 text-[#0F172A]">
                 Admin Oversight: {user?.name || 'Admin Sharma'}
               </h1>
-              <p className="text-xs text-[#94A3B8] mt-1 font-medium">
-                HQ Governance • Multi-Modal AI Fraud Prevention & Digital Benefit Transfer (DBT) Authorizations
+              <p className="text-xs text-[#64748B] mt-1 font-medium">
+                HQ Governance • AI-Assisted Fraud Prevention & Digital Benefit Transfer (DBT) Authorizations
               </p>
             </div>
           </div>
@@ -87,72 +86,72 @@ export default function AdminPortal() {
           <div className="flex flex-wrap items-center gap-2.5">
             <button
               onClick={loadDashboard}
-              className="gov-btn-secondary px-3.5 py-2 text-xs font-mono"
+              className="gov-btn-secondary px-3.5 py-2 text-xs font-mono font-bold"
             >
               ↻ Refresh
             </button>
             <button
               onClick={() => navigate('/risk-map')}
-              className="gov-btn-secondary px-3.5 py-2 text-xs"
+              className="gov-btn-secondary px-3.5 py-2 text-xs font-bold"
             >
               🗺️ Geo Risk Map
             </button>
             <button
               onClick={() => navigate('/video-inspector')}
-              className="gov-btn-secondary px-3.5 py-2 text-xs"
+              className="gov-btn-secondary px-3.5 py-2 text-xs font-bold"
             >
               🎥 Qwen Video AI
             </button>
             <button
               onClick={() => navigate('/approvals')}
-              className="gov-btn-primary px-4 py-2 text-xs font-semibold"
+              className="gov-btn-primary px-4 py-2 text-xs font-bold shadow-sm"
             >
               ⚡ Stage Approvals
             </button>
           </div>
         </div>
 
-        {/* Bloomberg-Style Micro-Telemetry Indicators */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6 pt-5 border-t border-white/[0.06] text-xs font-mono">
-          <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-black/30 border border-white/[0.05]">
+        {/* Real-time System Telemetry Indicators */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6 pt-5 border-t border-slate-200/80 text-xs font-mono">
+          <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/70 border border-slate-200/80 shadow-2xs">
             <span className="micro-aura-emerald" />
-            <span className="text-[#94A3B8]">Gemini 2.5 AI:</span>
-            <strong className="text-[#F1F5F9] tabular-nums">ONLINE</strong>
+            <span className="text-slate-600">Gemini 2.5 AI:</span>
+            <strong className="text-emerald-700 font-bold tabular-nums">ONLINE</strong>
           </div>
-          <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-black/30 border border-white/[0.05]">
+          <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/70 border border-slate-200/80 shadow-2xs">
             <span className="micro-aura-cyan" />
-            <span className="text-[#94A3B8]">FastAPI Engine:</span>
-            <strong className="text-[#F1F5F9] tabular-nums">PORT 8000</strong>
+            <span className="text-slate-600">FastAPI Engine:</span>
+            <strong className="text-cyan-700 font-bold tabular-nums">PORT 8000</strong>
           </div>
-          <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-black/30 border border-white/[0.05]">
+          <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/70 border border-slate-200/80 shadow-2xs">
             <span className="micro-aura-slate" />
-            <span className="text-[#94A3B8]">Database:</span>
-            <strong className="text-[#F1F5F9] tabular-nums">PORT 27017</strong>
+            <span className="text-slate-600">Database:</span>
+            <strong className="text-indigo-700 font-bold tabular-nums">PORT 27017</strong>
           </div>
-          <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-black/30 border border-white/[0.05]">
+          <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/70 border border-slate-200/80 shadow-2xs">
             <span className="micro-aura-emerald" />
-            <span className="text-[#94A3B8]">Socket.IO Stream:</span>
-            <strong className="text-[#F1F5F9] tabular-nums">SYNCED</strong>
+            <span className="text-slate-600">Socket.IO Stream:</span>
+            <strong className="text-emerald-700 font-bold tabular-nums">SYNCED</strong>
           </div>
         </div>
       </div>
 
-      {/* Primary KPI Grid (Monochromatic with Tabular Numerals) */}
+      {/* Primary KPI Grid (Frosted Glass with Soft Jewel Accents) */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {/* KPI 1 */}
         <div className="gov-card p-5 group">
           <div className="flex items-start justify-between">
             <div>
               <p className="section-label">Total Beneficiaries</p>
-              <p className="text-3xl font-semibold text-[#F1F5F9] mt-1.5 tabular-nums font-mono">
+              <p className="text-3xl font-extrabold text-[#0F172A] mt-1.5 tabular-nums font-mono font-display">
                 {o.totalBeneficiaries || 5}
               </p>
-              <p className="text-xs text-[#94A3B8] font-medium mt-1.5 flex items-center gap-1.5">
+              <p className="text-xs text-emerald-700 font-bold mt-1.5 flex items-center gap-1.5">
                 <span className="micro-aura-emerald" />
                 100% Aadhaar Verified
               </p>
             </div>
-            <div className="w-9 h-9 rounded-lg bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-sm text-[#94A3B8]">
+            <div className="w-10 h-10 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-base text-indigo-700 shadow-2xs group-hover:scale-105 transition-transform">
               👥
             </div>
           </div>
@@ -163,15 +162,15 @@ export default function AdminPortal() {
           <div className="flex items-start justify-between">
             <div>
               <p className="section-label">Stage Inspections</p>
-              <p className="text-3xl font-semibold text-[#F1F5F9] mt-1.5 tabular-nums font-mono">
+              <p className="text-3xl font-extrabold text-[#0F172A] mt-1.5 tabular-nums font-mono font-display">
                 {o.totalInspections || 11}
               </p>
-              <p className="text-xs text-[#94A3B8] font-medium mt-1.5 flex items-center gap-1.5">
+              <p className="text-xs text-cyan-700 font-bold mt-1.5 flex items-center gap-1.5">
                 <span className="micro-aura-cyan" />
                 GPS Geofence Verified
               </p>
             </div>
-            <div className="w-9 h-9 rounded-lg bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-sm text-[#94A3B8]">
+            <div className="w-10 h-10 rounded-xl bg-cyan-50 border border-cyan-100 flex items-center justify-center text-base text-cyan-700 shadow-2xs group-hover:scale-105 transition-transform">
               🔍
             </div>
           </div>
@@ -182,56 +181,56 @@ export default function AdminPortal() {
           <div className="flex items-start justify-between">
             <div>
               <p className="section-label">Disbursed via DBT</p>
-              <p className="text-3xl font-semibold text-[#F1F5F9] mt-1.5 tabular-nums font-mono">
+              <p className="text-3xl font-extrabold text-[#0F172A] mt-1.5 tabular-nums font-mono font-display text-shimmer-gold">
                 ₹{((o.totalDisbursed || 160000)).toLocaleString('en-IN')}
               </p>
-              <p className="text-xs text-[#94A3B8] font-medium mt-1.5 flex items-center gap-1.5">
+              <p className="text-xs text-emerald-700 font-bold mt-1.5 flex items-center gap-1.5">
                 <span className="micro-aura-emerald" />
                 PFMS Direct Transfer
               </p>
             </div>
-            <div className="w-9 h-9 rounded-lg bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-sm text-[#94A3B8]">
+            <div className="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-base text-emerald-700 shadow-2xs group-hover:scale-105 transition-transform">
               🏦
             </div>
           </div>
         </div>
 
-        {/* KPI 4 - Laser Crimson for Critical Flags */}
-        <div className="gov-card p-5 group border-[#FF334B]/30 bg-[rgba(255,51,75,0.03)] hover:border-[#FF334B]/50">
+        {/* KPI 4 */}
+        <div className="gov-card p-5 group border-rose-200/80 bg-rose-50/40 hover:border-rose-300">
           <div className="flex items-start justify-between">
             <div>
-              <p className="section-label text-[#FF334B]">Critical Risk Flags</p>
-              <p className="text-3xl font-semibold text-[#FF334B] mt-1.5 tabular-nums font-mono">
+              <p className="section-label text-rose-800">Critical Risk Flags</p>
+              <p className="text-3xl font-extrabold text-rose-700 mt-1.5 tabular-nums font-mono font-display">
                 {highRiskCases.length || 1}
               </p>
-              <p className="text-xs text-[#FF334B]/80 font-medium mt-1.5 flex items-center gap-1.5">
+              <p className="text-xs text-rose-700 font-bold mt-1.5 flex items-center gap-1.5">
                 <span className="micro-aura-crimson" />
                 Action Required
               </p>
             </div>
-            <div className="w-9 h-9 rounded-lg bg-[#FF334B]/10 border border-[#FF334B]/30 flex items-center justify-center text-sm text-[#FF334B]">
+            <div className="w-10 h-10 rounded-xl bg-rose-100/80 border border-rose-200 flex items-center justify-center text-base text-rose-700 shadow-2xs">
               ⚠️
             </div>
           </div>
         </div>
       </div>
 
-      {/* Critical Triage Section (Restrained Laser Crimson) */}
+      {/* Critical Triage Section (Frosted Coral-Rose Slab) */}
       {highRiskCases.length > 0 && (
-        <div className="gov-card p-6 border-[#FF334B]/30 bg-black/30">
+        <div className="gov-card p-6 border-rose-200 bg-rose-50/30">
           <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
             <div className="flex items-center gap-2.5">
               <span className="micro-aura-crimson" />
-              <h3 className="text-base font-semibold text-[#F1F5F9] tracking-tight">
+              <h3 className="text-base font-extrabold text-[#0F172A] tracking-tight">
                 High Risk & AI Anomaly Triage Queue
               </h3>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#FF334B]/15 text-[#FF334B] border border-[#FF334B]/30 font-bold">
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-rose-100 text-rose-800 border border-rose-300 font-extrabold">
                 CRITICAL ({highRiskCases.length})
               </span>
             </div>
             <button
               onClick={() => navigate('/risk-cases')}
-              className="text-xs text-[#94A3B8] hover:text-[#F1F5F9] font-medium transition-colors"
+              className="text-xs text-rose-700 hover:text-rose-900 font-bold transition-colors"
             >
               View Full Audit Stream →
             </button>
@@ -241,50 +240,50 @@ export default function AdminPortal() {
             {highRiskCases.map((c) => (
               <div
                 key={c._id}
-                className="p-4 rounded-xl bg-black/40 border border-[#FF334B]/25 hover:border-[#FF334B]/40 transition-colors flex flex-col justify-between"
+                className="p-4 rounded-2xl bg-white/90 border border-rose-200 hover:border-rose-300 transition-all shadow-2xs flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-start justify-between">
                     <div>
-                      <h4 className="font-semibold text-[#F1F5F9] text-sm">
+                      <h4 className="font-bold text-[#0F172A] text-sm">
                         {c.beneficiaryId?.name || 'Gopal Singh'}
                       </h4>
-                      <p className="text-xs text-[#94A3B8] mt-0.5">
-                        {c.beneficiaryId?.village || 'Berasia'} • Stage: <span className="text-[#F1F5F9] font-medium">{c.officerSelectedStage}</span>
+                      <p className="text-xs text-slate-500 mt-0.5 font-medium">
+                        {c.beneficiaryId?.village || 'Berasia'} • Stage: <span className="text-indigo-900 font-bold">{c.officerSelectedStage}</span>
                       </p>
                     </div>
-                    <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-[#FF334B]/10 text-[#FF334B] border border-[#FF334B]/30 tabular-nums">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg text-xs font-mono font-bold bg-rose-50 text-rose-800 border border-rose-200 tabular-nums">
                       <span className="micro-aura-crimson" />
                       {c.riskScore?.score ?? 72}/100 {c.riskScore?.level || 'CRITICAL'}
                     </span>
                   </div>
 
-                  <div className="mt-3 p-3 rounded-lg bg-black/60 border border-white/[0.06] text-xs text-[#94A3B8] space-y-1.5">
-                    <div className="flex justify-between items-center text-[11px] font-mono">
-                      <span>📸 Photo Risk: <strong className="text-[#F1F5F9] tabular-nums">{c.dualEvidenceSynthesis?.photoRiskScore ?? c.riskScore?.score}/100</strong></span>
-                      <span>🎥 Video Risk: <strong className="text-[#F1F5F9] tabular-nums">{c.dualEvidenceSynthesis?.videoRiskScore ?? (c.videoEvidence?.aiGeneratedRiskScore || 0)}/100</strong></span>
-                      <span>⚖️ Composite: <strong className="text-[#FF334B] tabular-nums">{c.riskScore?.score}/100</strong></span>
+                  <div className="mt-3 p-3 rounded-xl bg-rose-50/70 border border-rose-100 text-xs text-rose-950 space-y-1.5">
+                    <div className="flex justify-between items-center text-[11px] font-mono font-semibold">
+                      <span>📸 Photo: <strong className="text-rose-900 tabular-nums">{c.dualEvidenceSynthesis?.photoRiskScore ?? c.riskScore?.score}/100</strong></span>
+                      <span>🎥 Video: <strong className="text-purple-900 tabular-nums">{c.dualEvidenceSynthesis?.videoRiskScore ?? (c.videoEvidence?.aiGeneratedRiskScore || 0)}/100</strong></span>
+                      <span>⚖️ Composite: <strong className="text-rose-900 tabular-nums">{c.riskScore?.score}/100</strong></span>
                     </div>
                     {c.dualEvidenceSynthesis?.synthesisReasoning && (
-                      <p className="text-[11px] text-[#94A3B8] italic pt-1 border-t border-white/[0.05]">
+                      <p className="text-[11px] text-rose-900/80 italic pt-1 border-t border-rose-200/60">
                         "{c.dualEvidenceSynthesis.synthesisReasoning}"
                       </p>
                     )}
                     {c.gpsVerification && !c.gpsVerification.withinFence && (
-                      <p className="text-[#FF334B] font-mono text-[11px]">
+                      <p className="text-rose-900 font-mono text-[11px]">
                         • GPS Deviation: Officer distance <strong className="tabular-nums">{c.gpsVerification.distance}m</strong> (Allowed limit: 200m)
                       </p>
                     )}
                   </div>
                 </div>
 
-                <div className="mt-4 pt-3 border-t border-white/[0.06] flex items-center justify-between">
-                  <span className="text-xs text-[#64748B] font-mono">
+                <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                  <span className="text-xs text-slate-500 font-mono font-medium">
                     Inspector: {c.officerId?.name || 'Rajesh Kumar'}
                   </span>
                   <button
                     onClick={() => setReviewModal(c)}
-                    className="gov-btn-primary py-1 px-3 text-xs"
+                    className="gov-btn-primary py-1 px-3.5 text-xs font-bold"
                   >
                     Review Case →
                   </button>
@@ -299,24 +298,24 @@ export default function AdminPortal() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Officer Submissions Queue */}
         <div className="lg:col-span-2 gov-card p-6 space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-white/[0.06]">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-200/80">
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-base">📥</span>
-                <h3 className="text-base font-semibold text-[#F1F5F9]">
+                <h3 className="text-base font-extrabold text-[#0F172A]">
                   Incoming Field Officer Submissions
                 </h3>
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-white/[0.05] text-[#94A3B8] border border-white/[0.08] tabular-nums">
-                  Awaiting Verification ({pendingApprovals.length})
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200 font-bold tabular-nums">
+                  Awaiting AI Audit ({pendingApprovals.length})
                 </span>
               </div>
-              <p className="text-xs text-[#94A3B8] mt-0.5">
+              <p className="text-xs text-[#64748B] mt-0.5 font-medium">
                 Site photos &amp; video walkthroughs uploaded by field inspectors requiring AI forensics verification prior to ₹40k DBT grant release
               </p>
             </div>
             <button
               onClick={() => navigate('/approvals')}
-              className="text-xs text-[#94A3B8] hover:text-[#F1F5F9] font-medium whitespace-nowrap self-start sm:self-auto transition-colors"
+              className="text-xs text-indigo-700 hover:text-indigo-900 font-bold whitespace-nowrap self-start sm:self-auto transition-colors"
             >
               All Approvals →
             </button>
@@ -331,41 +330,41 @@ export default function AdminPortal() {
               return (
                 <div
                   key={p._id}
-                  className="p-3.5 rounded-xl bg-black/30 border border-white/[0.06] hover:border-white/[0.14] transition-all flex flex-col md:flex-row md:items-center justify-between gap-4"
+                  className="p-3.5 rounded-2xl bg-white/90 border border-slate-200/80 hover:border-indigo-300 transition-all shadow-2xs flex flex-col md:flex-row md:items-center justify-between gap-4"
                 >
                   <div className="flex items-start gap-3">
-                    <div className="w-9 h-9 rounded-lg bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-sm flex-shrink-0">
+                    <div className="w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-sm flex-shrink-0">
                       👷
                     </div>
                     <div>
                       <div className="flex items-center gap-2 flex-wrap">
-                        <h5 className="font-semibold text-[#F1F5F9] text-xs">
+                        <h5 className="font-bold text-[#0F172A] text-xs">
                           {p.beneficiaryId?.name || 'Beneficiary'}
                         </h5>
-                        <span className="text-[11px] text-[#64748B] font-mono">
+                        <span className="text-[11px] text-[#64748B] font-mono font-medium">
                           ({p.beneficiaryId?.householdId || 'Pending ID'})
                         </span>
-                        <span className="px-1.5 py-0.2 rounded text-[10px] font-mono bg-white/[0.05] text-[#94A3B8] border border-white/[0.06]">
+                        <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-slate-100 text-slate-800 border border-slate-200">
                           {p.officerSelectedStage || 'Plinth'} Milestone
                         </span>
                       </div>
 
-                      <p className="text-xs text-[#94A3B8] mt-0.5">
-                        Officer: {p.officerId?.name || 'Field Inspector'} • {p.beneficiaryId?.village || 'Barkheda'}, {p.beneficiaryId?.block || 'Berasia'}
+                      <p className="text-xs text-[#64748B] mt-0.5 font-medium">
+                        Officer: <strong className="text-slate-800">{p.officerId?.name || 'Field Inspector'}</strong> • {p.beneficiaryId?.village || 'Barkheda'}, {p.beneficiaryId?.block || 'Berasia'}
                       </p>
 
                       {/* Evidence Tags */}
                       <div className="flex items-center gap-2 mt-2 flex-wrap text-[11px] font-mono">
-                        <span className="px-2 py-0.5 rounded bg-black/40 text-[#94A3B8] border border-white/[0.06]">
+                        <span className="px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200 font-semibold">
                           📸 {p.evidence?.length || 1} Photo(s)
                         </span>
-                        <span className="px-2 py-0.5 rounded bg-black/40 text-[#94A3B8] border border-white/[0.06]">
+                        <span className="px-2 py-0.5 rounded-full bg-purple-50 text-purple-800 border border-purple-200 font-semibold">
                           🎥 {hasVideo ? 'Video Walkthrough' : 'Photo Only'}
                         </span>
-                        <span className={`px-2 py-0.5 rounded border tabular-nums ${
+                        <span className={`px-2 py-0.5 rounded-full border tabular-nums font-bold ${
                           isHigh
-                            ? 'bg-[#FF334B]/10 text-[#FF334B] border-[#FF334B]/30'
-                            : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25'
+                            ? 'bg-rose-50 text-rose-800 border-rose-200'
+                            : 'bg-emerald-50 text-emerald-800 border-emerald-200'
                         }`}>
                           Risk: {riskScore}/100
                         </span>
@@ -374,24 +373,24 @@ export default function AdminPortal() {
                   </div>
 
                   {/* Actions */}
-                  <div className="flex items-center gap-2 flex-shrink-0 pt-2 md:pt-0 border-t md:border-t-0 border-white/[0.05]">
+                  <div className="flex items-center gap-2 flex-shrink-0 pt-2 md:pt-0 border-t md:border-t-0 border-slate-100">
                     <button
                       onClick={() => navigate(`/video-inspector?inspectionId=${p._id}&stage=${p.officerSelectedStage}&beneficiaryId=${p.beneficiaryId?._id}`)}
-                      className="gov-btn-secondary py-1 px-2.5 text-xs font-mono"
+                      className="gov-btn-secondary py-1 px-2.5 text-xs font-mono font-bold"
                       title="Run VLM video forensics"
                     >
                       Video AI
                     </button>
                     <button
                       onClick={() => handleAction(p._id, 'verified')}
-                      className="gov-btn-primary py-1 px-3 text-xs"
+                      className="glass-btn-emerald py-1 px-3 text-xs font-bold"
                       title="Authorize ₹40,000 DBT Grant"
                     >
-                      Approve
+                      ✓ Approve
                     </button>
                     <button
                       onClick={() => setReviewModal(p)}
-                      className="gov-btn-secondary py-1 px-2.5 text-xs"
+                      className="gov-btn-secondary py-1 px-2.5 text-xs font-bold"
                     >
                       Audit
                     </button>
@@ -411,39 +410,39 @@ export default function AdminPortal() {
         {/* Stage Progression Funnel */}
         <div className="gov-card p-6 flex flex-col justify-between">
           <div>
-            <h3 className="text-base font-semibold text-[#F1F5F9] mb-1">Stage Progression</h3>
-            <p className="text-xs text-[#94A3B8] mb-5">PMAY-G 4-stage funnel health</p>
+            <h3 className="text-base font-extrabold text-[#0F172A] mb-1">Stage Progression</h3>
+            <p className="text-xs text-[#64748B] mb-5 font-medium">PMAY-G 4-stage funnel health</p>
 
             <div className="space-y-4">
               {[
-                { stage: 'Foundation', count: 5, pct: 100 },
-                { stage: 'Plinth Level', count: 3, pct: 60 },
-                { stage: 'Lintel Level', count: 2, pct: 40 },
-                { stage: 'Full Handover', count: 1, pct: 20 },
+                { stage: 'Foundation', count: 5, color: 'from-emerald-500 to-teal-500', pct: 100 },
+                { stage: 'Plinth Level', count: 3, color: 'from-blue-500 to-cyan-500', pct: 60 },
+                { stage: 'Lintel Level', count: 2, color: 'from-amber-500 to-orange-500', pct: 40 },
+                { stage: 'Full Handover', count: 1, color: 'from-indigo-600 to-purple-600', pct: 20 },
               ].map((s) => (
                 <div key={s.stage}>
-                  <div className="flex justify-between text-xs mb-1">
-                    <span className="text-[#94A3B8]">{s.stage}</span>
-                    <span className="text-[#64748B] font-mono tabular-nums">{s.count} Beneficiaries ({s.pct}%)</span>
+                  <div className="flex justify-between text-xs mb-1 font-semibold">
+                    <span className="text-slate-700">{s.stage}</span>
+                    <span className="text-slate-500 font-mono tabular-nums">{s.count} Beneficiaries ({s.pct}%)</span>
                   </div>
-                  <div className="w-full h-1.5 rounded-full bg-black/40 overflow-hidden border border-white/[0.06]">
-                    <div className="h-full bg-white/40 transition-all duration-500 rounded-full" style={{ width: `${s.pct}%` }} />
+                  <div className="w-full h-2 rounded-full bg-slate-200/80 overflow-hidden">
+                    <div className={`h-full bg-gradient-to-r ${s.color} transition-all duration-500 rounded-full`} style={{ width: `${s.pct}%` }} />
                   </div>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="mt-6 pt-5 border-t border-white/[0.06] space-y-2">
+          <div className="mt-6 pt-5 border-t border-slate-200/80 space-y-2">
             <button
               onClick={() => navigate('/audit-logs')}
-              className="w-full gov-btn-secondary py-2 text-xs justify-center font-mono"
+              className="w-full gov-btn-secondary py-2 text-xs justify-center font-mono font-bold"
             >
               📋 Immutable Audit Trail
             </button>
             <button
               onClick={() => navigate('/installments')}
-              className="w-full gov-btn-secondary py-2 text-xs justify-center font-mono"
+              className="w-full gov-btn-secondary py-2 text-xs justify-center font-mono font-bold"
             >
               💰 DBT Grant Passbook
             </button>
@@ -453,47 +452,47 @@ export default function AdminPortal() {
 
       {/* Review Modal */}
       {reviewModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fadeIn">
-          <div className="bg-[#0A0E17] border border-white/[0.12] rounded-2xl max-w-lg w-full p-6 shadow-2xl relative text-[#F1F5F9]">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-md animate-fadeIn">
+          <div className="bg-white/95 backdrop-blur-2xl border border-slate-200 rounded-3xl max-w-lg w-full p-6 shadow-2xl relative text-slate-800">
             <button
               onClick={() => setReviewModal(null)}
-              className="absolute top-4 right-4 text-[#64748B] hover:text-[#F1F5F9] text-base transition-colors"
+              className="absolute top-4 right-4 text-slate-400 hover:text-slate-800 text-lg font-bold transition-colors"
             >
               ✕
             </button>
 
-            <h3 className="text-base font-semibold text-[#F1F5F9]">
+            <h3 className="text-lg font-extrabold text-[#0F172A]">
               Inspection Audit & Grant Action
             </h3>
-            <p className="text-xs text-[#94A3B8] mt-0.5">
-              Beneficiary: <strong className="text-[#F1F5F9]">{reviewModal.beneficiaryId?.name}</strong> • Stage: {reviewModal.officerSelectedStage}
+            <p className="text-xs text-slate-500 mt-0.5 font-medium">
+              Beneficiary: <strong className="text-indigo-950 font-bold">{reviewModal.beneficiaryId?.name}</strong> • Stage: {reviewModal.officerSelectedStage}
             </p>
 
-            <div className="my-4 p-3 rounded-xl bg-black/40 border border-white/[0.06] text-xs space-y-2">
-              <div className="flex justify-between items-center pb-2 border-b border-white/[0.06]">
-                <span className="text-[#94A3B8]">Dual-Evidence Synthesis:</span>
-                <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-white/[0.06] text-[#F1F5F9] border border-white/[0.08]">
+            <div className="my-4 p-3 rounded-2xl bg-slate-50 border border-slate-200/80 text-xs space-y-2 font-medium">
+              <div className="flex justify-between items-center pb-2 border-b border-slate-200">
+                <span className="text-slate-600 font-bold">Dual-Evidence Verdict:</span>
+                <span className="font-mono font-bold px-2 py-0.5 rounded bg-indigo-100 text-indigo-800 text-[10px]">
                   {reviewModal.dualEvidenceSynthesis?.finalVerdict || 'SINGLE_MEDIA_EVALUATED'}
                 </span>
               </div>
               <div className="grid grid-cols-3 gap-2 py-1 text-center font-mono">
-                <div className="p-2 rounded bg-black/40 border border-white/[0.05]">
-                  <span className="text-[10px] text-[#64748B] block">📸 Photo</span>
-                  <strong className="text-[#F1F5F9] text-xs tabular-nums">{reviewModal.dualEvidenceSynthesis?.photoRiskScore ?? reviewModal.riskScore?.score}/100</strong>
+                <div className="p-2 rounded-xl bg-white border border-slate-200 shadow-2xs">
+                  <span className="text-[10px] text-slate-500 block font-sans">📸 Photo Risk</span>
+                  <strong className="text-slate-800 text-xs tabular-nums">{reviewModal.dualEvidenceSynthesis?.photoRiskScore ?? reviewModal.riskScore?.score}/100</strong>
                 </div>
-                <div className="p-2 rounded bg-black/40 border border-white/[0.05]">
-                  <span className="text-[10px] text-[#64748B] block">🎥 Video</span>
-                  <strong className="text-[#F1F5F9] text-xs tabular-nums">{reviewModal.dualEvidenceSynthesis?.videoRiskScore ?? (reviewModal.videoEvidence?.aiGeneratedRiskScore || 0)}/100</strong>
+                <div className="p-2 rounded-xl bg-white border border-slate-200 shadow-2xs">
+                  <span className="text-[10px] text-slate-500 block font-sans">🎥 Video Risk</span>
+                  <strong className="text-purple-700 text-xs tabular-nums">{reviewModal.dualEvidenceSynthesis?.videoRiskScore ?? (reviewModal.videoEvidence?.aiGeneratedRiskScore || 0)}/100</strong>
                 </div>
-                <div className="p-2 rounded bg-black/40 border border-white/[0.05]">
-                  <span className="text-[10px] text-[#64748B] block">⚖️ Final</span>
-                  <strong className="text-amber-400 text-xs tabular-nums">{reviewModal.riskScore?.score ?? 20}/100</strong>
+                <div className="p-2 rounded-xl bg-amber-50 border border-amber-200 shadow-2xs">
+                  <span className="text-[10px] text-amber-800 block font-sans">⚖️ Final</span>
+                  <strong className="text-amber-900 text-xs tabular-nums">{reviewModal.riskScore?.score ?? 20}/100</strong>
                 </div>
               </div>
             </div>
 
             <div className="mb-4">
-              <label className="block text-xs font-medium text-[#94A3B8] mb-1.5">
+              <label className="block text-xs font-bold text-slate-700 mb-1.5">
                 Executive Audit Notes:
               </label>
               <textarea
@@ -501,29 +500,29 @@ export default function AdminPortal() {
                 value={actionReason}
                 onChange={(e) => setActionReason(e.target.value)}
                 placeholder="Enter approval note or directive..."
-                className="input-field text-xs"
+                className="input-field text-xs font-medium"
               />
             </div>
 
-            <div className="flex items-center justify-end gap-2 pt-3 border-t border-white/[0.06]">
+            <div className="flex items-center justify-end gap-2 pt-3 border-t border-slate-200">
               <button
                 disabled={submitting}
                 onClick={() => handleAction(reviewModal._id, 'rejected')}
-                className="px-3 py-1.5 rounded-lg text-xs font-medium bg-[#FF334B]/10 text-[#FF334B] hover:bg-[#FF334B]/20 border border-[#FF334B]/30 transition-colors"
+                className="px-3 py-1.5 rounded-xl text-xs font-bold bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200 transition-colors"
               >
                 Reject & Flag
               </button>
               <button
                 disabled={submitting}
                 onClick={() => handleAction(reviewModal._id, 'reinspection')}
-                className="px-3 py-1.5 rounded-lg text-xs font-medium bg-amber-500/10 text-amber-400 hover:bg-amber-500/20 border border-amber-500/30 transition-colors"
+                className="px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-50 text-amber-800 hover:bg-amber-100 border border-amber-200 transition-colors"
               >
                 Re-inspection
               </button>
               <button
                 disabled={submitting}
                 onClick={() => handleAction(reviewModal._id, 'verified')}
-                className="gov-btn-primary py-1.5 px-4 text-xs"
+                className="glass-btn-emerald py-1.5 px-4 text-xs font-bold shadow-sm"
               >
                 Approve & Release Grant
               </button>

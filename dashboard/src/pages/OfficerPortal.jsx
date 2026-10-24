@@ -36,12 +36,12 @@ export default function OfficerPortal() {
   const myBlock = user?.block || 'Berasia';
 
   return (
-    <div className="space-y-6 animate-fadeIn text-[#F1F5F9]">
-      {/* Officer Welcome Header - Gov-Tech Glass Slab */}
+    <div className="space-y-6 animate-fadeIn text-slate-800">
+      {/* Officer Welcome Header - Frosted Glass Slab */}
       <div className="gov-card-hero relative overflow-hidden">
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 relative z-10">
           <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-xl bg-white/[0.04] border border-white/[0.12] flex items-center justify-center text-2xl text-slate-200 shadow-[inset_0_1px_0_rgba(255,255,255,0.2)] flex-shrink-0">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-emerald-600 via-teal-600 to-cyan-600 flex items-center justify-center text-2xl text-white shadow-md flex-shrink-0">
               👷
             </div>
             <div>
@@ -50,13 +50,13 @@ export default function OfficerPortal() {
                   <span className="micro-aura-emerald" />
                   Field Inspector Active
                 </span>
-                <span className="text-xs text-[#94A3B8] font-mono">ID: {user?.employeeId || 'OFF-001'}</span>
+                <span className="text-xs text-emerald-800 font-mono font-bold">ID: {user?.employeeId || 'OFF-001'}</span>
               </div>
-              <h1 className="page-title mt-1 text-[#F1F5F9]">
+              <h1 className="page-title mt-1 text-[#0F172A]">
                 Field Workspace: {user?.name || 'Officer Rajesh Kumar'}
               </h1>
-              <p className="text-xs text-[#94A3B8] mt-1 font-medium">
-                Jurisdiction: <span className="text-[#F1F5F9] font-semibold">{myPanchayat} Gram Panchayat</span>, {myBlock} Block, {user?.district || 'Bhopal'} District
+              <p className="text-xs text-[#64748B] mt-1 font-medium">
+                Jurisdiction: <span className="text-emerald-950 font-bold">{myPanchayat} Gram Panchayat</span>, {myBlock} Block, {user?.district || 'Bhopal'} District
               </p>
             </div>
           </div>
@@ -64,76 +64,76 @@ export default function OfficerPortal() {
           <div className="flex flex-wrap items-center gap-2.5">
             <button
               onClick={() => navigate('/new-inspection')}
-              className="gov-btn-primary px-4 py-2.5 text-xs font-semibold"
+              className="glass-btn-emerald px-4 py-2.5 text-xs font-bold shadow-md"
             >
               🚀 Launch New Inspection
             </button>
             <button
               onClick={() => navigate('/risk-map')}
-              className="gov-btn-secondary px-3.5 py-2.5 text-xs"
+              className="gov-btn-secondary px-3.5 py-2.5 text-xs font-bold"
             >
               🗺️ Radius Map
             </button>
             <button
               onClick={() => navigate('/video-inspector')}
-              className="gov-btn-secondary px-3.5 py-2.5 text-xs"
+              className="gov-btn-secondary px-3.5 py-2.5 text-xs font-bold"
             >
               🎥 Video Forensics
             </button>
             <button
               onClick={() => navigate('/beneficiaries')}
-              className="gov-btn-secondary px-3.5 py-2.5 text-xs"
+              className="gov-btn-secondary px-3.5 py-2.5 text-xs font-bold"
             >
               👥 Beneficiaries
             </button>
           </div>
         </div>
 
-        {/* Real-time Field Metrics Bar (Monochromatic Tabular) */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-6 pt-5 border-t border-white/[0.06]">
-          <div className="p-3.5 rounded-xl bg-black/30 border border-white/[0.05]">
+        {/* Real-time Field Metrics Bar */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-6 pt-5 border-t border-slate-200/80">
+          <div className="p-3.5 rounded-2xl bg-white/70 border border-slate-200/80 shadow-2xs">
             <div className="flex items-center justify-between">
               <span className="section-label">Assigned Houses</span>
-              <span className="text-sm opacity-60">🏠</span>
+              <span className="text-sm opacity-80">🏠</span>
             </div>
-            <p className="text-2xl font-semibold text-[#F1F5F9] mt-1 tabular-nums font-mono">{beneficiaries.length || 5}</p>
-            <p className="text-[11px] text-[#64748B] font-mono mt-0.5">In GP Jurisdiction</p>
+            <p className="text-2xl font-extrabold text-[#0F172A] mt-1 tabular-nums font-mono font-display">{beneficiaries.length || 5}</p>
+            <p className="text-[11px] text-indigo-700 font-bold font-mono mt-0.5">In GP Jurisdiction</p>
           </div>
 
-          <div className="p-3.5 rounded-xl bg-black/30 border border-white/[0.05]">
+          <div className="p-3.5 rounded-2xl bg-white/70 border border-emerald-200 shadow-2xs">
             <div className="flex items-center justify-between">
-              <span className="section-label">Verified & Approved</span>
-              <span className="text-sm opacity-60">✅</span>
+              <span className="section-label text-emerald-800">Verified & Approved</span>
+              <span className="text-sm opacity-80">✅</span>
             </div>
-            <p className="text-2xl font-semibold text-[#F1F5F9] mt-1 tabular-nums font-mono">
+            <p className="text-2xl font-extrabold text-emerald-700 mt-1 tabular-nums font-mono font-display">
               {inspections.filter(i => i.status === 'verified').length}
             </p>
-            <p className="text-[11px] text-[#64748B] font-mono mt-0.5">HQ Cleared</p>
+            <p className="text-[11px] text-emerald-700 font-bold font-mono mt-0.5">HQ Cleared</p>
           </div>
 
-          <div className="p-3.5 rounded-xl bg-black/30 border border-white/[0.05]">
+          <div className="p-3.5 rounded-2xl bg-white/70 border border-amber-200 shadow-2xs">
             <div className="flex items-center justify-between">
-              <span className="section-label">Pending AI Audit</span>
-              <span className="text-sm opacity-60">⏳</span>
+              <span className="section-label text-amber-800">Pending AI Audit</span>
+              <span className="text-sm opacity-80">⏳</span>
             </div>
-            <p className="text-2xl font-semibold text-[#F1F5F9] mt-1 tabular-nums font-mono">
+            <p className="text-2xl font-extrabold text-amber-700 mt-1 tabular-nums font-mono font-display">
               {inspections.filter(i => i.status === 'pending').length}
             </p>
-            <p className="text-[11px] text-[#64748B] font-mono mt-0.5">In Review Queue</p>
+            <p className="text-[11px] text-amber-700 font-bold font-mono mt-0.5">In Review Queue</p>
           </div>
 
-          <div className="p-3.5 rounded-xl bg-black/30 border border-white/[0.05]">
+          <div className="p-3.5 rounded-2xl bg-white/70 border border-slate-200/80 shadow-2xs">
             <div className="flex items-center justify-between">
               <span className="section-label">Offline Queue</span>
-              <span className="text-sm opacity-60">📡</span>
+              <span className="text-sm opacity-80">📡</span>
             </div>
             <div className="flex items-center gap-2 mt-1">
-              <p className="text-2xl font-semibold text-[#F1F5F9] tabular-nums font-mono">{offlineQueue}</p>
-              <span className="text-[10px] px-1.5 py-0.2 rounded font-mono bg-white/[0.05] text-[#94A3B8] border border-white/[0.06]">
+              <p className="text-2xl font-extrabold text-[#0F172A] tabular-nums font-mono font-display">{offlineQueue}</p>
+              <span className="text-[10px] px-2 py-0.5 rounded-full font-mono font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
                 AUTO-SYNC
               </span>
             </div>
-            <p className="text-[11px] text-[#64748B] font-mono mt-0.5">Local Storage Cache</p>
+            <p className="text-[11px] text-slate-500 font-bold font-mono mt-0.5">Local Storage Cache</p>
           </div>
         </div>
       </div>
@@ -142,10 +142,10 @@ export default function OfficerPortal() {
       <div className="gov-card p-6">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-5">
           <div>
-            <h3 className="text-base font-semibold text-[#F1F5F9]">
+            <h3 className="text-base font-extrabold text-[#0F172A]">
               Beneficiaries Pending Field Inspection
             </h3>
-            <p className="text-xs text-[#94A3B8] mt-0.5">
+            <p className="text-xs text-[#64748B] mt-0.5 font-medium">
               Select a beneficiary to record geo-tagged stage evidence (Foundation, Plinth, Lintel, Completion)
             </p>
           </div>
@@ -155,10 +155,10 @@ export default function OfficerPortal() {
               <button
                 key={f}
                 onClick={() => setActiveFilter(f)}
-                className={`px-3 py-1 rounded-md text-xs font-mono font-medium transition-all ${
+                className={`px-3 py-1 rounded-xl text-xs font-bold transition-all ${
                   activeFilter === f
-                    ? 'bg-white text-black font-semibold shadow-sm'
-                    : 'bg-white/[0.04] text-[#94A3B8] hover:text-[#F1F5F9] border border-white/[0.06]'
+                    ? 'bg-emerald-600 text-white shadow-xs'
+                    : 'bg-white text-slate-600 hover:text-slate-900 border border-slate-200'
                 }`}
               >
                 {f === 'all' ? 'All Stages' : f}
@@ -176,48 +176,48 @@ export default function OfficerPortal() {
               .map((b) => (
                 <div
                   key={b._id}
-                  className="p-4 rounded-xl bg-black/30 border border-white/[0.06] hover:border-white/[0.14] transition-all flex flex-col justify-between group"
+                  className="p-4 rounded-2xl bg-white/90 border border-slate-200/90 hover:border-emerald-400 transition-all shadow-2xs flex flex-col justify-between group"
                 >
                   <div>
                     <div className="flex items-start justify-between">
                       <div>
-                        <h4 className="font-semibold text-[#F1F5F9] text-sm group-hover:text-white transition-colors">
+                        <h4 className="font-bold text-[#0F172A] text-sm group-hover:text-emerald-800 transition-colors">
                           {b.name}
                         </h4>
-                        <p className="text-xs text-[#94A3B8] mt-0.5 font-mono">
-                          ID: <span className="text-[#F1F5F9] font-medium">{b.householdId}</span> • {b.village}
+                        <p className="text-xs text-slate-500 mt-0.5 font-medium">
+                          ID: <span className="font-mono text-indigo-700 font-bold">{b.householdId}</span> • {b.village}
                         </p>
                       </div>
-                      <span className="text-[11px] px-2 py-0.5 rounded font-mono bg-white/[0.05] text-[#94A3B8] border border-white/[0.06]">
+                      <span className="badge badge-pending">
                         {b.currentStage || 'Foundation'}
                       </span>
                     </div>
 
-                    <div className="mt-3 p-2.5 rounded-lg bg-black/40 border border-white/[0.05] space-y-1 text-xs font-mono">
-                      <div className="flex justify-between text-[#64748B]">
+                    <div className="mt-3 p-2.5 rounded-xl bg-slate-50 border border-slate-100 space-y-1 text-xs font-medium">
+                      <div className="flex justify-between text-slate-500">
                         <span>Aadhaar:</span>
-                        <span className="text-[#94A3B8] tabular-nums">XXXX-{b.aadhaarLast4}</span>
+                        <span className="font-mono text-slate-800 font-bold tabular-nums">XXXX-{b.aadhaarLast4}</span>
                       </div>
-                      <div className="flex justify-between text-[#64748B]">
+                      <div className="flex justify-between text-slate-500">
                         <span>BPL Number:</span>
-                        <span className="text-[#94A3B8] tabular-nums">{b.bplNumber}</span>
+                        <span className="font-mono text-slate-800 font-bold tabular-nums">{b.bplNumber}</span>
                       </div>
-                      <div className="flex justify-between text-[#64748B]">
+                      <div className="flex justify-between text-slate-500">
                         <span>Coordinates:</span>
-                        <span className="text-[#94A3B8] text-[11px] tabular-nums">
+                        <span className="text-emerald-700 font-mono text-[11px] font-bold tabular-nums">
                           {b.registeredLocation?.latitude || '23.63'}, {b.registeredLocation?.longitude || '77.42'}
                         </span>
                       </div>
                     </div>
                   </div>
 
-                  <div className="mt-4 pt-3 border-t border-white/[0.06] flex items-center justify-between">
-                    <span className="text-xs text-[#64748B] font-mono">
-                      Grant: <strong className="text-[#F1F5F9] tabular-nums">₹{(b.estimatedCost || 150000).toLocaleString('en-IN')}</strong>
+                  <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                    <span className="text-xs text-slate-500 font-medium font-mono">
+                      Grant: <strong className="text-slate-900 font-bold tabular-nums">₹{(b.estimatedCost || 150000).toLocaleString('en-IN')}</strong>
                     </span>
                     <button
                       onClick={() => navigate(`/new-inspection?beneficiaryId=${b._id}&stage=${b.currentStage || 'Foundation'}`)}
-                      className="gov-btn-primary py-1 px-3 text-xs"
+                      className="glass-btn-emerald py-1 px-3 text-xs font-bold shadow-2xs"
                     >
                       📸 Inspect {b.currentStage || 'Stage'}
                     </button>
@@ -228,16 +228,16 @@ export default function OfficerPortal() {
         )}
       </div>
 
-      {/* Recent Field Submissions - Bloomberg Dark Table */}
+      {/* Recent Field Submissions - Frosted Acrylic Table */}
       <div className="gov-card p-6">
         <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
           <div>
-            <h3 className="text-base font-semibold text-[#F1F5F9]">Recent Field Submissions</h3>
-            <p className="text-xs text-[#94A3B8] mt-0.5">Inspections analyzed by multi-modal AI & forwarded to District HQ</p>
+            <h3 className="text-base font-extrabold text-[#0F172A]">Recent Field Submissions</h3>
+            <p className="text-xs text-[#64748B] mt-0.5 font-medium">Inspections analyzed by multi-modal AI & forwarded to District HQ</p>
           </div>
           <button
             onClick={() => navigate('/inspections')}
-            className="text-xs text-[#94A3B8] hover:text-[#F1F5F9] font-mono transition-colors"
+            className="text-xs text-emerald-700 hover:text-emerald-900 font-bold transition-colors"
           >
             Archive Stream →
           </button>
@@ -260,22 +260,22 @@ export default function OfficerPortal() {
               {inspections.slice(0, 6).map((insp) => (
                 <tr key={insp._id}>
                   <td className="py-3">
-                    <p className="font-medium text-[#F1F5F9] text-xs">{insp.beneficiaryId?.name || 'Beneficiary'}</p>
-                    <p className="text-[11px] text-[#64748B] font-mono">{insp.beneficiaryId?.village || 'Panchayat'}</p>
+                    <p className="font-bold text-[#0F172A] text-xs">{insp.beneficiaryId?.name || 'Beneficiary'}</p>
+                    <p className="text-[11px] text-slate-500 font-medium">{insp.beneficiaryId?.village || 'Panchayat'}</p>
                   </td>
-                  <td className="py-3 text-xs text-[#94A3B8] font-mono">{insp.officerSelectedStage}</td>
+                  <td className="py-3 text-xs font-semibold text-slate-800">{insp.officerSelectedStage}</td>
                   <td className="py-3">
                     <div className="flex items-center gap-1.5">
-                      <span className="text-xs text-[#F1F5F9] font-mono">{insp.aiDetectedStage || insp.officerSelectedStage}</span>
+                      <span className="text-xs font-bold text-indigo-700">{insp.aiDetectedStage || insp.officerSelectedStage}</span>
                       {insp.stageMismatch && (
-                        <span className="text-[9px] px-1 py-0.2 rounded font-mono bg-[#FF334B]/15 text-[#FF334B] border border-[#FF334B]/30">
+                        <span className="text-[10px] px-1.5 py-0.5 rounded font-bold bg-rose-50 text-rose-700 border border-rose-200">
                           MISMATCH
                         </span>
                       )}
                     </div>
                   </td>
                   <td className="py-3">
-                    <span className="font-mono text-xs tabular-nums text-[#94A3B8]">
+                    <span className="font-mono text-xs tabular-nums font-bold text-slate-700">
                       {insp.riskScore?.score ?? 15}/100 ({insp.riskScore?.level || 'LOW'})
                     </span>
                   </td>
@@ -284,28 +284,28 @@ export default function OfficerPortal() {
                       {insp.status === 'verified' ? (
                         <>
                           <span className="micro-aura-emerald" />
-                          <span className="text-emerald-400 font-mono text-[11px]">HQ Approved</span>
+                          <span className="text-emerald-700 font-bold text-[11px]">HQ Approved</span>
                         </>
                       ) : insp.status === 'reinspection_required' ? (
                         <>
                           <span className="micro-aura-amber" />
-                          <span className="text-amber-400 font-mono text-[11px]">Re-Inspection</span>
+                          <span className="text-amber-700 font-bold text-[11px]">Re-Inspection</span>
                         </>
                       ) : (
                         <>
                           <span className="micro-aura-slate" />
-                          <span className="text-[#94A3B8] font-mono text-[11px]">In Review</span>
+                          <span className="text-slate-600 font-semibold text-[11px]">In Review</span>
                         </>
                       )}
                     </span>
                   </td>
-                  <td className="py-3 text-xs text-[#64748B] font-mono tabular-nums">
+                  <td className="py-3 text-xs text-slate-500 font-mono tabular-nums font-medium">
                     {new Date(insp.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
                   </td>
                   <td className="py-3 text-right">
                     <button
                       onClick={() => navigate(`/inspections/${insp._id}`)}
-                      className="gov-btn-secondary py-0.5 px-2.5 text-xs font-mono"
+                      className="gov-btn-secondary py-1 px-3 text-xs font-bold"
                     >
                       View →
                     </button>

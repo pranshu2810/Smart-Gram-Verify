@@ -22,7 +22,7 @@ const PORTALS = [
     label: 'Field Terminal',
     icon: '👷',
     badge: 'Field Clearance',
-    title: 'Field Inspector Terminal',
+    title: 'Field Inspector Workspace',
     desc: 'Gram Rozgar Sahayaks — GPS-verified photos & AI stage inspections',
     email: 'rajesh@smartgram.gov.in',
     pass: 'officer123',
@@ -78,41 +78,41 @@ export default function Login() {
   return (
     <div className="min-h-screen bg-gov-command flex items-center justify-center p-4 relative overflow-hidden select-none">
       {/* Subtle Dot Grid */}
-      <div className="fixed inset-0 dot-grid pointer-events-none opacity-50" />
+      <div className="fixed inset-0 dot-grid pointer-events-none opacity-40" />
 
       <div className="w-full max-w-md relative z-10 animate-fadeIn">
         {/* Back to Home */}
         <button
           onClick={() => navigate('/')}
-          className="flex items-center gap-1.5 text-xs text-[#94A3B8] hover:text-[#F1F5F9] mb-6 transition-colors font-mono"
+          className="flex items-center gap-1.5 text-xs text-slate-600 hover:text-slate-900 mb-6 transition-colors font-mono font-bold"
         >
           <span>←</span> Back to Public Overview
         </button>
 
         {/* Header */}
         <div className="text-center mb-6">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md mb-3 bg-white/[0.03] border border-white/[0.08]">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-3 bg-white/80 border border-slate-200/80 shadow-2xs">
             <span className="text-xs">🇮🇳</span>
-            <span className="text-[11px] font-mono uppercase tracking-widest text-[#94A3B8]">
+            <span className="text-[11px] font-mono font-bold uppercase tracking-widest text-slate-700">
               Ministry of Rural Development · PMAY-G
             </span>
           </div>
-          <h1 className="text-2xl font-bold text-[#F1F5F9] tracking-tight font-display">
-            Smart-Gram <span className="text-[#94A3B8] font-normal">Verify</span>
+          <h1 className="text-3xl font-extrabold text-[#0F172A] tracking-tight font-display">
+            Smart-Gram <span className="text-shimmer">Verify</span>
           </h1>
-          <p className="text-xs text-[#64748B] mt-1 font-mono">Executive Command & Autonomous DBT Audit Matrix</p>
+          <p className="text-xs text-[#64748B] mt-1 font-mono font-medium">Executive Command & Autonomous DBT Audit Matrix</p>
         </div>
 
-        {/* Monochromatic Portal Selector */}
-        <div className="flex gap-1.5 mb-5 p-1 rounded-xl bg-black/40 border border-white/[0.08] backdrop-blur-md">
+        {/* Portal Selector Tabs */}
+        <div className="flex gap-1.5 mb-5 p-1 rounded-2xl bg-white/70 border border-slate-200/80 backdrop-blur-md shadow-2xs">
           {PORTALS.map((p, i) => (
             <button
               key={p.id}
               onClick={() => setActivePortal(i)}
-              className={`flex-1 flex items-center justify-center gap-1.5 py-2 px-2 rounded-lg text-xs font-medium transition-all ${
+              className={`flex-1 flex items-center justify-center gap-1.5 py-2 px-2 rounded-xl text-xs font-bold transition-all ${
                 activePortal === i
-                  ? 'bg-white text-black font-semibold shadow-sm'
-                  : 'text-[#94A3B8] hover:text-[#F1F5F9]'
+                  ? 'bg-indigo-600 text-white shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900'
               }`}
             >
               <span className="text-xs">{p.icon}</span>
@@ -121,21 +121,21 @@ export default function Login() {
           ))}
         </div>
 
-        {/* Gov-Tech Glass Auth Card */}
-        <div className="gov-card p-6 sm:p-7 relative overflow-hidden">
+        {/* Frosted Glass Auth Card */}
+        <div className="gov-card-hero p-6 sm:p-7 relative overflow-hidden">
           {/* Header */}
           <div className="flex items-start justify-between mb-5">
             <div>
               <div className="flex items-center gap-1.5 mb-1.5">
-                <span className={portal.id === 'admin' ? "micro-aura-cyan" : portal.id === 'officer' ? "micro-aura-emerald" : "micro-aura-slate"} />
-                <span className="text-[11px] font-mono text-[#94A3B8] uppercase tracking-wider">
+                <span className={portal.id === 'admin' ? "micro-aura-cyan" : portal.id === 'officer' ? "micro-aura-emerald" : "micro-aura-amber"} />
+                <span className="text-[11px] font-mono font-bold text-indigo-700 uppercase tracking-wider">
                   {portal.badge}
                 </span>
               </div>
-              <h2 className="text-base font-semibold text-[#F1F5F9]">{portal.title}</h2>
-              <p className="text-xs text-[#64748B] mt-0.5">{portal.desc}</p>
+              <h2 className="text-base font-extrabold text-[#0F172A]">{portal.title}</h2>
+              <p className="text-xs text-[#64748B] mt-0.5 font-medium">{portal.desc}</p>
             </div>
-            <div className="w-10 h-10 rounded-lg bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-lg flex-shrink-0">
+            <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-indigo-50 to-sky-50 border border-indigo-100 flex items-center justify-center text-xl flex-shrink-0 shadow-2xs">
               {portal.icon}
             </div>
           </div>
@@ -143,7 +143,7 @@ export default function Login() {
           {/* Citizen portal — direct jump */}
           {portal.id === 'citizen' ? (
             <div className="space-y-4">
-              <div className="p-3.5 rounded-lg bg-black/30 border border-white/[0.05] space-y-2 text-xs text-[#94A3B8]">
+              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 space-y-2 text-xs text-slate-700 font-medium">
                 <p>✓ 4-Stage construction photo & AI inspection ledger</p>
                 <p>✓ DBT installment disbursements & transaction history</p>
                 <p>✓ Digital sanction certificate download</p>
@@ -151,19 +151,19 @@ export default function Login() {
               </div>
               <button
                 onClick={() => navigate('/client')}
-                className="w-full gov-btn-primary py-2.5 text-xs font-semibold"
+                className="w-full gov-btn-primary py-3 text-xs font-bold shadow-sm"
               >
                 Enter Public Citizen Tracker →
               </button>
-              <p className="text-center text-[11px] text-[#64748B] font-mono">
-                No login required · Enter Household ID or Aadhaar
+              <p className="text-center text-[11px] text-slate-500 font-mono">
+                No login required · Enter Household ID or Aadhaar directly
               </p>
             </div>
           ) : (
             /* Login Form */
             <>
               {error && (
-                <div className="mb-4 p-2.5 rounded-lg text-xs font-medium text-[#FF334B] bg-[#FF334B]/10 border border-[#FF334B]/30 flex items-center gap-2">
+                <div className="mb-4 p-2.5 rounded-xl text-xs font-bold text-rose-800 bg-rose-50 border border-rose-200 flex items-center gap-2">
                   <span className="micro-aura-crimson" />
                   <span>{error}</span>
                 </div>
@@ -171,7 +171,7 @@ export default function Login() {
 
               <form onSubmit={handleSubmit} className="space-y-3.5">
                 <div>
-                  <label className="block text-[11px] font-mono uppercase tracking-wider text-[#94A3B8] mb-1.5">
+                  <label className="block text-[11px] font-mono font-bold uppercase tracking-wider text-slate-600 mb-1.5">
                     {portal.fieldLabel}
                   </label>
                   <input
@@ -179,13 +179,13 @@ export default function Login() {
                     value={email}
                     onChange={e => setEmail(e.target.value)}
                     required
-                    className="input-field font-mono text-xs"
+                    className="input-field font-medium text-xs"
                     placeholder={portal.email}
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-mono uppercase tracking-wider text-[#94A3B8] mb-1.5">
+                  <label className="block text-[11px] font-mono font-bold uppercase tracking-wider text-slate-600 mb-1.5">
                     {portal.passLabel}
                   </label>
                   <div className="relative">
@@ -194,13 +194,13 @@ export default function Login() {
                       value={password}
                       onChange={e => setPassword(e.target.value)}
                       required
-                      className="input-field font-mono text-xs pr-10"
+                      className="input-field font-medium text-xs pr-10"
                       placeholder="••••••••••••"
                     />
                     <button
                       type="button"
                       onClick={() => setShowPass(s => !s)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-[#64748B] hover:text-[#94A3B8] text-xs"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 text-xs font-bold font-mono"
                     >
                       {showPass ? 'HIDE' : 'SHOW'}
                     </button>
@@ -210,11 +210,11 @@ export default function Login() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full gov-btn-primary py-2.5 text-xs font-semibold mt-2"
+                  className="w-full gov-btn-primary py-3 text-xs font-bold mt-2 shadow-sm"
                 >
                   {loading ? (
                     <span className="flex items-center justify-center gap-2 font-mono">
-                      <span className="w-3.5 h-3.5 border-2 border-black/30 border-t-black rounded-full animate-spin" />
+                      <span className="w-3.5 h-3.5 border-2 border-white/40 border-t-white rounded-full animate-spin" />
                       Verifying Clearance...
                     </span>
                   ) : portal.ctaText}
@@ -222,13 +222,13 @@ export default function Login() {
               </form>
 
               {/* Demo quick access */}
-              <div className="mt-4 pt-3 border-t border-white/[0.06] flex items-center justify-between text-xs">
-                <span className="text-[#64748B] font-mono text-[11px]">Quick Credentials:</span>
+              <div className="mt-4 pt-3 border-t border-slate-200/80 flex items-center justify-between text-xs">
+                <span className="text-slate-500 font-mono text-[11px] font-medium">Quick Credentials:</span>
                 <div className="flex gap-1.5">
                   <button
                     onClick={() => handleLogin(portal.email, portal.pass)}
                     disabled={loading}
-                    className="px-2.5 py-1 rounded bg-white/[0.05] hover:bg-white/[0.1] text-[#94A3B8] hover:text-[#F1F5F9] border border-white/[0.08] font-mono text-[11px] transition-colors"
+                    className="px-2.5 py-1 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 font-mono text-[11px] font-bold transition-colors"
                   >
                     {portal.quickLabel}
                   </button>
@@ -238,7 +238,7 @@ export default function Login() {
           )}
         </div>
 
-        <p className="text-center text-[11px] text-[#64748B] mt-5 font-mono">
+        <p className="text-center text-[11px] text-slate-500 mt-5 font-mono">
           Ministry of Rural Development · Smart-Gram Verify · Gov-Tech Core
         </p>
       </div>

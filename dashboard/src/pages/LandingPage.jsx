@@ -2,66 +2,20 @@ import { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const STATS = [
-  { value: '2.4M+', label: 'Beneficiaries Tracked', icon: '👥', color: '#6366f1' },
-  { value: '₹18,600 Cr', label: 'DBT Disbursed', icon: '💰', color: '#10b981' },
-  { value: '99.2%', label: 'AI Accuracy Rate', icon: '🎯', color: '#a855f7' },
-  { value: '28 States', label: 'Coverage Nationwide', icon: '🗺️', color: '#22d3ee' },
+  { value: '2.4M+', label: 'Beneficiaries Tracked', icon: '👥', color: '#4F46E5' },
+  { value: '₹18,600 Cr', label: 'DBT Disbursed', icon: '💰', color: '#059669' },
+  { value: '99.4%', label: 'AI Accuracy Rate', icon: '🎯', color: '#0891B2' },
+  { value: '28 States', label: 'Coverage Nationwide', icon: '🗺️', color: '#7C3AED' },
 ];
 
 const FEATURES = [
-  { icon: '📸', title: 'Stage-wise AI Inspection', desc: 'GPS-tagged photos at Foundation → Plinth → Lintel → Completion with ML verification', color: '#6366f1' },
-  { icon: '📡', title: 'Offline-First Mobile', desc: 'Upload stored records automatically when connectivity returns — zero data loss', color: '#10b981' },
-  { icon: '🏛️', title: '3D Digital Twin', desc: 'NeRF-powered spatial reconstruction with civil metrology and dimension verification', color: '#a855f7' },
-  { icon: '🎥', title: 'VLM Video Forensics', desc: 'Frame-by-frame AI analysis detecting progress gaps and construction anomalies', color: '#22d3ee' },
-  { icon: '🔍', title: 'Beneficiary Dedup AI', desc: 'Cross-verify duplicate claims, previously received benefits and eligibility flags', color: '#f59e0b' },
-  { icon: '🗺️', title: 'Geo Risk Heat Map', desc: 'Real-time cluster maps showing fraud risk, pending approvals and block progress', color: '#f43f5e' },
+  { icon: '📸', title: 'Stage-wise AI Inspection', desc: 'GPS-tagged photos at Foundation → Plinth → Lintel → Completion with autonomous computer vision verification', color: '#4F46E5' },
+  { icon: '📡', title: 'Offline-First Mobile Field Kit', desc: 'Upload stored records automatically when connectivity returns — zero packet or survey loss in remote rural hamlets', color: '#059669' },
+  { icon: '🏛️', title: '3D Spatial Twin Studio', desc: 'LiDAR-assisted photogrammetry reconstruction with structural metrology and metric boundary checks', color: '#7C3AED' },
+  { icon: '🎥', title: 'VLM Video AI Forensics', desc: 'Frame-by-frame Qwen 2.5-VL inspection detecting progress tampering and duplicate site footage', color: '#0891B2' },
+  { icon: '🔍', title: 'Perceptual Hash Dedup AI', desc: 'Cross-verifies image hashes against 10M+ prior geo-surveys to eliminate ghost beneficiary duplicate claims', color: '#D97706' },
+  { icon: '🗺️', title: 'Geo-Radius Risk Heat Map', desc: 'Real-time interactive Leaflet GIS cluster maps flagging high-risk cases, geofence breaches, and disbursement velocity', color: '#E11D48' },
 ];
-
-function AnimatedCounter({ target, suffix = '' }) {
-  const [count, setCount] = useState('0');
-  const [started, setStarted] = useState(false);
-  const ref = useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting && !started) setStarted(true);
-    }, { threshold: 0.3 });
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, [started]);
-
-  useEffect(() => {
-    if (!started) return;
-    // Just animate display
-    let frame = 0;
-    const total = 60;
-    const timer = setInterval(() => {
-      frame++;
-      if (frame >= total) { setCount(target); clearInterval(timer); }
-      else setCount(target.slice(0, Math.ceil((frame / total) * target.length)) || '0');
-    }, 30);
-    return () => clearInterval(timer);
-  }, [started, target]);
-
-  return <span ref={ref}>{count}{suffix}</span>;
-}
-
-function Particle({ style }) {
-  return (
-    <div
-      className="absolute rounded-full pointer-events-none"
-      style={{
-        width: Math.random() * 3 + 1 + 'px',
-        height: Math.random() * 3 + 1 + 'px',
-        background: ['#6366f1','#a855f7','#22d3ee','#10b981'][Math.floor(Math.random()*4)],
-        animation: `particleDrift ${3 + Math.random() * 4}s ease-out infinite`,
-        animationDelay: Math.random() * 3 + 's',
-        opacity: 0.7,
-        ...style,
-      }}
-    />
-  );
-}
 
 export default function LandingPage() {
   const navigate = useNavigate();
@@ -69,161 +23,132 @@ export default function LandingPage() {
   const [activeFeature, setActiveFeature] = useState(0);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60);
+    const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   useEffect(() => {
-    const t = setInterval(() => setActiveFeature(f => (f + 1) % FEATURES.length), 3000);
+    const t = setInterval(() => setActiveFeature(f => (f + 1) % FEATURES.length), 3500);
     return () => clearInterval(t);
   }, []);
 
   return (
-    <div className="min-h-screen bg-gov-command relative overflow-x-hidden select-none">
+    <div className="min-h-screen bg-gov-command text-slate-800 relative overflow-x-hidden select-none">
       {/* Subtle Dot Grid */}
-      <div className="fixed inset-0 dot-grid pointer-events-none opacity-50 z-0" />
+      <div className="fixed inset-0 dot-grid pointer-events-none opacity-40 z-0" />
 
-      {/* NAVBAR */}
+      {/* Frosted Acrylic Navbar */}
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? 'bg-[#07090E]/85 backdrop-blur-xl border-b border-white/[0.08] shadow-2xl' : 'bg-transparent'
+        scrolled ? 'bg-white/80 backdrop-blur-xl border-b border-slate-200/80 shadow-sm' : 'bg-transparent'
       }`}>
         <div className="max-w-7xl mx-auto px-6 py-3.5 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-white/[0.04] border border-white/[0.12] flex items-center justify-center text-lg shadow-[inset_0_1px_0_rgba(255,255,255,0.15)]">
-              🏛️
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-amber-500 via-indigo-600 to-sky-500 p-0.5 shadow-sm">
+              <div className="w-full h-full bg-white/95 rounded-[14px] flex items-center justify-center text-lg shadow-inner">
+                🏛️
+              </div>
             </div>
             <div>
-              <span className="font-display font-bold text-[#F1F5F9] text-base tracking-tight">
-                Smart-Gram <span className="text-[#94A3B8] font-normal">Verify</span>
+              <span className="font-display font-extrabold text-[#0F172A] text-lg tracking-tight">
+                Smart-Gram <span className="text-shimmer">Verify</span>
               </span>
-              <div className="text-[10px] text-[#64748B] font-mono">PMAY-G Autonomous Matrix</div>
+              <div className="text-[10px] text-[#64748B] font-mono font-medium">PMAY-G Autonomous Matrix</div>
             </div>
           </div>
 
           <div className="hidden md:flex items-center gap-3">
-            <span className="flex items-center gap-2 px-3 py-1 rounded-md text-[11px] font-mono bg-white/[0.03] border border-white/[0.06] text-[#94A3B8]">
+            <span className="flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-mono font-bold bg-emerald-50 text-emerald-800 border border-emerald-200 shadow-2xs">
               <span className="micro-aura-emerald" />
               Vision AI Online
             </span>
-            <span className="text-[11px] font-mono text-[#64748B]">
-              Ministry of Rural Development
+            <span className="text-xs font-semibold text-slate-600">
+              Ministry of Rural Development · Govt of India
             </span>
           </div>
 
           <button
             onClick={() => navigate('/login')}
-            className="gov-btn-primary px-4 py-2 text-xs font-semibold"
+            className="gov-btn-primary px-5 py-2.5 text-xs font-bold shadow-md"
           >
             Launch Command HQ →
           </button>
         </div>
       </nav>
 
-      {/* HERO SECTION */}
-      <section className="relative min-h-screen flex items-center justify-center px-6 pt-20">
-        {/* Particles */}
-        {[...Array(20)].map((_, i) => (
-          <Particle key={i} style={{ left: Math.random() * 100 + '%', top: Math.random() * 100 + '%' }} />
-        ))}
-
-        {/* Central Glow Ring */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
-          <div className="w-[600px] h-[600px] rounded-full animate-rotateSlow opacity-10"
-            style={{ border: '1px solid rgba(99,102,241,0.6)', boxShadow: '0 0 60px rgba(99,102,241,0.3)' }} />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full"
-            style={{ border: '1px dashed rgba(168,85,247,0.4)', animation: 'orbitRing 15s linear infinite reverse' }} />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] h-[200px] rounded-full"
-            style={{ background: 'radial-gradient(circle, rgba(99,102,241,0.15) 0%, transparent 70%)', animation: 'glowPulse 3s ease-in-out infinite' }} />
-        </div>
-
-        <div className="relative z-10 max-w-6xl mx-auto text-center">
+      {/* Hero Section */}
+      <section className="relative min-h-screen flex items-center justify-center px-6 pt-24 pb-16">
+        <div className="relative z-10 max-w-5xl mx-auto text-center">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 animate-fadeInUp"
-            style={{ background: 'rgba(99,102,241,0.1)', border: '1px solid rgba(99,102,241,0.35)', boxShadow: '0 0 20px rgba(99,102,241,0.15)' }}>
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-6 bg-white/80 border border-indigo-200/80 shadow-2xs animate-fadeIn">
             <span className="text-sm">🇮🇳</span>
-            <span className="text-xs font-bold text-indigo-300 uppercase tracking-widest">
-              Government of India • Ministry of Rural Development • PMAY-G 2026
+            <span className="text-xs font-bold text-indigo-900 uppercase tracking-widest font-mono">
+              Government of India · Ministry of Rural Development · PMAY-G 2026
             </span>
-            <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse" />
+            <span className="w-2 h-2 rounded-full bg-indigo-600 animate-pulse" />
           </div>
 
-          {/* Main Heading */}
-          <h1 className="text-5xl md:text-7xl font-black mb-6 leading-tight tracking-tight animate-fadeInUp"
-            style={{ fontFamily: 'Outfit', animationDelay: '0.1s' }}>
-            <span className="text-white">Digital Intelligence for</span>
+          {/* Heading */}
+          <h1 className="text-5xl md:text-7xl font-extrabold mb-6 leading-tight tracking-tight text-[#0F172A] font-display">
+            Autonomous AI Verification for
             <br />
-            <span className="text-shimmer">Rural Housing</span>
-            <br />
-            <span className="text-white">at Scale</span>
+            <span className="text-shimmer">Rural Housing Delivery</span>
           </h1>
 
-          <p className="text-slate-400 text-lg md:text-xl max-w-3xl mx-auto mb-10 leading-relaxed animate-fadeInUp"
-            style={{ animationDelay: '0.2s' }}>
-            AI-powered inspection of PMAY-G housing works — from GPS-tagged field photos to 
-            <strong className="text-slate-200"> 3D digital twins</strong>, fraud detection, and 
-            <strong className="text-slate-200"> ₹1.5L DBT disbursement</strong> — all on one platform.
+          <p className="text-slate-600 text-lg md:text-xl max-w-3xl mx-auto mb-10 leading-relaxed font-medium">
+            Next-generation PMAY-G inspection architecture. From GPS-verified multi-angle site photos to
+            <strong className="text-[#0F172A] font-bold"> VLM video forensics</strong>, 3D spatial twins, and automated direct benefit transfer releases.
           </p>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 animate-fadeInUp"
-            style={{ animationDelay: '0.3s' }}>
+          {/* Action CTAs */}
+          <div className="flex flex-wrap items-center justify-center gap-4 mb-16">
             <button
               onClick={() => navigate('/login')}
-              className="btn-primary px-8 py-4 text-base animate-neonPulse"
+              className="gov-btn-primary px-7 py-3.5 text-sm font-bold shadow-md hover:scale-102 transition-all"
             >
               🛡️ Admin Command HQ
             </button>
             <button
               onClick={() => navigate('/login')}
-              className="gov-btn-secondary px-6 py-3 text-sm"
+              className="gov-btn-secondary px-7 py-3.5 text-sm font-bold shadow-2xs hover:scale-102 transition-all"
             >
-              👷 Field Officer Terminal
+              👷 Field Officer Workspace
             </button>
             <button
               onClick={() => navigate('/client')}
-              className="gov-btn-secondary px-6 py-3 text-sm"
+              className="gov-btn-secondary px-7 py-3.5 text-sm font-bold shadow-2xs hover:scale-102 transition-all"
             >
-              🏛️ Citizen Portal →
+              🏛️ Public Citizen Tracker →
             </button>
           </div>
 
-          {/* Stats Row - Gov-Tech Glass with Tabular Monospace figures */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto animate-fadeInUp"
-            style={{ animationDelay: '0.4s' }}>
+          {/* Stats Row - Frosted Glass Cards */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto">
             {STATS.map((s, i) => (
               <div key={i} className="gov-card p-5 text-center group cursor-default">
-                <div className="text-xl mb-1.5 opacity-80">{s.icon}</div>
-                <div className="text-2xl md:text-3xl font-bold mb-1 text-[#F1F5F9] font-mono tabular-nums tracking-tight">
+                <div className="text-xl mb-1.5 opacity-90">{s.icon}</div>
+                <div className="text-2xl md:text-3xl font-extrabold mb-1 text-[#0F172A] font-mono tabular-nums tracking-tight">
                   {s.value}
                 </div>
-                <div className="text-xs text-[#94A3B8] font-medium">{s.label}</div>
+                <div className="text-xs text-slate-600 font-bold">{s.label}</div>
               </div>
             ))}
           </div>
         </div>
-
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 rounded-full border-2 border-slate-600 flex items-start justify-center pt-2">
-            <div className="w-1 h-2 rounded-full bg-indigo-400 animate-pulse" />
-          </div>
-        </div>
       </section>
 
-      {/* FEATURES SECTION */}
-      <section className="py-24 px-6 relative">
+      {/* Features Section */}
+      <section className="py-20 px-6 relative">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-4"
-              style={{ background: 'rgba(168,85,247,0.1)', border: '1px solid rgba(168,85,247,0.3)' }}>
-              <span className="text-xs font-bold text-violet-300 uppercase tracking-widest">Platform Capabilities</span>
+          <div className="text-center mb-14">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full mb-3 bg-indigo-50 border border-indigo-200 text-xs font-bold text-indigo-700">
+              Engineered Capabilities
             </div>
-            <h2 className="text-4xl md:text-5xl font-black text-white mb-4" style={{ fontFamily: 'Outfit' }}>
-              Built for <span className="text-shimmer">Real India</span>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-[#0F172A] mb-3 font-display">
+              Built for <span className="text-shimmer">Ground Realities</span>
             </h2>
-            <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-              Every feature engineered for the ground realities of rural housing inspection
+            <p className="text-slate-600 text-base max-w-2xl mx-auto font-medium">
+              Every AI model, spatial pipeline, and offline storage queue is optimized for rural infrastructure
             </p>
           </div>
 
@@ -231,122 +156,61 @@ export default function LandingPage() {
             {FEATURES.map((f, i) => (
               <div
                 key={i}
-                className="glass-card-pro p-6 cursor-pointer group"
-                style={{
-                  borderColor: activeFeature === i ? f.color + '60' : 'rgba(99,102,241,0.15)',
-                  boxShadow: activeFeature === i ? `0 0 30px ${f.color}25, 0 8px 32px rgba(0,0,0,0.5)` : '0 8px 32px rgba(0,0,0,0.4)',
-                  transition: 'all 0.4s ease',
-                }}
+                className="gov-card p-6 cursor-pointer group"
                 onMouseEnter={() => setActiveFeature(i)}
               >
-                <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform"
-                  style={{ background: f.color + '1a', border: `1px solid ${f.color}40`, boxShadow: `0 0 20px ${f.color}20` }}>
+                <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl mb-4 bg-slate-100 border border-slate-200 group-hover:scale-105 transition-transform">
                   {f.icon}
                 </div>
-                <h3 className="text-base font-bold text-white mb-2" style={{ fontFamily: 'Outfit' }}>{f.title}</h3>
-                <p className="text-sm text-slate-400 leading-relaxed">{f.desc}</p>
-                <div className="mt-4 h-0.5 rounded-full transition-all duration-300"
-                  style={{ background: `linear-gradient(90deg, ${f.color}, transparent)`, width: activeFeature === i ? '100%' : '30%' }} />
+                <h3 className="text-base font-bold text-[#0F172A] mb-2 font-display">{f.title}</h3>
+                <p className="text-sm text-slate-600 leading-relaxed font-medium">{f.desc}</p>
+                <div className="mt-4 h-1 rounded-full transition-all duration-300"
+                  style={{ background: f.color, width: activeFeature === i ? '100%' : '20%', opacity: activeFeature === i ? 1 : 0.2 }} />
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* PORTAL CARDS */}
-      <section className="py-20 px-6">
+      {/* Three Portals Section */}
+      <section className="py-16 px-6">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-14">
-            <h2 className="text-4xl font-black text-white mb-3" style={{ fontFamily: 'Outfit' }}>
-              Three Portals. <span className="text-shimmer">One Mission.</span>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-extrabold text-[#0F172A] mb-2 font-display">
+              Three Portals. <span className="text-shimmer">One Cohesive Mission.</span>
             </h2>
+            <p className="text-xs text-slate-600 font-medium">Distinct clearances for state governance, field inspectors, and rural beneficiaries</p>
           </div>
+
           <div className="grid md:grid-cols-3 gap-6">
             {[
-              { icon: '🛡️', title: 'Admin Command Center', desc: 'District-level oversight, DBT approvals, fraud triage, risk analytics & immutable audit trails', color: '#6366f1', role: 'admin', cta: 'Enter Admin Portal' },
-              { icon: '👷', title: 'Field Officer Workspace', desc: 'GPS photo uploads, stage inspections, offline sync, AI verification & assigned beneficiaries', color: '#10b981', role: 'officer', cta: 'Open Field Workspace' },
-              { icon: '🏛️', title: 'Citizen Housing Portal', desc: 'Check construction progress, DBT installment status & download digital certificates — no login needed', color: '#f59e0b', role: 'citizen', cta: 'View My House Status' },
+              { icon: '🛡️', title: 'Admin Command Center', desc: 'District & Block oversight, DBT disbursement authorizer, fraud triage, risk analytics & audit trails', role: 'admin', cta: 'Enter Admin HQ' },
+              { icon: '👷', title: 'Field Officer Workspace', desc: 'GPS photos, stage inspection submission, offline storage sync, AI feedback & assigned beneficiary directory', role: 'officer', cta: 'Open Field Terminal' },
+              { icon: '🏛️', title: 'Citizen Housing Tracker', desc: 'Check house completion progress, DBT installment receipts & download digital approval certificates', role: 'citizen', cta: 'Track Housing Status' },
             ].map((p, i) => (
-              <div key={i} className="relative glass-card-pro p-8 text-center group overflow-hidden"
-                style={{ borderColor: p.color + '30' }}>
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{ background: `radial-gradient(circle at 50% 0%, ${p.color}10 0%, transparent 60%)` }} />
-                <div className="relative z-10">
-                  <div className="w-16 h-16 rounded-3xl flex items-center justify-center text-3xl mx-auto mb-5 animate-float"
-                    style={{ animationDelay: `${i * 0.5}s`, background: p.color + '1a', border: `1px solid ${p.color}40`, boxShadow: `0 0 30px ${p.color}25` }}>
+              <div key={i} className="gov-card-hero p-7 text-center group flex flex-col justify-between">
+                <div>
+                  <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4 bg-slate-50 border border-slate-200 shadow-2xs group-hover:scale-105 transition-transform">
                     {p.icon}
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-3" style={{ fontFamily: 'Outfit' }}>{p.title}</h3>
-                  <p className="text-sm text-slate-400 leading-relaxed mb-6">{p.desc}</p>
-                  <button
-                    onClick={() => p.role === 'citizen' ? navigate('/client') : navigate('/login')}
-                    className="w-full py-3 rounded-xl font-bold text-sm transition-all duration-300 group-hover:shadow-lg"
-                    style={{
-                      background: p.color + '1a',
-                      border: `1px solid ${p.color}40`,
-                      color: p.color,
-                    }}
-                    onMouseEnter={e => {
-                      e.currentTarget.style.background = p.color + '30';
-                      e.currentTarget.style.boxShadow = `0 0 20px ${p.color}40`;
-                    }}
-                    onMouseLeave={e => {
-                      e.currentTarget.style.background = p.color + '1a';
-                      e.currentTarget.style.boxShadow = 'none';
-                    }}
-                  >
-                    {p.cta} →
-                  </button>
+                  <h3 className="text-lg font-bold text-[#0F172A] mb-2 font-display">{p.title}</h3>
+                  <p className="text-xs text-slate-600 leading-relaxed mb-6 font-medium">{p.desc}</p>
                 </div>
+                <button
+                  onClick={() => p.role === 'citizen' ? navigate('/client') : navigate('/login')}
+                  className="w-full gov-btn-primary py-2.5 text-xs font-bold"
+                >
+                  {p.cta} →
+                </button>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* BOTTOM CTA */}
-      <section className="py-20 px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="glass-card-pro p-12 relative overflow-hidden"
-            style={{ borderColor: 'rgba(99,102,241,0.3)', boxShadow: '0 0 60px rgba(99,102,241,0.15), 0 20px 60px rgba(0,0,0,0.5)' }}>
-            <div className="absolute inset-0 animate-laser opacity-30"
-              style={{ background: 'linear-gradient(180deg, transparent 0%, rgba(99,102,241,0.1) 50%, transparent 100%)', height: '40%' }} />
-            <div className="relative z-10">
-              <h2 className="text-4xl font-black text-white mb-4" style={{ fontFamily: 'Outfit' }}>
-                Ready to <span className="text-shimmer-gold">Transform</span> Rural Housing Oversight?
-              </h2>
-              <p className="text-slate-400 mb-8">
-                Join the national platform trusted by thousands of field officials across 28 states
-              </p>
-              <button
-                onClick={() => navigate('/login')}
-                className="btn-primary px-10 py-4 text-base animate-neonPulse"
-              >
-                🚀 Launch Smart-Gram Verify
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* FOOTER */}
-      <footer className="border-t border-[rgba(99,102,241,0.1)] py-8 px-6">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <span className="text-xl">🏛️</span>
-            <div>
-              <span className="text-sm font-bold text-white">Smart-Gram Verify</span>
-              <div className="text-xs text-slate-500">Ministry of Rural Development • PMAY-G Digital Platform</div>
-            </div>
-          </div>
-          <div className="text-xs text-slate-600 text-center">
-            Built with AI · 3D Digital Twins · Offline-First · Geo Intelligence · 2026
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="text-xs text-slate-500">All systems operational</span>
-          </div>
-        </div>
+      {/* Footer */}
+      <footer className="py-8 px-6 border-t border-slate-200/80 bg-white/60 text-center text-xs text-slate-500 font-medium">
+        <p>Smart-Gram Verify · Ministry of Rural Development · Pradhan Mantri Awaas Yojana - Gramin (PMAY-G) 2026</p>
       </footer>
     </div>
   );

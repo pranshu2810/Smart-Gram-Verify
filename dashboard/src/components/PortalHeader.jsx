@@ -8,25 +8,27 @@ export default function PortalHeader() {
   const isAdmin = user?.role === 'admin';
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-[#07090E]/80 backdrop-blur-xl border-b border-white/[0.08] shadow-[0_4px_24px_rgba(0,0,0,0.6)] px-4 sm:px-6 py-2.5 transition-all">
+    <header className="sticky top-0 z-40 w-full bg-white/75 backdrop-blur-xl border-b border-slate-200/80 shadow-[0_4px_20px_-4px_rgba(15,23,42,0.05)] px-4 sm:px-6 py-2.5 transition-all">
       <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
         {/* Brand & Emblem */}
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-lg bg-white/[0.04] border border-white/[0.12] flex items-center justify-center text-base shadow-[inset_0_1px_0_rgba(255,255,255,0.15)]">
-            🏛️
+          <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-amber-500 via-indigo-600 to-sky-500 p-0.5 shadow-sm">
+            <div className="w-full h-full bg-white/90 backdrop-blur-sm rounded-[14px] flex items-center justify-center text-lg shadow-inner">
+              🏛️
+            </div>
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-display font-bold text-[#F1F5F9] text-sm tracking-tight">
-                Smart-Gram <span className="text-[#94A3B8] font-normal">Verify</span>
+              <span className="font-display font-extrabold text-[#0F172A] text-base tracking-tight">
+                Smart-Gram <span className="text-shimmer">Verify</span>
               </span>
-              <span className="text-[10px] px-2 py-0.5 rounded font-mono font-semibold bg-white/[0.05] text-[#94A3B8] border border-white/[0.08]">
+              <span className="text-[10px] px-2 py-0.5 rounded-full font-mono font-bold bg-indigo-50 text-indigo-700 border border-indigo-200/80 shadow-2xs">
                 PMAY-G
               </span>
-              <span className="text-[10px] font-mono text-[#64748B]">v2.4-HQ</span>
+              <span className="text-[10px] font-mono text-[#64748B] font-semibold">v2.4</span>
             </div>
             <p className="text-[10px] text-[#64748B] font-medium tracking-wide">
-              Rural Housing Autonomous Verification & DBT Audit Matrix
+              Rural Housing Inspection & Digital Benefit Transfer (DBT) System
             </p>
           </div>
         </div>
@@ -34,36 +36,36 @@ export default function PortalHeader() {
         {/* Clearance Role Banner */}
         <div className="flex items-center gap-2">
           {isAdmin ? (
-            <div className="flex items-center gap-2.5 px-3.5 py-1.5 rounded-lg bg-white/[0.03] border border-white/[0.08] shadow-sm">
+            <div className="flex items-center gap-2.5 px-3.5 py-1.5 rounded-xl bg-indigo-50/80 border border-indigo-200/80 shadow-2xs">
               <span className="micro-aura-cyan" />
               <div>
                 <div className="flex items-center gap-1.5">
-                  <span className="text-[11px] font-semibold text-[#F1F5F9] uppercase tracking-wider">
+                  <span className="text-xs font-bold text-indigo-950 uppercase tracking-wide">
                     Executive Command HQ
                   </span>
-                  <span className="text-[9px] px-1.5 py-0.2 rounded bg-white/[0.08] text-[#94A3B8] font-mono font-medium">
+                  <span className="text-[9px] px-1.5 py-0.2 rounded-full bg-indigo-200/80 text-indigo-900 font-bold font-mono">
                     Apex Clearance
                   </span>
                 </div>
-                <p className="text-[10px] text-[#64748B] font-mono leading-tight">
-                  District Oversight • DBT Grant Verification
+                <p className="text-[10px] text-indigo-800 font-medium leading-tight">
+                  State Oversight • DBT Grant Disbursements
                 </p>
               </div>
             </div>
           ) : (
-            <div className="flex items-center gap-2.5 px-3.5 py-1.5 rounded-lg bg-white/[0.03] border border-white/[0.08] shadow-sm">
+            <div className="flex items-center gap-2.5 px-3.5 py-1.5 rounded-xl bg-emerald-50/80 border border-emerald-200/80 shadow-2xs">
               <span className="micro-aura-emerald" />
               <div>
                 <div className="flex items-center gap-1.5">
-                  <span className="text-[11px] font-semibold text-[#F1F5F9] uppercase tracking-wider">
-                    Field Officer Terminal
+                  <span className="text-xs font-bold text-emerald-950 uppercase tracking-wide">
+                    Field Officer Workspace
                   </span>
-                  <span className="text-[9px] px-1.5 py-0.2 rounded bg-white/[0.08] text-[#94A3B8] font-mono font-medium">
+                  <span className="text-[9px] px-1.5 py-0.2 rounded-full bg-emerald-200/80 text-emerald-900 font-bold font-mono">
                     Field Clearance
                   </span>
                 </div>
-                <p className="text-[10px] text-[#64748B] font-mono leading-tight">
-                  Jurisdiction: <span className="text-[#94A3B8] font-semibold">{user?.panchayat || 'Barkheda'} GP</span> • {user?.block || 'Berasia'}
+                <p className="text-[10px] text-emerald-800 font-medium leading-tight">
+                  Jurisdiction: <span className="font-bold text-emerald-950">{user?.panchayat || 'Barkheda'} GP</span>, {user?.block || 'Berasia'} Block
                 </p>
               </div>
             </div>
@@ -72,29 +74,29 @@ export default function PortalHeader() {
 
         {/* Session Status & Sign Out */}
         <div className="flex items-center gap-3">
-          <div className="hidden md:flex items-center gap-2 px-3 py-1 rounded-md bg-white/[0.02] border border-white/[0.06] text-xs">
+          <div className="hidden md:flex items-center gap-2 px-3 py-1 rounded-xl bg-emerald-50/80 border border-emerald-200/80 text-xs">
             <span className="micro-aura-emerald" />
-            <span className="text-[11px] font-medium text-[#94A3B8] font-mono">Vision AI Engine Active</span>
+            <span className="text-[11px] font-bold text-emerald-800 font-mono">Vision AI Engine Active</span>
           </div>
 
           {user && (
             <div className="flex items-center gap-2.5">
-              <div className="w-7 h-7 rounded-md bg-white/[0.06] border border-white/[0.12] flex items-center justify-center text-xs font-semibold text-[#F1F5F9]">
+              <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-indigo-600 to-blue-600 flex items-center justify-center text-xs font-extrabold text-white shadow-2xs">
                 {user.name?.charAt(0) || 'U'}
               </div>
               <div className="hidden sm:block text-left text-xs">
-                <p className="font-medium text-[#F1F5F9] truncate max-w-[120px]">{user.name}</p>
-                <p className="text-[10px] text-[#64748B] font-mono capitalize">{user.role}</p>
+                <p className="font-bold text-[#0F172A] truncate max-w-[120px]">{user.name}</p>
+                <p className="text-[10px] text-indigo-700 font-bold capitalize">{user.role}</p>
               </div>
               <button
                 onClick={() => {
                   logout();
                   navigate('/login');
                 }}
-                title="Sign out of government workspace"
-                className="px-2.5 py-1 rounded-md bg-white/[0.04] hover:bg-white/[0.08] text-[#94A3B8] hover:text-[#F1F5F9] transition-colors text-xs font-medium border border-white/[0.08]"
+                title="Sign out of workspace"
+                className="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-rose-50 text-slate-700 hover:text-rose-700 transition-colors text-xs font-bold border border-slate-200 hover:border-rose-200 shadow-2xs"
               >
-                Sign Out
+                Sign Out 🚪
               </button>
             </div>
           )}
