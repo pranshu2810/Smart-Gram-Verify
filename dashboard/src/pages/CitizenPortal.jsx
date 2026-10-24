@@ -81,24 +81,25 @@ export default function CitizenPortal() {
   };
 
   return (
-    <div className="min-h-screen bg-light-mesh text-slate-800 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-surface-mesh text-slate-100 py-8 px-4 sm:px-6 lg:px-8 relative">
+      <div className="stars" />
       {/* Top Banner & Language Selector */}
-      <div className="max-w-6xl mx-auto mb-8">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-[#d8e2ec] pb-5">
+      <div className="max-w-6xl mx-auto mb-8 relative z-10">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-indigo-500/20 pb-5">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500 via-indigo-600 to-sky-500 p-0.5 shadow-md">
-              <div className="w-full h-full bg-[#f8fafd] rounded-[14px] flex items-center justify-center text-xl">
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500 via-indigo-600 to-cyan-400 p-0.5 shadow-[0_0_20px_rgba(99,102,241,0.4)]">
+              <div className="w-full h-full bg-[#090d22] rounded-[14px] flex items-center justify-center text-xl">
                 🏛️
               </div>
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-[10px] tracking-wider uppercase px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-800 font-extrabold border border-amber-200">
+                <span className="text-[10px] tracking-wider uppercase px-2.5 py-0.5 rounded-full bg-amber-500/15 text-amber-300 font-extrabold border border-amber-500/30">
                   PMAY-G • भारत सरकार
                 </span>
-                <span className="text-xs text-slate-600 font-extrabold">Digital Gramin Awaas</span>
+                <span className="text-xs text-indigo-300 font-extrabold">Digital Gramin Awaas</span>
               </div>
-              <h1 className="text-xl sm:text-2xl font-display font-extrabold text-slate-900 mt-0.5">
+              <h1 className="text-xl sm:text-2xl font-display font-extrabold text-white mt-0.5">
                 {lang === 'hi' ? 'प्रधानमंत्री ग्रामीण आवास योजना — नागरिक सेवा पोर्टल' : 'PMAY-G Citizen Housing & DBT Tracker'}
               </h1>
             </div>
@@ -108,23 +109,23 @@ export default function CitizenPortal() {
             {b && (
               <button
                 onClick={handleExitSession}
-                className="text-xs px-3.5 py-1.5 rounded-xl bg-slate-200/80 hover:bg-rose-50 text-slate-700 hover:text-rose-700 font-bold border border-slate-300 hover:border-rose-300 transition-all"
+                className="text-xs px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-rose-950/50 text-slate-300 hover:text-rose-300 font-bold border border-slate-700 hover:border-rose-500/40 transition-all"
               >
                 ← {lang === 'hi' ? 'सुरक्षित लॉगआउट' : 'Exit / New Search'}
               </button>
             )}
             <div className="flex items-center gap-1.5">
-              <span className="text-xs text-slate-500 font-bold">भाषा:</span>
-              <div className="flex bg-[#edf2f7] p-1 rounded-xl border border-[#d8e2ec]">
+              <span className="text-xs text-slate-400 font-bold">भाषा:</span>
+              <div className="flex bg-[#050814] p-1 rounded-xl border border-indigo-500/30">
                 <button
                   onClick={() => setLang('en')}
-                  className={`px-3 py-1 text-xs rounded-lg font-bold transition-all ${lang === 'en' ? 'bg-indigo-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'}`}
+                  className={`px-3 py-1 text-xs rounded-lg font-bold transition-all ${lang === 'en' ? 'bg-indigo-600 text-white shadow-xs' : 'text-slate-400 hover:text-white'}`}
                 >
                   English
                 </button>
                 <button
                   onClick={() => setLang('hi')}
-                  className={`px-3 py-1 text-xs rounded-lg font-bold transition-all ${lang === 'hi' ? 'bg-amber-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'}`}
+                  className={`px-3 py-1 text-xs rounded-lg font-bold transition-all ${lang === 'hi' ? 'bg-amber-600 text-white shadow-xs' : 'text-slate-400 hover:text-white'}`}
                 >
                   हिंदी
                 </button>
@@ -136,8 +137,8 @@ export default function CitizenPortal() {
 
       {/* Screen 1: PRIVATE LOOKUP (When no beneficiary is loaded) */}
       {!b && (
-        <div className="max-w-2xl mx-auto my-12 animate-fadeIn">
-          <div className="card p-8 sm:p-10 bg-[#f8fafd] border border-[#d8e2ec] shadow-lg text-center">
+        <div className="max-w-2xl mx-auto my-12 animate-fadeIn relative z-10">
+          <div className="card glass-card-pro p-8 sm:p-10 border border-indigo-500/30 shadow-2xl text-center">
             <div className="w-16 h-16 rounded-3xl bg-amber-50 border border-amber-200 flex items-center justify-center text-3xl mx-auto mb-4">
               🔐
             </div>

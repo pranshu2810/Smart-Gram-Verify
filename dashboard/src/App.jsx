@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import Layout from './components/Layout';
+import LandingPage from './pages/LandingPage';
 import Login from './pages/Login';
 import AdminPortal from './pages/AdminPortal';
 import OfficerPortal from './pages/OfficerPortal';
@@ -24,10 +25,10 @@ function ProtectedRoute({ children, roleRequired }) {
 
   if (authChecking) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#edf2f7]">
-        <div className="flex items-center gap-3 p-4 bg-[#f8fafd] rounded-2xl shadow-sm border border-[#d8e2ec]">
-          <span className="w-5 h-5 border-2 border-indigo-600 border-t-transparent rounded-full animate-spin" />
-          <span className="text-sm font-bold text-slate-800">Verifying Government Clearance...</span>
+      <div className="min-h-screen flex items-center justify-center bg-[#050814] text-white">
+        <div className="flex items-center gap-3 p-4 bg-[#0d1230]/90 rounded-2xl shadow-xl border border-indigo-500/30">
+          <span className="w-5 h-5 border-2 border-indigo-400 border-t-transparent rounded-full animate-spin" />
+          <span className="text-sm font-bold text-indigo-200">Verifying Government Clearance...</span>
         </div>
       </div>
     );
@@ -53,10 +54,10 @@ function AppRoutes() {
 
   if (authChecking) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#edf2f7]">
-        <div className="flex items-center gap-3 p-4 bg-[#f8fafd] rounded-2xl shadow-sm border border-[#d8e2ec]">
-          <span className="w-5 h-5 border-2 border-indigo-600 border-t-transparent rounded-full animate-spin" />
-          <span className="text-sm font-bold text-slate-800">Loading Smart-Gram Verify...</span>
+      <div className="min-h-screen flex items-center justify-center bg-[#050814] text-white">
+        <div className="flex items-center gap-3 p-4 bg-[#0d1230]/90 rounded-2xl shadow-xl border border-indigo-500/30">
+          <span className="w-5 h-5 border-2 border-indigo-400 border-t-transparent rounded-full animate-spin" />
+          <span className="text-sm font-bold text-indigo-200">Loading Smart-Gram Verify...</span>
         </div>
       </div>
     );
@@ -64,6 +65,19 @@ function AppRoutes() {
 
   return (
     <Routes>
+      {/* Cinematic Showcase Landing Page */}
+      <Route
+        path="/"
+        element={
+          isAuthenticated ? (
+            <Navigate to={user?.role === 'admin' ? '/admin' : '/officer'} replace />
+          ) : (
+            <LandingPage />
+          )
+        }
+      />
+      <Route path="/landing" element={<LandingPage />} />
+
       {/* Public Citizen / Beneficiary Portal (No Login Required) */}
       <Route path="/client" element={<CitizenPortal />} />
       <Route path="/citizen" element={<CitizenPortal />} />
@@ -81,8 +95,8 @@ function AppRoutes() {
       />
 
       {/* Main Authenticated Layout */}
-      <Route path="/" element={<ProtectedRoute><Layout /></ProtectedRoute>}>
-        <Route index element={<RoleHomeRedirect />} />
+      <Route element={<ProtectedRoute><Layout /></ProtectedRoute>}>
+        <Route path="/app" element={<RoleHomeRedirect />} />
 
         {/* Admin Strictly Enforced Routes */}
         <Route path="admin" element={<ProtectedRoute roleRequired="admin"><AdminPortal /></ProtectedRoute>} />
