@@ -49,6 +49,15 @@ uploads/
 scratch/
 .agents/
 
+# Generated QR codes & root-level media dumps
+expo_qr.png
+**/expo_qr.png
+*.mp4
+*.mov
+*.avi
+*.webm
+*.mkv
+
 # Build & Bundler Artifacts
 dist/
 **/dist/
