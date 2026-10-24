@@ -1557,6 +1557,8 @@ async def analyze_video(req: VideoAnalyzeRequest):
         officer_stage=req.officer_stage or "Plinth"
     )
 
+    return to_native(result)
+
 # =====================================================================
 # 8. REAL-TIME COLMAP STRUCTURE-FROM-MOTION + NERFSTUDIO 3D DIGITAL TWIN
 # =====================================================================

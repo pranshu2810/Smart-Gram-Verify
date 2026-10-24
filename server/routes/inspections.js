@@ -149,9 +149,10 @@ router.post('/verify-video', protect, videoUpload.single('video'), async (req, r
 // POST /api/inspections/reconstruct-nerf — COLMAP Structure-from-Motion + Nerfstudio Real-Time 3D Digital Twin
 router.post('/reconstruct-nerf', protect, async (req, res) => {
   try {
-    const { videoUrl, videoBase64, imageUrls, inspectionId, densifyPoints, generateSplats } = req.body;
+    const { videoUrl, videoBase64, imageUrls, inspectionId, densifyPoints, generateSplats, stage } = req.body;
     let targetVideo = videoUrl || videoBase64;
     let targetImages = imageUrls || [];
+    let targetStage = stage || 'Plinth';
 
     // If inspectionId provided, pull media stored on MongoDB record
     if (inspectionId) {
@@ -162,6 +163,9 @@ router.post('/reconstruct-nerf', protect, async (req, res) => {
         }
         if (targetImages.length === 0 && inspection.evidence?.length > 0) {
           targetImages = inspection.evidence.map(e => e.cloudinaryUrl).filter(Boolean);
+        }
+        if (inspection.officerSelectedStage) {
+          targetStage = inspection.officerSelectedStage;
         }
       }
     }
@@ -182,6 +186,7 @@ router.post('/reconstruct-nerf', protect, async (req, res) => {
       videoBase64: !targetVideo?.startsWith('http') && !targetVideo?.startsWith('/') && !targetVideo?.includes(':\\') ? targetVideo : null,
       imageUrls: targetImages,
       inspectionId,
+      stage: targetStage,
       densifyPoints: parseInt(densifyPoints) || 25000,
       generateSplats: generateSplats !== false
     });
