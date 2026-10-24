@@ -5,53 +5,44 @@ import { useAuth } from '../context/AuthContext';
 const PORTALS = [
   {
     id: 'admin',
-    label: 'Admin Portal',
+    label: 'Command HQ',
     icon: '🛡️',
-    color: '#6366f1',
-    glow: 'rgba(99,102,241,0.4)',
     badge: 'Apex Clearance',
     title: 'Administrative Command Center',
-    desc: 'District & Block Officers — DBT approvals and full oversight',
+    desc: 'District & Block Executives — DBT approvals, anomaly audits, and governance',
     email: 'admin@smartgram.gov.in',
     pass: 'admin123',
-    ctaText: 'Authenticate & Enter Command →',
-    quickLabel: '⚡ Instant Admin Access',
-    fieldLabel: 'HQ Admin Email',
-    passLabel: 'Security Passcode',
-    gradient: 'linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)',
+    ctaText: 'Authenticate & Enter HQ',
+    quickLabel: 'Demo: Apex Admin',
+    fieldLabel: 'Executive Email',
+    passLabel: 'Clearance Passcode',
   },
   {
     id: 'officer',
-    label: 'Field Officer',
+    label: 'Field Terminal',
     icon: '👷',
-    color: '#10b981',
-    glow: 'rgba(16,185,129,0.4)',
     badge: 'Field Clearance',
-    title: 'Field Inspector Workspace',
-    desc: 'Gram Rozgar Sahayaks — GPS photos & AI stage inspections',
+    title: 'Field Inspector Terminal',
+    desc: 'Gram Rozgar Sahayaks — GPS-verified photos & AI stage inspections',
     email: 'rajesh@smartgram.gov.in',
     pass: 'officer123',
-    ctaText: 'Open Officer Workspace →',
-    quickLabel: '⚡ Officer Rajesh',
-    fieldLabel: 'Field Officer Email',
-    passLabel: 'Inspector Password',
-    gradient: 'linear-gradient(135deg, #059669 0%, #10b981 100%)',
+    ctaText: 'Authenticate Field Inspector',
+    quickLabel: 'Demo: Officer Rajesh',
+    fieldLabel: 'Officer Email',
+    passLabel: 'Terminal Passcode',
   },
   {
     id: 'citizen',
-    label: 'Citizen Portal',
+    label: 'Citizen Tracker',
     icon: '🏛️',
-    color: '#f59e0b',
-    glow: 'rgba(245,158,11,0.4)',
     badge: 'Public Access',
     title: 'Nagarik & Beneficiary Portal',
-    desc: 'No login needed — track your housing progress & DBT installments',
+    desc: 'No password required — track housing verification progress & DBT transfers',
     email: '',
     pass: '',
-    ctaText: 'Enter Citizen Portal →',
+    ctaText: 'Enter Public Tracker →',
     fieldLabel: '',
     passLabel: '',
-    gradient: 'linear-gradient(135deg, #d97706 0%, #f59e0b 100%)',
   },
 ];
 
@@ -85,231 +76,170 @@ export default function Login() {
   const handleSubmit = (e) => { e.preventDefault(); handleLogin(); };
 
   return (
-    <div className="min-h-screen bg-space grid-overlay flex items-center justify-center p-4 relative overflow-hidden">
-      <div className="stars" />
+    <div className="min-h-screen bg-gov-command flex items-center justify-center p-4 relative overflow-hidden select-none">
+      {/* Subtle Dot Grid */}
+      <div className="fixed inset-0 dot-grid pointer-events-none opacity-50" />
 
-      {/* Ambient orbs */}
-      <div className="fixed pointer-events-none" style={{
-        top: '-20%', left: '-10%', width: '600px', height: '600px',
-        background: `radial-gradient(circle, ${portal.glow}20 0%, transparent 70%)`,
-        filter: 'blur(40px)', transition: 'background 0.6s ease', borderRadius: '50%',
-      }} />
-      <div className="fixed pointer-events-none" style={{
-        bottom: '-20%', right: '-10%', width: '500px', height: '500px',
-        background: `radial-gradient(circle, ${portal.glow}15 0%, transparent 70%)`,
-        filter: 'blur(40px)', transition: 'background 0.6s ease', borderRadius: '50%',
-      }} />
-
-      <div className="w-full max-w-lg relative z-10">
-
-        {/* Back to Landing */}
+      <div className="w-full max-w-md relative z-10 animate-fadeIn">
+        {/* Back to Home */}
         <button
           onClick={() => navigate('/')}
-          className="flex items-center gap-2 text-slate-400 hover:text-white text-sm mb-6 transition-colors group"
+          className="flex items-center gap-1.5 text-xs text-[#94A3B8] hover:text-[#F1F5F9] mb-6 transition-colors font-mono"
         >
-          <span className="group-hover:-translate-x-1 transition-transform">←</span>
-          Back to Home
+          <span>←</span> Back to Public Overview
         </button>
 
         {/* Header */}
-        <div className="text-center mb-8 animate-fadeInUp">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-4"
-            style={{ background: 'rgba(99,102,241,0.1)', border: '1px solid rgba(99,102,241,0.3)' }}>
-            <span className="text-sm">🇮🇳</span>
-            <span className="text-xs font-bold text-indigo-300 uppercase tracking-widest">
+        <div className="text-center mb-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md mb-3 bg-white/[0.03] border border-white/[0.08]">
+            <span className="text-xs">🇮🇳</span>
+            <span className="text-[11px] font-mono uppercase tracking-widest text-[#94A3B8]">
               Ministry of Rural Development · PMAY-G
             </span>
           </div>
-          <h1 className="text-4xl font-black text-white tracking-tight mb-2" style={{ fontFamily: 'Outfit' }}>
-            Smart-Gram <span className="text-shimmer">Verify</span>
+          <h1 className="text-2xl font-bold text-[#F1F5F9] tracking-tight font-display">
+            Smart-Gram <span className="text-[#94A3B8] font-normal">Verify</span>
           </h1>
-          <p className="text-sm text-slate-400">AI-Powered Housing Inspection & DBT Platform</p>
+          <p className="text-xs text-[#64748B] mt-1 font-mono">Executive Command & Autonomous DBT Audit Matrix</p>
         </div>
 
-        {/* Portal Selector */}
-        <div className="flex gap-2 mb-6 p-1.5 rounded-2xl animate-fadeInUp"
-          style={{ background: 'rgba(5,8,20,0.6)', border: '1px solid rgba(99,102,241,0.15)', backdropFilter: 'blur(20px)', animationDelay: '0.1s' }}>
+        {/* Monochromatic Portal Selector */}
+        <div className="flex gap-1.5 mb-5 p-1 rounded-xl bg-black/40 border border-white/[0.08] backdrop-blur-md">
           {PORTALS.map((p, i) => (
             <button
               key={p.id}
               onClick={() => setActivePortal(i)}
-              className="flex-1 flex items-center justify-center gap-2 py-3 px-2 rounded-xl text-xs font-bold transition-all duration-300"
-              style={activePortal === i ? {
-                background: p.gradient,
-                color: '#fff',
-                boxShadow: `0 4px 20px ${p.glow}60`,
-                transform: 'scale(1.02)',
-              } : {
-                color: '#64748b',
-              }}
+              className={`flex-1 flex items-center justify-center gap-1.5 py-2 px-2 rounded-lg text-xs font-medium transition-all ${
+                activePortal === i
+                  ? 'bg-white text-black font-semibold shadow-sm'
+                  : 'text-[#94A3B8] hover:text-[#F1F5F9]'
+              }`}
             >
-              <span>{p.icon}</span>
-              <span className="hidden sm:inline">{p.label}</span>
+              <span className="text-xs">{p.icon}</span>
+              <span>{p.label}</span>
             </button>
           ))}
         </div>
 
-        {/* Auth Card */}
-        <div
-          className="relative overflow-hidden rounded-2xl animate-fadeInUp"
-          style={{
-            background: 'linear-gradient(135deg, rgba(13,18,48,0.95) 0%, rgba(9,13,31,0.92) 100%)',
-            border: `1px solid ${portal.color}30`,
-            boxShadow: `0 0 40px ${portal.color}15, 0 20px 60px rgba(0,0,0,0.6)`,
-            backdropFilter: 'blur(24px)',
-            transition: 'border-color 0.4s ease, box-shadow 0.4s ease',
-            animationDelay: '0.15s',
-          }}
-        >
-          {/* Top accent line */}
-          <div className="h-0.5 w-full" style={{ background: portal.gradient }} />
-
-          {/* Scan line */}
-          <div className="absolute inset-0 pointer-events-none overflow-hidden">
-            <div className="absolute w-full h-[2px] animate-laser opacity-20"
-              style={{ background: `linear-gradient(90deg, transparent, ${portal.color}, transparent)` }} />
-          </div>
-
-          <div className="p-8">
-            {/* Card Header */}
-            <div className="flex items-start justify-between mb-7">
-              <div>
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold mb-2"
-                  style={{ background: portal.color + '15', border: `1px solid ${portal.color}35`, color: portal.color }}>
-                  <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: portal.color }} />
+        {/* Gov-Tech Glass Auth Card */}
+        <div className="gov-card p-6 sm:p-7 relative overflow-hidden">
+          {/* Header */}
+          <div className="flex items-start justify-between mb-5">
+            <div>
+              <div className="flex items-center gap-1.5 mb-1.5">
+                <span className={portal.id === 'admin' ? "micro-aura-cyan" : portal.id === 'officer' ? "micro-aura-emerald" : "micro-aura-slate"} />
+                <span className="text-[11px] font-mono text-[#94A3B8] uppercase tracking-wider">
                   {portal.badge}
                 </span>
-                <h2 className="text-xl font-bold text-white" style={{ fontFamily: 'Outfit' }}>{portal.title}</h2>
-                <p className="text-xs text-slate-400 mt-1">{portal.desc}</p>
               </div>
-              <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0 animate-float"
-                style={{ background: portal.color + '15', border: `1px solid ${portal.color}35`, boxShadow: `0 0 20px ${portal.color}20` }}>
-                {portal.icon}
-              </div>
+              <h2 className="text-base font-semibold text-[#F1F5F9]">{portal.title}</h2>
+              <p className="text-xs text-[#64748B] mt-0.5">{portal.desc}</p>
             </div>
-
-            {/* Citizen portal — no form */}
-            {portal.id === 'citizen' ? (
-              <div>
-                <div className="space-y-3 mb-7">
-                  {[
-                    { c: '#10b981', t: '✓ 4-Stage construction photos & AI verification' },
-                    { c: '#6366f1', t: '✓ DBT installment receipt & transfer history' },
-                    { c: '#f59e0b', t: '✓ Digital approval certificate download' },
-                    { c: '#94a3b8', t: '✓ Request reinspection or raise grievance' },
-                  ].map((item, i) => (
-                    <div key={i} className="flex items-center gap-3 p-3 rounded-xl text-sm font-medium"
-                      style={{ background: item.c + '08', border: `1px solid ${item.c}20`, color: item.c }}>
-                      {item.t}
-                    </div>
-                  ))}
-                </div>
-                <button onClick={() => navigate('/client')}
-                  className="w-full py-4 rounded-xl font-bold text-base"
-                  style={{ background: portal.gradient, boxShadow: `0 4px 20px ${portal.color}40` }}>
-                  🏛️ Enter Citizen Housing Portal →
-                </button>
-                <p className="text-center text-xs text-slate-500 mt-4">
-                  No registration required · Enter Household ID or Aadhaar directly
-                </p>
-              </div>
-            ) : (
-              /* Login Form */
-              <>
-                {error && (
-                  <div className="mb-5 p-3 rounded-xl text-xs font-bold text-rose-300 flex items-center gap-2 animate-fadeIn"
-                    style={{ background: 'rgba(244,63,94,0.1)', border: '1px solid rgba(244,63,94,0.3)' }}>
-                    <span>⚠️</span> {error}
-                  </div>
-                )}
-
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div>
-                    <label className="block text-xs font-bold text-slate-400 mb-2 uppercase tracking-wider">
-                      {portal.fieldLabel}
-                    </label>
-                    <input
-                      type="email"
-                      value={email}
-                      onChange={e => setEmail(e.target.value)}
-                      required
-                      className="input-field"
-                      placeholder={portal.email}
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold text-slate-400 mb-2 uppercase tracking-wider">
-                      {portal.passLabel}
-                    </label>
-                    <div className="relative">
-                      <input
-                        type={showPass ? 'text' : 'password'}
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
-                        required
-                        className="input-field pr-10"
-                        placeholder="••••••••••••"
-                      />
-                      <button type="button"
-                        onClick={() => setShowPass(s => !s)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors text-xs">
-                        {showPass ? '🙈' : '👁️'}
-                      </button>
-                    </div>
-                  </div>
-
-                  <button
-                    type="submit"
-                    disabled={loading}
-                    className="w-full py-4 rounded-xl font-bold text-sm mt-2 transition-all duration-300 relative overflow-hidden"
-                    style={{ background: portal.gradient, boxShadow: `0 4px 20px ${portal.color}40` }}
-                    onMouseEnter={e => e.currentTarget.style.boxShadow = `0 8px 30px ${portal.glow}70`}
-                    onMouseLeave={e => e.currentTarget.style.boxShadow = `0 4px 20px ${portal.color}40`}
-                  >
-                    {loading ? (
-                      <span className="flex items-center justify-center gap-2">
-                        <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                        Verifying Credentials...
-                      </span>
-                    ) : portal.ctaText}
-                  </button>
-                </form>
-
-                {/* Quick Access */}
-                <div className="mt-5 pt-4" style={{ borderTop: '1px solid rgba(99,102,241,0.1)' }}>
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-slate-500 font-medium">Quick Demo Access:</span>
-                    <div className="flex gap-2">
-                      {portal.id === 'officer' && (
-                        <button
-                          onClick={() => handleLogin('sunita@smartgram.gov.in', 'officer123')}
-                          disabled={loading}
-                          className="px-3 py-1.5 rounded-lg text-xs font-bold transition-all"
-                          style={{ background: portal.color + '12', border: `1px solid ${portal.color}30`, color: portal.color }}
-                        >
-                          ⚡ Sunita
-                        </button>
-                      )}
-                      <button
-                        onClick={() => handleLogin(portal.email, portal.pass)}
-                        disabled={loading}
-                        className="px-3 py-1.5 rounded-lg text-xs font-bold transition-all"
-                        style={{ background: portal.color + '12', border: `1px solid ${portal.color}30`, color: portal.color }}
-                      >
-                        {portal.quickLabel}
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </>
-            )}
+            <div className="w-10 h-10 rounded-lg bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-lg flex-shrink-0">
+              {portal.icon}
+            </div>
           </div>
+
+          {/* Citizen portal — direct jump */}
+          {portal.id === 'citizen' ? (
+            <div className="space-y-4">
+              <div className="p-3.5 rounded-lg bg-black/30 border border-white/[0.05] space-y-2 text-xs text-[#94A3B8]">
+                <p>✓ 4-Stage construction photo & AI inspection ledger</p>
+                <p>✓ DBT installment disbursements & transaction history</p>
+                <p>✓ Digital sanction certificate download</p>
+                <p>✓ Transparent grievance & reinspection tracker</p>
+              </div>
+              <button
+                onClick={() => navigate('/client')}
+                className="w-full gov-btn-primary py-2.5 text-xs font-semibold"
+              >
+                Enter Public Citizen Tracker →
+              </button>
+              <p className="text-center text-[11px] text-[#64748B] font-mono">
+                No login required · Enter Household ID or Aadhaar
+              </p>
+            </div>
+          ) : (
+            /* Login Form */
+            <>
+              {error && (
+                <div className="mb-4 p-2.5 rounded-lg text-xs font-medium text-[#FF334B] bg-[#FF334B]/10 border border-[#FF334B]/30 flex items-center gap-2">
+                  <span className="micro-aura-crimson" />
+                  <span>{error}</span>
+                </div>
+              )}
+
+              <form onSubmit={handleSubmit} className="space-y-3.5">
+                <div>
+                  <label className="block text-[11px] font-mono uppercase tracking-wider text-[#94A3B8] mb-1.5">
+                    {portal.fieldLabel}
+                  </label>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    required
+                    className="input-field font-mono text-xs"
+                    placeholder={portal.email}
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-mono uppercase tracking-wider text-[#94A3B8] mb-1.5">
+                    {portal.passLabel}
+                  </label>
+                  <div className="relative">
+                    <input
+                      type={showPass ? 'text' : 'password'}
+                      value={password}
+                      onChange={e => setPassword(e.target.value)}
+                      required
+                      className="input-field font-mono text-xs pr-10"
+                      placeholder="••••••••••••"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPass(s => !s)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-[#64748B] hover:text-[#94A3B8] text-xs"
+                    >
+                      {showPass ? 'HIDE' : 'SHOW'}
+                    </button>
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full gov-btn-primary py-2.5 text-xs font-semibold mt-2"
+                >
+                  {loading ? (
+                    <span className="flex items-center justify-center gap-2 font-mono">
+                      <span className="w-3.5 h-3.5 border-2 border-black/30 border-t-black rounded-full animate-spin" />
+                      Verifying Clearance...
+                    </span>
+                  ) : portal.ctaText}
+                </button>
+              </form>
+
+              {/* Demo quick access */}
+              <div className="mt-4 pt-3 border-t border-white/[0.06] flex items-center justify-between text-xs">
+                <span className="text-[#64748B] font-mono text-[11px]">Quick Credentials:</span>
+                <div className="flex gap-1.5">
+                  <button
+                    onClick={() => handleLogin(portal.email, portal.pass)}
+                    disabled={loading}
+                    className="px-2.5 py-1 rounded bg-white/[0.05] hover:bg-white/[0.1] text-[#94A3B8] hover:text-[#F1F5F9] border border-white/[0.08] font-mono text-[11px] transition-colors"
+                  >
+                    {portal.quickLabel}
+                  </button>
+                </div>
+              </div>
+            </>
+          )}
         </div>
 
-        {/* Footer text */}
-        <p className="text-center text-xs text-slate-600 mt-6">
-          Ministry of Rural Development · Smart-Gram Verify · Digital Architecture 2026
+        <p className="text-center text-[11px] text-[#64748B] mt-5 font-mono">
+          Ministry of Rural Development · Smart-Gram Verify · Gov-Tech Core
         </p>
       </div>
     </div>

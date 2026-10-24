@@ -80,53 +80,42 @@ export default function LandingPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-space grid-overlay relative overflow-x-hidden">
-      <div className="stars" />
-
-      {/* Ambient Glow Orbs */}
-      <div className="fixed top-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full pointer-events-none"
-        style={{ background: 'radial-gradient(circle, rgba(99,102,241,0.12) 0%, transparent 70%)', filter: 'blur(40px)' }} />
-      <div className="fixed top-[30%] right-[-15%] w-[500px] h-[500px] rounded-full pointer-events-none"
-        style={{ background: 'radial-gradient(circle, rgba(168,85,247,0.10) 0%, transparent 70%)', filter: 'blur(40px)' }} />
-      <div className="fixed bottom-0 left-[30%] w-[400px] h-[400px] rounded-full pointer-events-none"
-        style={{ background: 'radial-gradient(circle, rgba(34,211,238,0.07) 0%, transparent 70%)', filter: 'blur(40px)' }} />
+    <div className="min-h-screen bg-gov-command relative overflow-x-hidden select-none">
+      {/* Subtle Dot Grid */}
+      <div className="fixed inset-0 dot-grid pointer-events-none opacity-50 z-0" />
 
       {/* NAVBAR */}
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled ? 'bg-[#050814]/90 backdrop-blur-xl border-b border-[rgba(99,102,241,0.2)] shadow-lg shadow-[rgba(0,0,0,0.5)]' : ''
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled ? 'bg-[#07090E]/85 backdrop-blur-xl border-b border-white/[0.08] shadow-2xl' : 'bg-transparent'
       }`}>
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-6 py-3.5 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="relative w-10 h-10">
-              <div className="absolute inset-0 rounded-xl animate-neonPulse"
-                style={{ background: 'linear-gradient(135deg, #4f46e5, #7c3aed)', boxShadow: '0 0 20px rgba(99,102,241,0.5)' }} />
-              <div className="relative w-full h-full rounded-xl flex items-center justify-center text-xl">🏛️</div>
+            <div className="w-9 h-9 rounded-lg bg-white/[0.04] border border-white/[0.12] flex items-center justify-center text-lg shadow-[inset_0_1px_0_rgba(255,255,255,0.15)]">
+              🏛️
             </div>
             <div>
-              <span className="font-bold text-white text-lg tracking-tight" style={{ fontFamily: 'Outfit' }}>
-                Smart-Gram <span className="text-shimmer">Verify</span>
+              <span className="font-display font-bold text-[#F1F5F9] text-base tracking-tight">
+                Smart-Gram <span className="text-[#94A3B8] font-normal">Verify</span>
               </span>
-              <div className="text-[10px] text-slate-500 font-medium">PMAY-G AI Platform</div>
+              <div className="text-[10px] text-[#64748B] font-mono">PMAY-G Autonomous Matrix</div>
             </div>
           </div>
 
-          <div className="hidden md:flex items-center gap-2">
-            <span className="flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold"
-              style={{ background: 'rgba(16,185,129,0.12)', border: '1px solid rgba(16,185,129,0.3)', color: '#34d399' }}>
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              AI Systems Online
+          <div className="hidden md:flex items-center gap-3">
+            <span className="flex items-center gap-2 px-3 py-1 rounded-md text-[11px] font-mono bg-white/[0.03] border border-white/[0.06] text-[#94A3B8]">
+              <span className="micro-aura-emerald" />
+              Vision AI Online
             </span>
-            <span className="flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold"
-              style={{ background: 'rgba(99,102,241,0.1)', border: '1px solid rgba(99,102,241,0.3)', color: '#a5b4fc' }}>
-              🇮🇳 Ministry of Rural Development
+            <span className="text-[11px] font-mono text-[#64748B]">
+              Ministry of Rural Development
             </span>
           </div>
 
           <button
             onClick={() => navigate('/login')}
-            className="btn-primary px-5 py-2.5 text-sm"
+            className="gov-btn-primary px-4 py-2 text-xs font-semibold"
           >
-            Launch Portal →
+            Launch Command HQ →
           </button>
         </div>
       </nav>
@@ -183,34 +172,32 @@ export default function LandingPage() {
               onClick={() => navigate('/login')}
               className="btn-primary px-8 py-4 text-base animate-neonPulse"
             >
-              🛡️ Admin Command Portal
+              🛡️ Admin Command HQ
             </button>
             <button
               onClick={() => navigate('/login')}
-              className="glass-btn-emerald px-8 py-4 text-base"
+              className="gov-btn-secondary px-6 py-3 text-sm"
             >
-              👷 Field Officer Workspace
+              👷 Field Officer Terminal
             </button>
             <button
               onClick={() => navigate('/client')}
-              className="btn-secondary px-8 py-4 text-base"
+              className="gov-btn-secondary px-6 py-3 text-sm"
             >
               🏛️ Citizen Portal →
             </button>
           </div>
 
-          {/* Stats Row */}
+          {/* Stats Row - Gov-Tech Glass with Tabular Monospace figures */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto animate-fadeInUp"
             style={{ animationDelay: '0.4s' }}>
             {STATS.map((s, i) => (
-              <div key={i} className="card p-5 text-center group cursor-default"
-                style={{ borderColor: s.color + '33', boxShadow: `0 0 20px ${s.color}15, 0 4px 20px rgba(0,0,0,0.4)` }}>
-                <div className="text-2xl mb-1">{s.icon}</div>
-                <div className="text-2xl md:text-3xl font-black mb-1"
-                  style={{ color: s.color, fontFamily: 'Outfit', textShadow: `0 0 20px ${s.color}80` }}>
+              <div key={i} className="gov-card p-5 text-center group cursor-default">
+                <div className="text-xl mb-1.5 opacity-80">{s.icon}</div>
+                <div className="text-2xl md:text-3xl font-bold mb-1 text-[#F1F5F9] font-mono tabular-nums tracking-tight">
                   {s.value}
                 </div>
-                <div className="text-xs text-slate-400 font-medium">{s.label}</div>
+                <div className="text-xs text-[#94A3B8] font-medium">{s.label}</div>
               </div>
             ))}
           </div>
